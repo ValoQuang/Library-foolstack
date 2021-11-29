@@ -2,7 +2,7 @@ import React,{Component} from 'react';
 import { Card, CardText, CardBody, CardLink,
     CardTitle, Button } from 'reactstrap';
 import {Link} from 'react-router-dom';
-import Loading from './LoadingComponent.js';
+import { CircularProgress } from '@mui/material';
 
 class Stats extends Component {
 
@@ -21,7 +21,7 @@ render(){
         return(
             <div className="container">
                 <div className="row">            
-                    <Loading />
+                    <CircularProgress />
                 </div>
             </div>
         );

@@ -4,7 +4,7 @@
 }
 
 body{
-background-color: rgba(1, 11, 20, 0.007);
+background-color: rgba(88, 93, 98, 0.007);
 width: 100vw;
 }
 
@@ -21,13 +21,12 @@ width: 100vw;
 
 
   .home{
-      background-image: url('./images/walllpaper.jpg');
       min-height: 100vh;
       min-width: 99vw;
     }
 
   .darkbg{
-      background-color: black;
+      background-color: rgb(128, 119, 119);
       opacity: 0.7;
       color: white;
       size: 4rem;

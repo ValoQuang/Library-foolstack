@@ -1,34 +1,31 @@
 import React,{Component} from 'react';
 import {Button, Label, Col, Row} from 'reactstrap';
 import { Control, LocalForm, Errors  } from 'react-redux-form';
+import { required, requiredNum, maxLength, minLength, maxVal, minVal, isNumber} from "../Validator/index"
 
 import LinearProgress from '@mui/material/LinearProgress';
 
-const required = (val) => val && val.length;
-const requiredNum = (val) => !!(val);
-const maxLength = (len) => (val) => !(val) || (val.length <= len);
-const minLength = (len) => (val) => (val) && (val.length >= len);
-const maxVal = (len) => (val) => !(val) || (val<= len);
-const minVal = (len) => (val) => (val) && (val>= len);
-const isNumber = (val) => !isNaN(Number(val));
 
-class AddBook extends Component {
 
-    constructor(props){
+interface addBook {
+    books: any,
+    booksErrMess:Function,
+    booksLoading:Function,
+    postBook:Function,
+}
+
+class AddBook extends Component<addBook> {
+    constructor(props:addBook){
         super(props);
         this.state={
         }
-
-    }
-    
+    }  
     componentDidMount() {
         window.scrollTo(0, 0)
       }
-
-render(){
-    let uniqueIsbn=(val) =>(!this.props.books.some((book)=>(book.isbn===val)))
-    let uniqueName=(val) =>(!this.props.books.some((book)=>(book.name===val)))
-
+    render(){
+    let uniqueIsbn=(val:any) =>(!this.props.books.some((book:any)=>(book.isbn===val)))
+    let uniqueName=(val:any) =>(!this.props.books.some((book:any)=>(book.name===val)))
     if (this.props.booksLoading) {
         return(
             <div className="container">
@@ -55,7 +52,7 @@ render(){
     <div className="container">
     <div className="row justify-content-center heading">
     <div className="col-12">
-  <h3 align="center">  Add a book</h3>
+  <h3>  Add a book</h3>
   </div>
     </div>
     <div className="row row-content justify-content-center">
@@ -149,8 +146,6 @@ render(){
                                      />
                                 </Col>
                             </Row>
-
-      
                         <Row className="form-group">
                             <Col>
                             <Label htmlFor="cat">Category</Label>
@@ -177,7 +172,6 @@ render(){
                             </Control.select>
                             </Col>
                         </Row>
-                        
                         <Row className="form-group text-center justify-content-center">
                                 <Label htmlFor="shelf" md={3}> Shelf</Label>
                                 <Col md={6}>
@@ -186,8 +180,7 @@ render(){
                                         className="form-control"
                                         validators={{
                                             requiredNum, minVal: minVal(1), maxVal: maxVal(100), isNumber
-                                        }}
-                                         />
+                                    }}/>
                                     <Errors
                                         className="text-danger"
                                         model=".shelf"
@@ -201,13 +194,11 @@ render(){
                                      />
                                 </Col>
                             </Row>
-
-                     
                         <Row className="form-group">
                                 <Label htmlFor="description" md={2}>Description</Label>
                                 <Col md={10}>
                                     <Control.textarea model=".description" id="description" name="description"
-                                        rows="12"
+                                        rows = {12} 
                                         placeholder="Some description of the book"
                                         className="form-control" />
                                 </Col>
@@ -223,10 +214,7 @@ render(){
                     </div>
                 <br/>
     </div>
- );
-
-}
-
+ );}
 }
 
 export default AddBook;

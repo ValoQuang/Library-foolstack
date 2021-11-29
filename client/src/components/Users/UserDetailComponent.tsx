@@ -1,26 +1,32 @@
+import { CircularProgress } from '@mui/material';
 import React,{Component} from 'react';
 import {Card,CardBody,CardHeader,CardText} from 'reactstrap';
-import Loading from './LoadingComponent';
 
-class UserDetail extends Component {
+interface userProp {
+    auth:any,
+    editPassword:any,
+    isLoading:boolean,
+    errMess:any,
+    user:any,
+    editUser:Function
+}
+interface userState {
+}
 
-    constructor(props){
+class UserDetail extends Component<userProp, userState> {
+    constructor(props:userProp){
         super(props);
-        this.state={
-        }
+        this.state={}
     }
-
     componentDidMount() {
         window.scrollTo(0, 0)
       }
-
-
 render(){
     if (this.props.isLoading) {
         return(
             <div className="container">
                 <div className="row">            
-                    <Loading />
+                    <CircularProgress />
                 </div>
             </div>
         );
@@ -42,9 +48,7 @@ render(){
 
         <div className="container mt-6 home text-center align-self-center">
             <div className="row text-center justify-content-center">
-            
-            <Card className="heading">
-                
+            <Card className="heading">         
         <CardHeader><h3>User Details</h3></CardHeader>
         <CardBody>
           <CardText>

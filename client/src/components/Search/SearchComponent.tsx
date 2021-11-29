@@ -1,11 +1,27 @@
 import React,{Component} from 'react';
 import { Form,FormGroup,Row,Col,Label, Input, Badge, ListGroupItem, ListGroup } from 'reactstrap';
-import Loading from './LoadingComponent.js';
 import {Link} from 'react-router-dom';
 
-class Search extends Component {
+import { CircularProgress } from '@mui/material';
 
-    constructor(props){
+interface searchProp {
+  books: any,
+  isAdmin:boolean,
+  changeSelected: Function,
+  booksLoading: any,
+  booksErrMess:any,
+  toggleEditModal: Function,
+  toggleDeleteModal:Function
+}
+
+interface searchState {
+  name:string,
+  author:string,
+  cat: any
+}
+
+class Search extends Component<searchProp, searchState> {
+    constructor(props:searchProp){
         super(props);
         this.state={
             name: '',
@@ -14,8 +30,7 @@ class Search extends Component {
         }
         this.onChange=this.onChange.bind(this);
     }
-
-    onChange(e) {
+    onChange(e:any) {
         const options = this.state.cat;
         let pos=-1;
     
@@ -44,8 +59,8 @@ render(){
     var colors=["warning","danger","success","info","secondary"];
     var nameRegex=new RegExp(this.state.name, 'i');
     var authorRegex=new RegExp(this.state.author, 'i');
-    const list = this.props.books.map((book) => {
-        let category_matched=this.state.cat.some((category)=>(category===book.cat));
+    const list = this.props.books.map((book:any) => {
+        let category_matched=this.state.cat.some((category:any)=>(category===book.cat));
         if(((book.name).search(nameRegex)!==-1)&&((book.author).search(authorRegex)!==-1)&&category_matched)
         return (
             <ListGroupItem key={book._id}>
@@ -69,7 +84,7 @@ render(){
         return(
             <div className="container loading">
                 <div className="row">            
-                    <Loading />
+                    <CircularProgress />
                 </div>
             </div>
         );
@@ -93,19 +108,19 @@ render(){
         <div className="container loading">
         <div className="row">
             <div className="col-12 heading">
-             <h3 align="center">Search your book here : </h3>
+             <h3>Search your book here : </h3>
              <Form>
         <Row form>
           <Col md={6}>
             <FormGroup>
               <Label for="name">Name of book</Label>
-              <Input type="name" name="name" id="name" value={this.state.name} onChange={(e)=>{this.setState({name: e.target.value});}} placeholder="Enter name of the book" />
+              <Input name="name" id="name" value={this.state.name} onChange={(e)=>{this.setState({name: e.target.value});}} placeholder="Enter name of the book" />
             </FormGroup>
           </Col>
           <Col md={6}>
             <FormGroup>
               <Label for="author">Author</Label>
-              <Input type="author" name="author" id="author" value={this.state.author}  onChange={(e)=>{this.setState({author: e.target.value});}} placeholder="Enter name of author" />
+              <Input name="author" id="author" value={this.state.author}  onChange={(e)=>{this.setState({author: e.target.value});}} placeholder="Enter name of author" />
             </FormGroup>
           </Col>
         </Row> 

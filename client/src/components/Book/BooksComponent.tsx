@@ -1,22 +1,26 @@
 import React,{Component} from 'react';
 import { Table } from 'reactstrap';
 import {Link} from 'react-router-dom';
-import Loading from './LoadingComponent.js';
+
+import {CircularProgress} from "@mui/material"
 
 // RenderBook is a functional component
-function RenderBook ({book, changeSelected ,isAdmin, toggleDeleteModal,toggleEditModal,i}) {
+interface renderBook {
+    book:any,
+    toggleEditModal:Function,
+    isAdmin:Boolean,
+    toggleDeleteModal:Function,
+    changeSelected:Function,
+    i: number
+}
+
+function RenderBook ({book, changeSelected ,isAdmin, toggleDeleteModal,toggleEditModal,i}:renderBook) {
     return (
             <React.Fragment>
+            <td> {i} </td>
+            <td> <Link to={`/books/${book._id}`}> {book.name} </Link> </td>
             <td>
-            {i}
-            </td>
-            <td>
-            <Link to={`/books/${book._id}`}>
-            {book.name}
-            </Link>
-            </td>
-            <td>
-            {book.isbn}
+                {book.isbn}
             </td>
             <td>
                 {book.author}
@@ -31,23 +35,30 @@ function RenderBook ({book, changeSelected ,isAdmin, toggleDeleteModal,toggleEdi
        );
 }
 
+interface bookList {
+    books:any,
+    booksLoading:boolean,
+    isAdmin:Boolean,
+    booksErrMess:Function,
+    toggleEditModal:Function,
+    toggleDeleteModal:Function,
+    changeSelected:Function,
+    i: number
+}
 
-class Booklist extends Component {
-
-    constructor(props){
+class Booklist extends Component<bookList> {
+    i: number;
+    constructor(props:bookList){
         super(props);
         this.state={
         }
         this.i=1;
     }
-
-
     componentDidMount() {
         window.scrollTo(0, 0)
       }
-      
 render(){
-    const list = this.props.books.map((book) => {
+    const list = this.props.books.map((book:any) => {
         return (
                 <tr key={book.name}>
                     <RenderBook book={book} isAdmin={this.props.isAdmin} changeSelected={this.props.changeSelected}
@@ -58,12 +69,11 @@ render(){
                 </tr>
         );
     });
-
     if (this.props.booksLoading) {
         return(
             <div className="container">
                 <div className="row">            
-                    <Loading />
+                    <CircularProgress />
                 </div>
             </div>
         );
@@ -79,15 +89,11 @@ render(){
                 </div>
             </div>
         );
-    }
-    else
-    {
-    return(
-        
+    } else { return(    
         <div className="container">
         <div className="row">
             <div className="col-12 heading">
-             <h3 align="center">List of All books</h3>
+             <h3>List of All books</h3>
              <Table striped bordered hover responsive>
         <thead>
           <tr>
@@ -106,11 +112,8 @@ render(){
             </div>
         </div>
     </div>
-
         );
-}
-}
-
+    }}
 }
 
 export default Booklist;

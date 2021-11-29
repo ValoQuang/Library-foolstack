@@ -3,14 +3,10 @@ import {Navbar, Form, FormGroup, Label, Input, Nav, NavbarToggler,Collapse,NavIt
 import {Dropdown,DropdownItem,DropdownMenu,DropdownToggle} from 'reactstrap';
 import { NavLink,Link } from 'react-router-dom';
 import { Control, LocalForm, Errors  } from 'react-redux-form';
-
-const required = (val) => val && val.length;
-const maxLength = (len) => (val) => !(val) || (val.length <= len);
-const minLength = (len) => (val) => (val) && (val.length >= len);
-const validEmail = (val) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val);
+import { required, maxLength, minLength, validEmail} from "../Validator/index"
 
 
-  function Registerer(props){
+  function Registerer(props:any){
     if(props.isSignedIn===false)
     return (
       <React.Fragment>
@@ -26,12 +22,31 @@ const validEmail = (val) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val
     );
   }
 
-  
-class Header extends Component{
+interface header {
+    isNavOpen: boolean,
+    isModalOpen: boolean,
+    isRegisterOpen: boolean,
+    dropdownOpen: boolean,
+    auth:any,
+    registerUser: Function,
+    loginUser: Function,
+    logoutUser: Function,
+    username:string,
+    password:string,
+}
 
-    constructor(props){
+interface MyComponentState { isNavOpen: boolean,
+    isModalOpen: boolean,
+    isRegisterOpen: boolean,
+    dropdownOpen: boolean,
+}
+
+class Header extends Component<header,MyComponentState >{
+    username: any;
+    password: any;
+    constructor(props:header){
         super(props);
-        this.state={
+        this.state ={
          isNavOpen: false,
          isModalOpen: false,
          isRegisterOpen: false,
@@ -48,26 +63,25 @@ class Header extends Component{
     toggle(){
         this.setState({dropdownOpen: !this.state.dropdownOpen});
     }
+
     toggleNav(){
         if(window.innerWidth<1200){
         this.setState({
             isNavOpen: !this.state.isNavOpen
         });
-    }
-    }
+    }}
 
-    toggleRegister(event){
-      this.setState({
+    toggleRegister(event:any){
+        this.setState({
         isRegisterOpen: !this.state.isRegisterOpen
       });
-
     }
 
-    handleLogin(event) {
-      this.toggleModal();
-      this.props.loginUser({username: this.username.value, password: this.password.value});
-      event.preventDefault();
-  }
+    handleLogin(event:any) {
+        this.toggleModal();
+        this.props.loginUser({username: this.username.value, password: this.password.value});
+        event.preventDefault();
+    }
 
   handleLogout() {
       this.props.logoutUser();
@@ -89,7 +103,7 @@ class Header extends Component{
                      </NavbarBrand>
                      <Collapse isOpen={this.state.isNavOpen} navbar>
                      <Nav navbar>
-                        <NavItem className="ml-2" onClick={this.toggleNav}>
+                        <NavItem  onClick={this.toggleNav}>
                             <NavLink className="nav-link text-primary" to="/home">
                                <span className="fa fa-home fa-lg"/> Home
                            </NavLink>
@@ -101,7 +115,6 @@ class Header extends Component{
                             <div className="text-primary">
                                                     <span className="fa fa-book fa-lg"/> Books
                                                    &nbsp; <i className="fa fa-caret-down fa-sm" aria-hidden="true"></i>
-
                                                 </div>
                             </DropdownToggle>
                             <DropdownMenu>
@@ -117,9 +130,7 @@ class Header extends Component{
                                                     <span className="fa fa-book fa-lg"/> Books
                                                 </NavLink>
                               </NavItem>
-    
-                        )}
-                        
+                        )}  
                         <NavItem className="ml-2" onClick={this.toggleNav}>
                             <NavLink className="nav-link text-primary" to="/search">
                                 <span className="fa fa-search fa-lg"/> Search
@@ -190,9 +201,7 @@ class Header extends Component{
                                         </Button>
                                         </div>
                                     }
-
-
-                    <Registerer isSignedIn={this.props.auth.isAuthenticated} toggleRegister={()=>{this.toggleRegister()}}/>
+                    <Registerer isSignedIn={this.props.auth.isAuthenticated} toggleRegister={()=>{this.toggleRegister(true)}}/>
                      </NavItem>
                       </Nav>
                      </Collapse>
@@ -224,7 +233,7 @@ class Header extends Component{
                      </ModalHeader>
                      <ModalBody>
                      <LocalForm model="user" onSubmit={(values) => {
-                           this.toggleRegister();
+                           this.toggleRegister(true);
                             this.props.registerUser({
                               username: values.username,
                                password: values.password,
@@ -242,10 +251,10 @@ class Header extends Component{
                             </FormGroup>
                             <FormGroup>
                             <Label htmlFor="password">Password</Label>
-                                <Control.password model=".password" id="password" name="password" 
-                            className="form-control" placeholder="password" validators={{required,minLength: minLength(6),maxLength:maxLength(20)}} />
+                            <Control.text model=".password" id="password" name="password" 
+                                className="form-control" placeholder="password" validators={{required,minLength: minLength(6),maxLength:maxLength(20)}} />
                             <Errors className="text-danger" model=".password" show="touched" messages={{required: 'Required',
-                            minLength: ' Must be greater than 5 characters', maxLength:' Must be 20 characters or less'}}/>
+                                minLength: ' Must be greater than 5 characters', maxLength:' Must be 20 characters or less'}}/>
                             </FormGroup>
                             <FormGroup>
                                 <Label htmlFor="firstname">First Name</Label>
@@ -283,5 +292,4 @@ class Header extends Component{
         );
     }
 }
-
 export default Header;

@@ -1,35 +1,38 @@
 import React,{Component} from 'react';
 import { Table } from 'reactstrap';
 import {Link} from 'react-router-dom';
-import Loading from './LoadingComponent.js';
+import { CircularProgress } from '@mui/material';
 
-function RenderUser ({user,i}) {
+interface userProp {
+    users:any,
+    editPassword:any,
+    usersLoading:boolean,
+    usersErrMess:any,
+    errMess:any,
+}
+interface userState {
+    
+}
+
+function RenderUser ({user,i}:any) {
     return (
             <React.Fragment>
+            <td>{i}</td>
             <td>
-            {i}
+                <Link to={`/users/${user._id}`}>
+                {user.firstname+' '+ user.lastname}
+                </Link>
             </td>
-            <td>
-            <Link to={`/users/${user._id}`}>
-            {user.firstname+' '+ user.lastname}
-            </Link>
-            </td>
-            <td>
-            {user.roll}
-            </td>
-            <td>
-            {user.username}
-            </td>
-            <td>
-            {user.email}
-            </td>
+            <td> {user.roll} </td>
+            <td> {user.username} </td>
+            <td> {user.email} </td>
             </React.Fragment>
        );
 }
 
-class UserList extends Component {
-
-    constructor(props){
+class UserList extends Component<userProp,userState> {
+    i: number;
+    constructor(props:userProp){
         super(props);
         this.state={
          }
@@ -38,14 +41,12 @@ class UserList extends Component {
     componentDidMount() {
         window.scrollTo(0, 0)
       }
-
 render(){
-
     if (this.props.usersLoading) {
         return(
             <div className="container">
                 <div className="row">            
-                    <Loading />
+                    <CircularProgress />
                 </div>
             </div>
         );
@@ -60,8 +61,7 @@ render(){
                     </div>
                 </div>
             </div>
-        );
-    }
+        );}
     else if(this.props.users.length===0){
         return (
             <div className="container loading">
@@ -75,18 +75,13 @@ render(){
         );
     }
     else {
-        const list = this.props.users.map((user) => {
+        const list = this.props.users.map((user:any) => {
             return (
                     <tr key={user._id}>
-                        <RenderUser user={user} 
-                                     i={this.i++}
-                        />
-                    </tr>
+                        <RenderUser user={user} i={this.i++}/></tr>
             );
         });
-    
         return(
-
         <div className="container mt-6 text-center align-self-center full">
             <div className="row text-center justify-content-center">
             <div className="col-12 heading">

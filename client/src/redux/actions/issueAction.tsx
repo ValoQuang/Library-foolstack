@@ -1,18 +1,19 @@
 import * as ActionTypes from './ActionTypes';
 import {baseUrl} from '../../baseUrl'
+import { returnBookdispatch } from './bookAction';
 
-export const addIssue = (issue) => ({
+export const addIssue = (issue:any) => ({
     type: ActionTypes.ADD_ISSUE,
     payload: issue
   });
   
-  export const postIssue = (bookId,studentId) => (dispatch) => {
+  export const postIssue = (bookId:string,studentId:string) => async (dispatch:Function) => {
       const newIssue = {
       book: bookId,
       student: studentId 
       };
       const bearer = 'Bearer ' + localStorage.getItem('token');
-      return fetch(baseUrl + 'issues', {
+      return await fetch(baseUrl + 'issues', {
           method: "POST",
           body: JSON.stringify(newIssue),
           headers: {
@@ -25,7 +26,7 @@ export const addIssue = (issue) => ({
           if (response.ok) {
             return response;
           } else {
-            var error = new Error('Error ' + response.status + ': ' + response.statusText);
+            var error:any = new Error('Error ' + response.status + ': ' + response.statusText);
             error.response = response;
             throw error;
           }
@@ -42,7 +43,7 @@ export const addIssue = (issue) => ({
         'or the book may not available. You can wait for some days, until the book is returned to library.'); });
   };
   
-  export const returnIssue = (issueId) => (dispatch) => {
+  export const returnIssue = (issueId:string) => async (dispatch:Function) => {
     const bearer = 'Bearer ' + localStorage.getItem('token');
     return fetch(baseUrl + 'issues/' + issueId, {
         method: "PUT"
@@ -55,7 +56,7 @@ export const addIssue = (issue) => ({
         if (response.ok) {
           return response;
         } else {
-          var error = new Error('Error ' + response.status + ': ' + response.statusText);
+          var error:any = new Error('Error ' + response.status + ': ' + response.statusText);
           error.response = response;
           throw error;
         }
@@ -71,16 +72,16 @@ export const addIssue = (issue) => ({
     alert('The book could not be returned\nError: '+error.message); });
   };
   
-  export const fetchIssues = (student) => (dispatch) => {
-    let issueUrl;
-    const bearer = 'Bearer ' + localStorage.getItem('token');
-    if(student) {
-      issueUrl='issues/student';
+  export const fetchIssues = (student:any) => async (dispatch:Function) => {
+    let issueUrl:string;
+     const bearer =  'Bearer ' + localStorage.getItem('token');
+     if(student) {
+       issueUrl= 'issues/student';
     }
     else {
       issueUrl='issues';
     }
-    dispatch(issuesLoading(true));
+    await dispatch(issuesLoading());
     return fetch(baseUrl+issueUrl,{
        headers: {
           'Authorization': bearer
@@ -90,7 +91,7 @@ export const addIssue = (issue) => ({
         if (response.ok) {
           return response;
         } else {
-          var error = new Error('Error ' + response.status + ': ' + response.statusText);
+          var error:any = new Error('Error ' + response.status + ': ' + response.statusText);
           error.response = response;
           throw error;
         }
@@ -110,17 +111,24 @@ export const addIssue = (issue) => ({
     type: ActionTypes.ISSUES_LOADING
   });
   
-  export const issuesFailed = (errmess) => ({
+  export const issuesFailed = (errmess:any) => ({
     type: ActionTypes.ISSUES_FAILED,
     payload: errmess
   });
   
-  export const addIssues = (issues) => ({
+  export const addIssues = (issues:any) => ({
     type: ActionTypes.ADD_ISSUES,
     payload: issues
   });
+
+  export const requestLogout = () => {
+    return {
+      type: ActionTypes.LOGOUT_REQUEST
+    }
+  }
   
-  export const usersFailed = (errmess) => ({
-    type: ActionTypes.USERS_FAILED,
-    payload: errmess
-  });
+  export const receiveLogout = () => {
+    return {
+      type: ActionTypes.LOGOUT_SUCCESS
+    }
+  }

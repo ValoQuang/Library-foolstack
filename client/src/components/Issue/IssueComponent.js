@@ -1,6 +1,6 @@
+import { CircularProgress } from '@mui/material';
 import React,{Component} from 'react';
 import { Button, Form, FormGroup, Label, Input, Col,Row } from 'reactstrap';
-import Loading from './LoadingComponent';
 
 
 class Issue extends Component {
@@ -22,7 +22,7 @@ render(){
         return(
             <div className="container">
                 <div className="row">            
-                    <Loading />
+                    <CircularProgress />
                 </div>
             </div>
         );

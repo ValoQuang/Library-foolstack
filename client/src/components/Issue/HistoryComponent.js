@@ -1,12 +1,12 @@
 import React,{Component} from 'react';
-import { Table,Button } from 'reactstrap';
+import { Table } from 'reactstrap';
 import {Link} from 'react-router-dom';
-import Loading from './LoadingComponent.js';
+import { CircularProgress } from '@mui/material';
 
 const fineRate=1;
 let totalFine=0;
 const allowedDays=30;
-function RenderIssue ({issue,i,returnBook}) {
+function RenderIssue ({issue,i}) {
     const dates=[];
     const today= new Date();
     dates.push(today);
@@ -27,20 +27,12 @@ function RenderIssue ({issue,i,returnBook}) {
             {i}
             </td>
             <td>
-        <Link to={`/users/${issue.student._id}`}>
-        {issue.student.firstname+' '+issue.student.lastname}
+            <Link to={`/books/${issue.book._id}`}>
+            {issue.book.name}
             </Link>
             </td>
             <td>
-            {issue.student.roll}
-            </td>
-            <td>
-                {issue.book==null ? "N/A":<Link to={`/books/${issue.book._id}`}>
-            {issue.book.name}
-            </Link>}
-            </td>
-            <td>
-            {issue.book==null ? "N/A":issue.book.isbn}     
+            {issue.book.isbn}
             </td>
             <td>
                 {new Intl.DateTimeFormat('en-US',{year: 'numeric', month: 'short', day: '2-digit'}).format(new Date( Date.parse(issue.createdAt)))}
@@ -50,19 +42,20 @@ function RenderIssue ({issue,i,returnBook}) {
             </td>
             <td>
                 {
-                    fine
+        issue.returned?('Returned on '+(new Intl.DateTimeFormat('en-US',{year: 'numeric', month: 'short', day: '2-digit'}).format(new Date( Date.parse(returnDate)))))                    
+               :('Not returned yet')
                 }
             </td>
             <td>
-            <Button color="info" onClick={()=>{
-               returnBook(issue._id); 
-            }}>Return</Button>
-            </td>         
+                {
+                    fine
+                }
+            </td>
             </React.Fragment>
        );
 }
 
-class Return extends Component {
+class History extends Component {
 
     constructor(props){
         super(props);
@@ -70,18 +63,17 @@ class Return extends Component {
          }
         this.i=1; 
     }
-
     componentDidMount() {
         window.scrollTo(0, 0)
       }
 
 render(){
-    console.log(this.props.issues);
+
     if (this.props.issues.isLoading) {
         return(
             <div className="container">
                 <div className="row">            
-                    <Loading />
+                    <CircularProgress />
                 </div>
             </div>
         );
@@ -104,20 +96,19 @@ render(){
                 <div className="row heading"> 
                     <div className="col-12 text-center">
                         <br/><br/><br/><br/>
-                        <h4>{'All books have been returned.'}</h4> 
+                        <h4>{'You have not issued any books.'}</h4> 
+                        <h4>{'Request admin to issue a book'}</h4>
                     </div>
                 </div>
             </div>
         );
     }
     else {
-        const dueIssues = this.props.issues.issues.filter((issue)=>(!issue.returned));
-        const list = dueIssues.map((issue) => {
+        const list = this.props.issues.issues.map((issue) => {
             return (
                     <tr key={issue._id}>
                         <RenderIssue issue={issue} 
                                      i={this.i++}
-                                     returnBook={this.props.returnIssue}
                         />
                     </tr>
             );
@@ -128,19 +119,17 @@ render(){
         <div className="container mt-6 text-center align-self-center full">
             <div className="row text-center justify-content-center">
             <div className="col-12 heading">
-                <h3>List of books not returned</h3>
+                <h3>Issue History</h3>
                 <Table striped bordered hover responsive>
         <thead>
            <tr>
             <th>S.No.</th>
-            <th>Name of Student</th>
-            <th>Roll No.</th>
             <th>Name of Book</th>
             <th>ISBN number</th>
             <th>Issue Date</th>
             <th>Return Deadline</th>
-            <th>Fine (in Rs.)</th>
-            <th>Return book</th> 
+            <th>Return status</th> 
+            <th>Fine (in Rs.)</th> 
            </tr>
         </thead>
         <tbody>
@@ -159,4 +148,4 @@ render(){
 
 }
 
-export default Return;
+export default History;

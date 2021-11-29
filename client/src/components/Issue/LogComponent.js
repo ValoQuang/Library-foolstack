@@ -1,10 +1,11 @@
 import React,{Component} from 'react';
 import { Table } from 'reactstrap';
 import {Link} from 'react-router-dom';
-import Loading from './LoadingComponent.js';
+import { CircularProgress } from '@mui/material';
+
 
 const fineRate=1;
-let totalFine=0;
+
 const allowedDays=30;
 function RenderIssue ({issue,i}) {
     const dates=[];
@@ -20,19 +21,26 @@ function RenderIssue ({issue,i}) {
       {
         fine=Math.floor((returnDate.getTime()-issueDate.getTime())/(1000 * 60 * 60 * 24))*fineRate;
       }
-   totalFine+=fine;
     return (
             <React.Fragment>
             <td>
             {i}
             </td>
             <td>
-            <Link to={`/books/${issue.book._id}`}>
-            {issue.book.name}
+            <Link to={`/users/${issue.student._id}`}>
+            {issue.student.firstname+' '+issue.student.lastname}
             </Link>
             </td>
             <td>
-            {issue.book.isbn}
+            {issue.student.roll}
+            </td>
+            <td>
+            {issue.book==null ? "N/A":<Link to={`/books/${issue.book._id}`}>
+            {issue.book.name}
+            </Link>}
+            </td>
+            <td>
+            {issue.book==null ? "N/A":issue.book.isbn}
             </td>
             <td>
                 {new Intl.DateTimeFormat('en-US',{year: 'numeric', month: 'short', day: '2-digit'}).format(new Date( Date.parse(issue.createdAt)))}
@@ -55,7 +63,7 @@ function RenderIssue ({issue,i}) {
        );
 }
 
-class History extends Component {
+class Log extends Component {
 
     constructor(props){
         super(props);
@@ -73,7 +81,7 @@ render(){
         return(
             <div className="container">
                 <div className="row">            
-                    <Loading />
+                    <CircularProgress />
                 </div>
             </div>
         );
@@ -119,11 +127,13 @@ render(){
         <div className="container mt-6 text-center align-self-center full">
             <div className="row text-center justify-content-center">
             <div className="col-12 heading">
-                <h3>Issue History</h3>
+                <h3>Issue Log</h3>
                 <Table striped bordered hover responsive>
         <thead>
            <tr>
             <th>S.No.</th>
+            <th>Name of Student</th>
+            <th>Roll No.</th>
             <th>Name of Book</th>
             <th>ISBN number</th>
             <th>Issue Date</th>
@@ -137,7 +147,7 @@ render(){
         </tbody>
         </Table>
             <br/>
-            <h6> Total Fine due (if all pending books are returned today) : Rs. {totalFine} </h6>
+           
             <br/>
             </div>
             </div>
@@ -148,4 +158,4 @@ render(){
 
 }
 
-export default History;
+export default Log;

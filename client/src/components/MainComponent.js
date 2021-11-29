@@ -1,34 +1,31 @@
 import React, {Component} from 'react';
-import Header from './HeaderComponent.js';
-import Footer from './FooterComponent.js';
-import Home from './HomeComponent.js';
-import Booklist from './BooksComponent.js';
-import Search from './SearchComponent.js';
-import BookDetail from './BookDetailComponent.js';
-import Profile from './ProfileComponent.js';
-import AddBook from './AddBookComponent.js';
-import History from './HistoryComponent.js';
-import Issue from './IssueComponent.js';
-import Return from './ReturnComponent.js';
-import UserDetail from './UserDetailComponent.js';
-import Stats from './StatsComponent.js';
-import Log from './LogComponent.js';
-import UserList from './UserListComponent.js';
+import Header from './HeaderFooter/HeaderComponent';
+import Footer from './HeaderFooter/FooterComponent';
+import Home from './Issue/HomeComponent';
+import Booklist from './Book/BooksComponent';
+import Search from './Search/SearchComponent';
+import BookDetail from './Book/BookDetailComponent';
+import Profile from './Users/ProfileComponent';
+import AddBook from './Book/AddBookComponent';
+import History from './Issue/HistoryComponent.js';
+import Issue from './Issue/IssueComponent.js';
+import Return from './Issue/ReturnComponent.js';
+import UserDetail from './Users/UserDetailComponent';
+import Stats from './Issue/StatsComponent.js';
+import Log from './Issue/LogComponent.js';
+import UserList from './Users/UserListComponent';
 
+import {required,requiredNum, maxLength, minLength, maxVal, minVal, isNumber} from "./Validator/index"
 import {Switch,Route,Redirect, withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {Modal,ModalBody,ModalHeader,Button, Label, Col, Row} from 'reactstrap';
-import { postBook, fetchBooks, editBook, deleteBook,loginUser, logoutUser, 
-  registerUser, editUser, editPassword, postIssue, returnIssue, fetchIssues, fetchUsers} from '../redux/actions/ActionCreators';
+import { postBook, fetchBooks, editBook, deleteBook} from '../redux/actions/bookAction';
+
+import {loginUser, logoutUser, 
+  registerUser, editUser, editPassword,fetchUsers } from '../redux/actions/userAction';
+import { returnIssue, fetchIssues, postIssue } from '../redux/actions/issueAction';
 import { Control, LocalForm, Errors  } from 'react-redux-form';
 
-const required = (val) => val && val.length;
-const requiredNum = (val) => !!(val);
-const maxLength = (len) => (val) => !(val) || (val.length <= len);
-const minLength = (len) => (val) => (val) && (val.length >= len);
-const maxVal = (len) => (val) => !(val) || (val<= len);
-const minVal = (len) => (val) => (val) && (val>= len);
-const isNumber = (val) => !isNaN(Number(val));
 
 const mapStateToProps= (state)=>{
   return{
@@ -56,7 +53,6 @@ const mapDispatchToProps = dispatch => ({
 });
 
 class Main extends Component {
-  
   componentDidMount() {
     this.props.fetchBooks();
     if(this.props.auth.isAuthenticated){

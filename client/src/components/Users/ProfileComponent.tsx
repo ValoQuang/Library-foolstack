@@ -1,16 +1,23 @@
 import React,{Component} from 'react';
 import {Card,CardBody,CardHeader,Label,CardText,Button,Modal,ModalBody,ModalHeader,FormGroup} from 'reactstrap';
 import { Control, LocalForm, Errors } from 'react-redux-form';
+import {required,maxLength,minLength,validEmail,matchcreds} from "../Validator/index"
 
-const required = (val) => val && val.length;
-const maxLength = (len) => (val) => !(val) || (val.length <= len);
-const minLength = (len) => (val) => (val) && (val.length >= len);
-const validEmail = (val) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val);
-const matchcreds = (original) => (val) =>  (val===original);
+interface profileProp {
+    auth:any,
+    editPassword:any,
+    isLoading:boolean,
+    errMess:any,
+    user:any,
+    editUser:Function
+}
+interface profileState {
+    isPasswordModalOpen:boolean,
+    isEditModalOpen:boolean,
+}
 
-class Profile extends Component {
-
-    constructor(props){
+class Profile extends Component<profileProp, profileState> {
+    constructor(props:profileProp){
         super(props);
         this.state={
             isEditModalOpen: false,
@@ -33,36 +40,31 @@ class Profile extends Component {
     toggleEditModal(){
             this.setState({isEditModalOpen: !this.state.isEditModalOpen});
           }
-      
-
 render(){
     if(this.props.auth.userinfo===null){
         return (
             <div className="row heading">
                 Failed to fetch. Please reload the page
             </div>
-        )
-    }
+    )}
     return(
-
         <div className="container mt-6 home text-center align-self-center">
-            <div className="row text-center justify-content-center">
-            
-            <Card className="heading">
-                
+        <div className="row text-center justify-content-center">
+        <Card className="heading">        
         <CardHeader><h3>My Profile</h3></CardHeader>
         <CardBody>
           <CardText>
           <h5> First Name : {'          '+this.props.auth.userinfo.firstname}</h5>
           <h5> Last Name : {'          '+this.props.auth.userinfo.lastname}</h5>
-          <h5> {(this.props.auth.userinfo.admin)?'Admin Id : ':'Roll No.'} : {'          '+this.props.auth.userinfo.roll}</h5>
+          <h5> {(this.props.auth.userinfo.admin)? 'Admin Id : ':'Roll No.'} : {'          '+this.props.auth.userinfo.roll}</h5>
           <h5> Email : {'          '+this.props.auth.userinfo.email}</h5>
           </CardText>
-          
           <Button color="info" onClick={this.toggleEditModal}>Edit &nbsp;{'   '}<span className="fa fa-pencil"/></Button>
         {' '}
-{this.props.auth.userinfo.admin?<div/>:        <Button color="info" onClick={this.togglePasswordModal}>Change Password &nbsp;{'   '}<span className="fa fa-key"/></Button>}
-
+        {this.props.auth.userinfo.admin?<div/>:       
+        <Button color="info" onClick={this.togglePasswordModal}>
+            Change Password &nbsp;{'   '}<span className="fa fa-key"/>
+        </Button>}
         </CardBody>
           </Card>
             </div>
@@ -112,9 +114,7 @@ render(){
                             <Button type="submit" value="submit" color="primary" >Submit</Button>
                         </LocalForm>
                      </ModalBody>
-               
           </Modal>
-
           <Modal isOpen={this.state.isPasswordModalOpen} toggle={this.togglePasswordModal}>
                      <ModalHeader toggle={this.togglePasswordModal}>
                          Change Password
@@ -132,7 +132,7 @@ render(){
                                  }}>
                             <FormGroup>
                             <Label htmlFor="password">Current Password</Label>
-                                <Control.password model=".password" id="password" name="password" 
+                                <Control.text model=".password" id="password" name="password" 
                             className="form-control" placeholder="password" validators={{required,minLength: minLength(6),maxLength:maxLength(20),
                             matchcreds: matchcreds(this.props.auth.user.password)}} />
                             <Errors className="text-danger" model=".password" show="touched" messages={{required: 'Required',
@@ -142,17 +142,16 @@ render(){
 
                             <FormGroup>
                             <Label htmlFor="newpassword">New password</Label>
-                                <Control.password model=".newpassword" id="newpassword" name="newpassword" 
+                                <Control.text model=".newpassword" id="newpassword" name="newpassword" 
                             className="form-control" placeholder="New Password" validators={{required,minLength: minLength(6),maxLength:maxLength(20)
                             }}  />
                             <Errors className="text-danger" model=".newpassword" show="touched" messages={{required: 'Required',
                             minLength: ' Must be greater than 5 characters', maxLength:' Must be 20 characters or less'
                       }}/>
                             </FormGroup>
-                            
                             <FormGroup>
                             <Label htmlFor="confirm">Confirm Password</Label>
-                                <Control.password model=".confirm" id="confirm" name="confirm" 
+                                <Control.text model=".confirm" id="confirm" name="confirm" 
                             className="form-control"
                             placeholder="Re-enter the new password" validators={{required,minLength: minLength(6),maxLength:maxLength(20)
                                  } } />
@@ -167,8 +166,6 @@ render(){
           </Modal>
             </div>
         );
-}
-
-}
+}}
 
 export default Profile;

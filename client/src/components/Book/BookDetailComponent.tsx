@@ -1,11 +1,20 @@
-import React,{Component} from 'react';
+import React, {Component} from 'react'
 import {Row,Col, Card, CardText, CardHeader, CardFooter, CardBody,CardTitle } from 'reactstrap';
-import Loading from './LoadingComponent';
-function RenderBook({book,isAdmin,toggleEditModal,changeSelected}) {
+
+import { CircularProgress } from '@mui/material'
+
+interface renderBook {
+    isLoading:boolean,
+    errMess:any,
+    book:any,
+    isAdmin:boolean,
+    toggleEditModal:Function,
+    changeSelected:Function
+}
+function RenderBook({book,isAdmin,toggleEditModal,changeSelected}:renderBook) {
     if (book != null)
         return(
         <Card>
-       
        <CardHeader tag="h3">{book.name} &nbsp; &nbsp; &nbsp;&nbsp;
        {isAdmin?(<span className="fa fa-pencil Option" onClick={()=>{changeSelected(book._id);toggleEditModal();}}/>):(<React.Fragment/>)}
         </CardHeader>
@@ -40,9 +49,8 @@ function RenderBook({book,isAdmin,toggleEditModal,changeSelected}) {
         }
 
 
-class BookDetail extends Component {
-
-    constructor(props){
+class BookDetail extends Component<renderBook> {
+    constructor(props:renderBook){
         super(props);
         this.state={
         }
@@ -55,7 +63,7 @@ render(){
     return(
         <div className="container">
             <div className="row">            
-                <Loading />
+                <CircularProgress/>
             </div>
         </div>
     );
@@ -72,25 +80,19 @@ else if (this.props.errMess) {
         </div>
     );
 }
-else
-    return(
-
+else return(
         <div className="container full">
         <div className="row heading">
           <div className="col-12">
           <br/>        <br/>
-          <RenderBook book={this.props.book} isAdmin={this.props.isAdmin}
-                    toggleEditModal={this.props.toggleEditModal}
-                    changeSelected={this.props.changeSelected}>
-              </RenderBook>
-
+            <RenderBook book={this.props.book} isAdmin={this.props.isAdmin}
+                  toggleEditModal={this.props.toggleEditModal}
+                  changeSelected={this.props.changeSelected} isLoading={false} errMess={undefined}/>
         <br/>
           </div>
         </div>
       </div>
         );
 }
-
 }
-
 export default BookDetail;
