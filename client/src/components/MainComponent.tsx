@@ -20,14 +20,12 @@ import {Switch,Route,Redirect, withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {Modal,ModalBody,ModalHeader,Button, Label, Col, Row} from 'reactstrap';
 import { postBook, fetchBooks, editBook, deleteBook} from '../redux/actions/bookAction';
-
-import {loginUser, logoutUser, 
-  registerUser, editUser, editPassword,fetchUsers } from '../redux/actions/userAction';
+import {loginUser, logoutUser, registerUser, editUser, editPassword,fetchUsers } from '../redux/actions/userAction';
 import { returnIssue, fetchIssues, postIssue } from '../redux/actions/issueAction';
 import { Control, LocalForm, Errors  } from 'react-redux-form';
 
 
-const mapStateToProps= (state)=>{
+const mapStateToProps= (state: { books: any; auth: any; issues: any; users: any; })=>{
   return{
     books: state.books,
     auth: state.auth,
@@ -36,23 +34,46 @@ const mapStateToProps= (state)=>{
   };
 }
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch: (arg0: { (dispatch: Function): Promise<any>; (dispatch: Function): Promise<any>; (dispatch: Function): Promise<any>; (dispatch: Function): Promise<any>; (dispatch: Function): Promise<any>; (dispatch: Function): Promise<any>; (dispatch: Function): Promise<any>; (dispatch: Function): void; (dispatch: Function): Promise<void>; (dispatch: Function): Promise<any>; (dispatch: Function): Promise<any>; (dispatch: Function): Promise<any>; (dispatch: Function): Promise<any>; }) => void) => ({
   fetchBooks: () => { dispatch(fetchBooks())},
-  fetchIssues: (student) =>{ dispatch(fetchIssues(student))},
+  fetchIssues: (student: any) =>{ dispatch(fetchIssues(student))},
   fetchUsers: () => { dispatch(fetchUsers())},
-  postBook: (name, author, description, isbn, cat, floor, shelf, copies) => dispatch(postBook(name, author, description, isbn, cat, floor, shelf, copies)),
-  editBook: (_id, name, author, description, isbn, cat, floor, shelf, copies) => dispatch(editBook(_id, name, author, description, isbn, cat, floor, shelf, copies)),
-  deleteBook: (_id) =>  dispatch(deleteBook(_id)),
-  loginUser: (creds) => dispatch(loginUser(creds)),
-  logoutUser: () => dispatch(logoutUser()),
-  registerUser: (creds) => dispatch(registerUser(creds)),
-  editUser: (_id, firstname, lastname, roll, email) => dispatch(editUser(_id, firstname, lastname, roll, email)),
-  editPassword : (_id,username,password) => dispatch(editPassword(_id,username,password)),
-  postIssue: (bookId,studentId) => (dispatch(postIssue(bookId,studentId))),
-  returnIssue: (issueId) => (dispatch(returnIssue(issueId)))
+  postBook: (name:string, author:string, description:string, isbn:number, cat:string, floor:number, shelf:number, copies:number) => dispatch(postBook(name, author, description, isbn, cat, floor, shelf, copies)),
+  editBook: (_id: string, name: string, author: string, description: string, isbn: number, cat: string, floor: number, shelf: number, copies: number) => dispatch(editBook(_id, name, author, description, isbn, cat, floor, shelf, copies)),
+  deleteBook: (_id:string) =>  dispatch(deleteBook(_id)),
+  loginUser: (creds: any) => dispatch(loginUser(creds)),
+  //logoutUser: () => dispatch(logoutUser()),
+  registerUser: (creds: any) => dispatch(registerUser(creds)),
+  editUser: (_id:string, firstname:string, lastname:string, roll:number, email:string) => dispatch(editUser(_id, firstname, lastname, roll, email)),
+  editPassword : (_id:string,username:string,password:string) => dispatch(editPassword(_id,username,password)),
+  postIssue: (bookId: string,studentId: string) => (dispatch(postIssue(bookId,studentId))),
+  returnIssue: (issueId: string) => (dispatch(returnIssue(issueId)))
 });
 
-class Main extends Component {
+interface mainProp {
+  fetchBooks: Function,
+  auth:any
+  fetchIssues:Function,
+  fetchUsers:Function,
+  editBook:Function,
+  books:any,
+  users:any,
+  loginUser:Function,
+  logoutUser:Function,
+  registerUser:Function,
+  isSignedIn:any,
+  location:any,
+  editUser:Function,
+  editPassword:Function,
+
+}
+interface mainState {
+  isDeleteModalOpen: boolean,
+  isEditModalOpen: boolean,
+  selectedBook: any
+}
+
+class Main extends Component<mainProp,mainState> {
   componentDidMount() {
     this.props.fetchBooks();
     if(this.props.auth.isAuthenticated){
@@ -62,7 +83,7 @@ class Main extends Component {
       this.props.fetchUsers();
     }
   }
-    constructor(props){
+    constructor(props:mainProp){
         super(props);
         this.state={
           isDeleteModalOpen: false,
@@ -75,14 +96,14 @@ class Main extends Component {
         this.handleSubmitEdit = this.handleSubmitEdit.bind(this);
       }
     
-      handleSubmitEdit(values) {
+      handleSubmitEdit(values: { name: any; author: any; description: any; isbn: any; cat: any; floor: any; shelf: any; copies: any; }) {
         this.toggleEditModal();
         this.props.editBook(this.state.selectedBook._id, values.name, values.author,
           values.description, values.isbn, values.cat, values.floor, values.shelf, values.copies);     
         }
     
-    changeSelected(_id){
-      this.setState({selectedBook:this.props.books.books.filter((book)=>(book._id===_id))[0]});
+    changeSelected(_id:string){
+      this.setState({selectedBook:this.props.books.books.filter((book: { _id: string; })=>(book._id===_id))[0]});
     }
 
     toggleDeleteModal(){
@@ -94,8 +115,8 @@ class Main extends Component {
     }
 
     render(){
-      const BookWithId = ({match}) => {
-      let selectedBook=this.props.books.books.filter((book) => (book._id)===(match.params.bookId))[0]
+      const BookWithId = ({match}:any) => {
+      let selectedBook=this.props.books.books.filter((book: { _id: any; }) => (book._id)===(match.params.bookId))[0]
       let notFoundErr=null;
       if(selectedBook===undefined){
       notFoundErr=("\n\n Error 404 :  Book not found");
@@ -111,21 +132,20 @@ class Main extends Component {
           );
       };
     
-      const UserWithId = ({match}) => {
-        let selectedUser=this.props.users.users.filter((user) => ((user._id)===(match.params.userId)))[0];
+      const UserWithId = ({match}:any) => {
+        let selectedUser=this.props.users.users.filter((user: { _id: any; }) => ((user._id)===(match.params.userId)))[0];
         let notFoundErr=null;
         if(selectedUser===undefined){
         notFoundErr=("\n\n Error 404 :  User not found");
         }  
         return(
             <UserDetail user={selectedUser}
-            isLoading={this.props.users.isLoading}
-            errMess={this.props.users.errMess||notFoundErr}
-            />
+          isLoading={this.props.users.isLoading}
+          errMess={this.props.users.errMess || notFoundErr} auth={undefined} editPassword={undefined}             />
             );
         };
    
-      const PrivateRouteCommon = ({ component: Component, ...rest }) => (
+      const PrivateRouteCommon = ({ component: Component, ...rest }:any) => (
         <Route {...rest} render={(props) => (
           this.props.auth.isAuthenticated
             ? <Component {...props} />
@@ -136,7 +156,7 @@ class Main extends Component {
         )} />
       );
 
-      const PrivateRouteAdmin = ({ component: Component, ...rest }) => (
+      const PrivateRouteAdmin = ({ component: Component, ...rest }:any) => (
         <Route {...rest} render={(props) => (
           this.props.auth.isAuthenticated&&this.props.auth.userinfo.admin
             ? <Component {...props} />
@@ -147,7 +167,7 @@ class Main extends Component {
         )} />
       );
 
-      const PrivateRoute = ({ component: Component, ...rest }) => (
+      const PrivateRoute = ({ component: Component, ...rest }:any) => (
         <Route {...rest} render={(props) => (
           this.props.auth.isAuthenticated&&!this.props.auth.userinfo.admin
             ? <Component {...props} />
@@ -158,16 +178,15 @@ class Main extends Component {
         )} />
       );
 
-      let uniqueIsbn= (defaultIsbn)=> (val) =>(!this.props.books.books.some((book)=>(book.isbn===val))||(val===defaultIsbn))
-      let uniqueName= (defaultName)=>(val) =>(!this.props.books.books.some((book)=>(book.name===val))||(val===defaultName))
+      let uniqueIsbn= (defaultIsbn: any)=> (val:any) =>(!this.props.books.books.some((book: { isbn: any; })=>(book.isbn===val))||(val===defaultIsbn))
+      let uniqueName= (defaultName:any)=>(val: any) =>(!this.props.books.books.some((book: { name: any; })=>(book.name===val))||(val===defaultName))
 
     return ( 
           <div className="App">
-          <Header auth={this.props.auth} 
-          loginUser={this.props.loginUser} 
-          logoutUser={this.props.logoutUser}
-          registerUser={this.props.registerUser}
-          />
+          <Header auth={this.props.auth}
+        loginUser={this.props.loginUser}
+        logoutUser={this.props.logoutUser}
+        registerUser={this.props.registerUser} isNavOpen={false} isModalOpen={false} isRegisterOpen={false} dropdownOpen={false} username={''} password={''}/>
           <Switch location={this.props.location}>
                       <Route exact path='/home' component={() => <Home />} />
                       <Route exact path='/search' component={() => <Search 
@@ -194,9 +213,9 @@ class Main extends Component {
                       changeSelected={this.changeSelected}/>}/>
                       <Route path='/books/:bookId' component={BookWithId} />
                       <PrivateRouteCommon exact path='/profile' component={() => <Profile
-                      auth={this.props.auth}
-                      editUser={this.props.editUser} 
-                      editPassword={this.props.editPassword}/>
+            auth={this.props.auth}
+            editUser={this.props.editUser}
+            editPassword={this.props.editPassword} isLoading={undefined} errMess={undefined} user={undefined}/>
                       }
                       />
                        <PrivateRouteAdmin exact path='/add_book' component={() => <AddBook
@@ -208,8 +227,8 @@ class Main extends Component {
                       />
                       }/>
                       <PrivateRoute exact path='/profile' component={() => <Profile
-                      auth={this.props.auth}
-                      editUser={this.props.editUser} />}
+            auth={this.props.auth}
+            editUser={this.props.editUser} editPassword={undefined} isLoading={undefined} errMess={undefined} user={undefined} />}
                       />
                        <PrivateRoute exact path='/history' component={() => <History
                       issues={this.props.issues}
@@ -217,20 +236,17 @@ class Main extends Component {
                      />}
                       />
                        <PrivateRouteAdmin exact path='/logs' component={() => <Log
-                      issues={this.props.issues}
-                     />}
+            issues={this.props.issues} errMess={undefined}                     />}
                       />
                          <PrivateRouteAdmin exact path='/list_students' component={() => <UserList
-                      users={this.props.users.users.filter((user)=>(!user.admin))}
-                      usersLoading={this.props.users.isLoading}
-                      usersErrMess={this.props.users.errMess}
-                     />}
+            users={this.props.users.users.filter((user) => (!user.admin))}
+            usersLoading={this.props.users.isLoading}
+            usersErrMess={this.props.users.errMess} editPassword={undefined} errMess={undefined}                     />}
                       />
                          <PrivateRouteAdmin exact path='/list_admins' component={() => <UserList
-                      users={this.props.users.users.filter((user)=>(user.admin))}
-                      usersLoading={this.props.users.isLoading}
-                      usersErrMess={this.props.users.errMess}
-                     />}
+            users={this.props.users.users.filter((user) => (user.admin))}
+            usersLoading={this.props.users.isLoading}
+            usersErrMess={this.props.users.errMess} editPassword={undefined} errMess={undefined}                     />}
                       />
                        <PrivateRouteAdmin exact path='/issue' component={() => <Issue
                       auth={this.props.auth}
@@ -249,14 +265,13 @@ class Main extends Component {
                      />} />
                       <PrivateRouteAdmin path='/users/:userId' component={UserWithId}/>
                       <PrivateRouteAdmin path='/stats' component={() => <Stats
-                      issues={this.props.issues}
-                      books={this.props.books.books}
-                      booksLoading={this.props.books.isLoading}
-                      booksErrMess={this.props.books.errMess}
-                      users={this.props.users.users}
-                      usersLoading={this.props.users.isLoading}
-                      usersErrMess={this.props.users.errMess}
-                     />}/>
+            issues={this.props.issues}
+            books={this.props.books.books}
+            booksLoading={this.props.books.isLoading}
+            booksErrMess={this.props.books.errMess}
+            users={this.props.users.users}
+            usersLoading={this.props.users.isLoading}
+            usersErrMess={this.props.users.errMess} errMess={undefined} returnIssue={undefined}                     />}/>
                       <Redirect to="/home"/>
           </Switch>
         <Footer/>
@@ -436,7 +451,7 @@ class Main extends Component {
                                 <Label htmlFor="description" md={2}>Description</Label>
                                 <Col md={10}>
                                     <Control.textarea model=".description" id="description" name="description"
-                                        rows="12"
+                                        rows={12}
                                         defaultValue={this.state.selectedBook.description}
                                         className="form-control" />
                                 </Col>

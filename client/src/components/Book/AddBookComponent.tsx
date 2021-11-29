@@ -5,8 +5,6 @@ import { required, requiredNum, maxLength, minLength, maxVal, minVal, isNumber} 
 
 import LinearProgress from '@mui/material/LinearProgress';
 
-
-
 interface addBook {
     books: any,
     booksErrMess:Function,

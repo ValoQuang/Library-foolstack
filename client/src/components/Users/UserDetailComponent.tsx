@@ -8,7 +8,6 @@ interface userProp {
     isLoading:boolean,
     errMess:any,
     user:any,
-    editUser:Function
 }
 interface userState {
 }
