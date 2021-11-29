@@ -6,15 +6,15 @@ import { CircularProgress } from '@mui/material';
 const fineRate=1;
 let totalFine=0;
 const allowedDays=30;
-function RenderIssue ({issue,i}) {
-    const dates=[];
+function RenderIssue ({issue,i}:any) {
+    const dates:any=[];
     const today= new Date();
     dates.push(today);
     const issueDate=new Date(Date.parse(issue.createdAt));
     const deadline = new Date( Date.parse(issue.createdAt));
     deadline.setDate(deadline.getDate()+30);
     dates.push(deadline);
-    const returnDate=issue.returned?new Date(Date.parse((issue.updatedAt))):(new Date(Math.min.apply(null,dates)));
+    const returnDate:any =issue.returned?new Date(Date.parse((issue.updatedAt))):(new Date(Math.min.apply(null,dates)));
     let fine=0;
       if(((returnDate.getTime()-issueDate.getTime())/(1000 * 60 * 60 * 24))>allowedDays)
       {
@@ -42,7 +42,7 @@ function RenderIssue ({issue,i}) {
             </td>
             <td>
                 {
-        issue.returned?('Returned on '+(new Intl.DateTimeFormat('en-US',{year: 'numeric', month: 'short', day: '2-digit'}).format(new Date( Date.parse(returnDate)))))                    
+            issue.returned?('Returned on '+(new Intl.DateTimeFormat('en-US',{year: 'numeric', month: 'short', day: '2-digit'}).format(new Date( Date.parse(returnDate)))))                    
                :('Not returned yet')
                 }
             </td>
@@ -55,9 +55,18 @@ function RenderIssue ({issue,i}) {
        );
 }
 
-class History extends Component {
+interface historyProp {
+    issues:any,
+    errMess:any,
 
-    constructor(props){
+}
+interface historyState {
+
+}
+
+class History extends Component<historyProp,historyState> {
+    i: number;
+    constructor(props:historyProp){
         super(props);
         this.state={
          }
@@ -104,7 +113,7 @@ render(){
         );
     }
     else {
-        const list = this.props.issues.issues.map((issue) => {
+        const list = this.props.issues.issues.map((issue:any) => {
             return (
                     <tr key={issue._id}>
                         <RenderIssue issue={issue} 
