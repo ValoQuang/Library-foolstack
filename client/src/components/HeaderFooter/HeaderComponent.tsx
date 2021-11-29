@@ -99,7 +99,7 @@ class Header extends Component<header,MyComponentState >{
                     <div className="container">
                      <NavbarToggler onClick={this.toggleNav}></NavbarToggler>
                      <NavbarBrand className="mr-auto text-primary" href="/home">
-                     QUANG APP
+                     <h1>QUANG APP</h1>
                      </NavbarBrand>
                      <Collapse isOpen={this.state.isNavOpen} navbar>
                      <Nav navbar>

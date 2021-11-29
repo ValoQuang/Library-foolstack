@@ -1,12 +1,25 @@
 import React,{Component} from 'react';
-import { Card, CardText, CardBody, CardLink,
-    CardTitle, Button } from 'reactstrap';
+import { Card, CardText, CardBody, CardLink, CardTitle, Button } from 'reactstrap';
 import {Link} from 'react-router-dom';
+
 import { CircularProgress } from '@mui/material';
 
-class Stats extends Component {
+interface statProp {
+    issues:any,
+    errMess:any,
+    returnIssue:Function,
+    booksLoading: boolean,
+    usersLoading:boolean,
+    usersErrMess:any,
+    booksErrMess:any,
+    books:any,
+    users:any
+}
+interface statState {}
 
-    constructor(props){
+class Stats extends Component<statProp, statState> {
+    i: number;
+    constructor(props:statProp){
         super(props);
         this.state={
          }
@@ -15,8 +28,7 @@ class Stats extends Component {
     componentDidMount() {
         window.scrollTo(0, 0)
       }
-
-render(){
+    render(){
     if (this.props.issues.isLoading||this.props.booksLoading||this.props.usersLoading) {
         return(
             <div className="container">
@@ -110,7 +122,7 @@ render(){
                 <CardBody>
                     <CardTitle>
                     <h1>
-                    {this.props.issues.issues.filter((issue)=>(!issue.returned)).length}
+                    {this.props.issues.issues.filter((issue: { returned: any; })=>(!issue.returned)).length}
                     </h1>
                     </CardTitle>
                     <CardText>Books not yet returned</CardText>
@@ -126,7 +138,7 @@ render(){
             <Card>
                 <CardBody>
                     <CardTitle>
-                        <h1>{this.props.users.filter((user)=>(!user.admin)).length}</h1>
+                        <h1>{this.props.users.filter((user: { admin: any; })=>(!user.admin)).length}</h1>
                     </CardTitle>
                     <CardText>Students registered</CardText>
                         <CardLink tag={Link} to="/list_students">
@@ -141,7 +153,7 @@ render(){
             <Card>
                 <CardBody>
                     <CardTitle>
-                        <h1>{this.props.users.filter((user)=>(user.admin)).length}</h1>
+                        <h1>{this.props.users.filter((user: { admin: any; })=>(user.admin)).length}</h1>
                     </CardTitle>
                     <CardText>Administrators in-charge</CardText>
                         <CardLink tag={Link} to="/list_admins">
@@ -152,8 +164,7 @@ render(){
                 </CardBody>
             </Card>
             </div>
-            </div>
-            
+            </div>       
             <br/>
             </div>
           );

@@ -7,12 +7,12 @@ import Search from './Search/SearchComponent';
 import BookDetail from './Book/BookDetailComponent';
 import Profile from './Users/ProfileComponent';
 import AddBook from './Book/AddBookComponent';
-import History from './Issue/HistoryComponent.js';
-import Issue from './Issue/IssueComponent.js';
-import Return from './Issue/ReturnComponent.js';
+import History from './Issue/HistoryComponent';
+import Issue from './Issue/IssueComponent';
+import Return from './Issue/ReturnComponent';
 import UserDetail from './Users/UserDetailComponent';
-import Stats from './Issue/StatsComponent.js';
-import Log from './Issue/LogComponent.js';
+import Stats from './Issue/StatsComponent';
+import Log from './Issue/LogComponent';
 import UserList from './Users/UserListComponent';
 
 import {required,requiredNum, maxLength, minLength, maxVal, minVal, isNumber} from "./Validator/index"
