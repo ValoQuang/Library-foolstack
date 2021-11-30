@@ -27,7 +27,7 @@ app.use(bodyParser.json());
 const mongoURI:String = require('./config/keys').mongoURI;
 
 // Connect to mongo
-mongoose.connect("mongodb://localhost:27017/QuangAssign?readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false", { useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect("mongodb://AsianSausage:Quangpro1995@cluster0-shard-00-00.fjnrj.mongodb.net:27017,cluster0-shard-00-01.fjnrj.mongodb.net:27017,cluster0-shard-00-02.fjnrj.mongodb.net:27017/myFirstDatabase?ssl=true&replicaSet=atlas-b8s458-shard-0&authSource=admin&retryWrites=true&w=majority", { useNewUrlParser: true, useUnifiedTopology: true})
 .then(()=> {console.log("MongoDB Connected");})
 .catch((err:any) => console.log(err));
 

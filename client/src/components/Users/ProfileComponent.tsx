@@ -6,7 +6,6 @@ import {required,maxLength,minLength,validEmail,matchcreds} from "../Validator/i
 interface profileProp {
     auth:any,
     editPassword:any,
-    isLoading:boolean,
     errMess:any,
     user:any,
     editUser:Function

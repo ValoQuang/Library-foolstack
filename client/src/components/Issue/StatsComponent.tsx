@@ -7,7 +7,7 @@ import { CircularProgress } from '@mui/material';
 interface statProp {
     issues:any,
     errMess:any,
-    returnIssue:Function,
+    returnIssue:any,
     booksLoading: boolean,
     usersLoading:boolean,
     usersErrMess:any,

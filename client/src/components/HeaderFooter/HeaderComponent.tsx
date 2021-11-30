@@ -99,7 +99,7 @@ class Header extends Component<header,MyComponentState >{
                     <div className="container">
                      <NavbarToggler onClick={this.toggleNav}></NavbarToggler>
                      <NavbarBrand className="mr-auto text-primary" href="/home">
-                     <h1>QUANG APP</h1>
+                     <h6>QUANG APP</h6>
                      </NavbarBrand>
                      <Collapse isOpen={this.state.isNavOpen} navbar>
                      <Nav navbar>
@@ -191,7 +191,7 @@ class Header extends Component<header,MyComponentState >{
                                         </Button>
                                         :
                                         <div>
-                                        <div className="navbar-text mr-3">{this.props.auth.user.username}</div>
+                                        <div className="navbar-text mr-1">{this.props.auth.user.username}</div>
                                         <Button outline color="primary" onClick={this.handleLogout}>
                                             <span className="fa fa-sign-out fa-lg"></span> Logout
                                             {this.props.auth.isLoading ?
@@ -252,7 +252,7 @@ class Header extends Component<header,MyComponentState >{
                             <FormGroup>
                             <Label htmlFor="password">Password</Label>
                             <Control.text model=".password" id="password" name="password" 
-                                className="form-control" placeholder="password" validators={{required,minLength: minLength(6),maxLength:maxLength(20)}} />
+                            className="form-control" placeholder="Password" validators={{required,minLength: minLength(3),maxLength:maxLength(20)}} />
                             <Errors className="text-danger" model=".password" show="touched" messages={{required: 'Required',
                                 minLength: ' Must be greater than 5 characters', maxLength:' Must be 20 characters or less'}}/>
                             </FormGroup>
