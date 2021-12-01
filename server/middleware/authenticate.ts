@@ -17,7 +17,7 @@ passport.deserializeUser(User.deserializeUser());
 
 exports.getToken = function(user:any) {
     return jwt.sign(user, 'QUANG',
-        {expiresIn: 3600});
+        {expiresIn: 300});
 };
 
 var opts:any = {};

@@ -27,10 +27,6 @@ export const editBookdispatch = (books:any) => ({
     payload: books
   });
   
-export const returnBookdispatch = (issue:any) => ({
-    type: ActionTypes.RETURN_ISSUE,
-    payload: issue
-});
 
 export const deleteBookdispatch = (resp:any) => ({
     type: ActionTypes.DELETE_BOOK,

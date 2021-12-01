@@ -1,19 +1,18 @@
 import * as ActionTypes from './ActionTypes';
 import {baseUrl} from '../../baseUrl'
-import { returnBookdispatch } from './bookAction';
 
 export const addIssue = (issue:any) => ({
     type: ActionTypes.ADD_ISSUE,
     payload: issue
   });
   
-  export const postIssue = (bookId:string,studentId:string) => async (dispatch:Function) => {
+  export const postIssue = (bookId:string,studentId:string) => (dispatch:Function) => {
       const newIssue = {
       book: bookId,
       student: studentId 
       };
       const bearer = 'Bearer ' + localStorage.getItem('token');
-      return await fetch(baseUrl + 'issues', {
+      return fetch(baseUrl + 'issues', {
           method: "POST",
           body: JSON.stringify(newIssue),
           headers: {
@@ -42,8 +41,13 @@ export const addIssue = (issue:any) => ({
         'May be the student has already issued 3 books and not returned. Please return them first. \n'+
         'or the book may not available. You can wait for some days, until the book is returned to library.'); });
   };
+
+  export const returnBookdispatch = (issue:any) => ({
+    type: ActionTypes.RETURN_ISSUE,
+    payload: issue
+  });
   
-  export const returnIssue = (issueId:string) => async (dispatch:Function) => {
+  export const returnIssue = (issueId:any) => (dispatch:Function) => {
     const bearer = 'Bearer ' + localStorage.getItem('token');
     return fetch(baseUrl + 'issues/' + issueId, {
         method: "PUT"

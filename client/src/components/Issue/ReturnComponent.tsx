@@ -45,11 +45,7 @@ function RenderIssue ({issue,i,returnBook}:any) {
             <td>
                 {new Intl.DateTimeFormat('en-US',{year: 'numeric', month: 'short', day: '2-digit'}).format(deadline)}
             </td>
-            <td>
-                {
-                    fine
-                }
-            </td>
+            <td>{fine}</td>
             <td>
             <Button color="info" onClick={()=>{
                returnBook(issue._id); 
@@ -114,7 +110,7 @@ render(){
         );
     }
     else {
-        const dueIssues = this.props.issues.issues.filter((issue: { returned: any; })=>(!issue.returned));
+        const dueIssues = this.props.issues.issues.filter((issue:any )=>(!issue.returned));
         const list = dueIssues.map((issue:any) => {
             return (
                     <tr key={issue._id}>
