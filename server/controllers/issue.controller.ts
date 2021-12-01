@@ -86,9 +86,9 @@ exports.issueBook = async (req:Request, res:Response, next: NextFunction) => {
     .catch((err:Error)=>(next(err))) 
 }
 //DELETE ISSUE BOOK TO STUDENT 
-exports.deleteIssue = async (req:Request, res:Response, next: NextFunction) => {
-    await Issue.remove({})
-    .then((resp:JSON) => {
+exports.deleteIssue = (req:Request, res:Response, next: NextFunction) => {
+    Issue.remove({})
+    .then((resp:any) => {
         console.log("Removed All Issue");
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');

@@ -7,7 +7,6 @@ const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
 
-const config = require('../config/keys');
 
 exports.local=passport.use(new LocalStrategy(User.authenticate()));
 
@@ -17,7 +16,7 @@ passport.deserializeUser(User.deserializeUser());
 
 exports.getToken = function(user:any) {
     return jwt.sign(user, 'QUANG',
-        {expiresIn: 300});
+        {expiresIn: 3600});
 };
 
 var opts:any = {};

@@ -358,8 +358,7 @@ class Main extends Component<any,any> {
                               <option>Fiction</option> <option>Philosophy</option>
                               <option>Language</option> <option>Arts</option>
                               <option>Other</option> 
-
-                                                          </Control.select>
+                            </Control.select>
                             </Col>
                         </Row>
 

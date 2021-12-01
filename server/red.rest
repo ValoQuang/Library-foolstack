@@ -14,3 +14,5 @@ content-type: application/json
     "roll":"0000000001",
     "email": "admin@gmail.com"
 }
+###
+PUT http://localhost:5000/api/issues/61a63b51d0099a2288abc652

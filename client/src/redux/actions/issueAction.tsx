@@ -47,7 +47,7 @@ export const addIssue = (issue:any) => ({
     payload: issue
   });
   
-  export const returnIssue = (issueId:any) => async (dispatch:Function) => {
+  export const returnIssue = (issueId:any) => (dispatch:Function) => {
     const bearer = 'Bearer ' + localStorage.getItem('token');
     return fetch(baseUrl + 'issues/' + issueId, {
         method: "PUT"

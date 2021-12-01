@@ -1,11 +1,7 @@
 export {}
-
 const express = require('express');
 const bodyParser = require('body-parser');
 const issueRouter = express.Router();
-const Issue = require('../models/issue.model');
-const Books = require('../models/book.model');
-const Users = require('../models/user.model');
 const authenticate = require('../middleware/authenticate');
 const cors = require('./cors');
 import {Request, Response, NextFunction} from "express"
@@ -50,7 +46,9 @@ issueRouter.route('/:issueId')
     res.end('POST operation not supported on /issues/'+ req.params.issueId);
 })
 //UPDATE ISSUE
-.put(cors.corsWithOptions,authenticate.verifyUser,authenticate.verifyAdmin,)
+.put(cors.corsWithOptions,authenticate.verifyUser,authenticate.verifyAdmin,issueController.updateIssue)
 
 
 module.exports = issueRouter;
+
+

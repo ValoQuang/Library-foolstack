@@ -103,7 +103,7 @@ class Log extends Component<logProp,logState> {
                     <div className="col-12 text-center">
                         <br/><br/><br/><br/>
                         <h4>{'You have not issued any books.'}</h4> 
-                        <h4>{'Request admin to issue a book'}</h4>
+                        <h4>{'Admin can issue book for you'}</h4>
                     </div>
                 </div>
             </div>

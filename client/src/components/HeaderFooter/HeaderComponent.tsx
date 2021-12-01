@@ -5,6 +5,9 @@ import { NavLink,Link } from 'react-router-dom';
 import { Control, LocalForm, Errors  } from 'react-redux-form';
 import { required, maxLength, minLength, validEmail} from "../Validator/index"
 import {GoogleLogin} from 'react-google-login'
+import { Icon } from '@mui/material';
+import { LOGIN_SUCCESS } from '../../redux/actions/ActionTypes';
+import { loginUser } from '../../redux/actions/userAction';
 
 
   function Registerer(props:any){
@@ -87,11 +90,25 @@ class Header extends Component<header,MyComponentState >{
   handleLogout() {
       this.props.logoutUser();
   }
+
     toggleModal() {
         this.setState({
           isModalOpen: !this.state.isModalOpen
         });
       }
+
+     googleSuccess(res:any) {
+        const result = res?.profileObj;
+        const token = res?.tokenId;
+        try {
+          this.props.loginUser({result,token});
+    } catch (error) {
+          console.log(error);
+        }
+    };
+    
+     googleError() {console.log('Google Sign In was unsuccessful. Try again later');} 
+
 
     render(){
         return (
@@ -202,6 +219,19 @@ class Header extends Component<header,MyComponentState >{
                                         </Button>
                                         </div>
                                     }
+
+            <GoogleLogin
+            clientId="511106555487-m6feond50oktruagqlb0h84fi9u1uvqm.apps.googleusercontent.com"
+            render={(renderProps) => (
+              <Button color="primary" fullWidth onClick={renderProps.onClick} disabled={renderProps.disabled} startIcon={<Icon />} variant="contained">
+                Google Sign In
+              </Button>
+            )}
+            onSuccess={this.googleSuccess}
+            onFailure={this.googleError}
+            cookiePolicy="single_host_origin"
+          />
+                
                     <Registerer isSignedIn={this.props.auth.isAuthenticated} toggleRegister={()=>{this.toggleRegister(true)}}/>
                      </NavItem>
                       </Nav>
@@ -294,3 +324,7 @@ class Header extends Component<header,MyComponentState >{
     }
 }
 export default Header;
+
+function dispatch(arg0: { type: any; data: { result: any; token: any; }; }) {
+    throw new Error('Function not implemented.');
+}
