@@ -10,6 +10,8 @@ interface addBook {
     booksErrMess:Function,
     booksLoading:Function,
     postBook:Function,
+    isAdmin:Boolean,
+    
 }
 
 class AddBook extends Component<addBook> {

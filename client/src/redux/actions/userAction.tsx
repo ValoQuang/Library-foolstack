@@ -162,8 +162,8 @@ export const requestLogin = (creds:any) => {
        return dispatch(loginError(error.message));})
   };
   
-export const logoutUser = () => (dispatch:Function) => {
-  dispatch(requestLogout())
+export const logoutUser = () => async (dispatch:any) => {
+  await dispatch(requestLogout())
   localStorage.removeItem('token');
   localStorage.removeItem('creds');  
   localStorage.removeItem('userinfo');  

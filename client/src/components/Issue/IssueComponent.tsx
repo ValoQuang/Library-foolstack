@@ -10,6 +10,7 @@ interface issueProp {
     books:any,
     users:any,
     postIssue:Function,
+    auth:any
 }
 interface issueState {
     isbn: string,

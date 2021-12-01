@@ -58,7 +58,8 @@ function RenderIssue ({issue,i,returnBook}:any) {
 interface returnProp {
     issues:any,
     errMess:any,
-    returnIssue:Function
+    returnIssue:Function,
+    auth:any
 }
 interface returnState {}
 

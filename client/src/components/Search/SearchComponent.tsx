@@ -11,7 +11,8 @@ interface searchProp {
   booksLoading: any,
   booksErrMess:any,
   toggleEditModal: Function,
-  toggleDeleteModal:Function
+  toggleDeleteModal:Function,
+  isSignedIn:any,
 }
 
 interface searchState {

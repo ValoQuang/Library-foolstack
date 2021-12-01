@@ -58,7 +58,7 @@ function RenderIssue ({issue,i}:any) {
 interface historyProp {
     issues:any,
     errMess:any,
-
+    auth:any
 }
 interface historyState {
 

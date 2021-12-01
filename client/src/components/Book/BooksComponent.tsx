@@ -43,7 +43,9 @@ interface bookList {
     toggleEditModal:Function,
     toggleDeleteModal:Function,
     changeSelected:Function,
-    i: number
+    i: number,
+    isSignedIn:any,
+    auth:any,
 }
 
 class Booklist extends Component<bookList> {
