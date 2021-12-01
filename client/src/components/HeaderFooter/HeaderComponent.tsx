@@ -4,6 +4,7 @@ import {Dropdown,DropdownItem,DropdownMenu,DropdownToggle} from 'reactstrap';
 import { NavLink,Link } from 'react-router-dom';
 import { Control, LocalForm, Errors  } from 'react-redux-form';
 import { required, maxLength, minLength, validEmail} from "../Validator/index"
+import {GoogleLogin} from 'react-google-login'
 
 
   function Registerer(props:any){
@@ -188,7 +189,7 @@ class Header extends Component<header,MyComponentState >{
                                                 <span className="fa fa-spinner fa-pulse fa-fw"></span>
                                                 : null
                                             }
-                                        </Button>
+                        </Button>
                                         :
                                         <div>
                                         <div className="navbar-text mr-3">{this.props.auth.user.username}</div>
