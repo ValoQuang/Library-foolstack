@@ -13,10 +13,17 @@ class Home extends Component {
 
 render(){
     return(
-        <div className="container mt-4 home text-center align-self-center">
-            <h1>Welcome</h1>
+        <div className="container mt-5 home text-center align-self-center">
+        <br/><br/><br/>
+            <div className="row pt-5 darkbg text-center justify-content-center">
+            <h1> Quang Home Page</h1>
+            </div>
+            <div className="row darkbg">
+
+        <br/><br/><br/>
         </div>
-        );
+        </div>
+    )
 }
 
 }

@@ -138,7 +138,7 @@ render(){
             <th>Issue Date</th>
             <th>Return Deadline</th>
             <th>Return status</th> 
-            <th>Fine (in Rs.)</th> 
+            <th>Fine (in EUR)</th> 
            </tr>
         </thead>
         <tbody>
@@ -146,7 +146,7 @@ render(){
         </tbody>
         </Table>
             <br/>
-            <h6> Total Fine due (if all pending books are returned today) : Rs. {totalFine} </h6>
+            <h6> Total Fine due (if all pending books are returned today) : EUR {totalFine} </h6>
             <br/>
             </div>
             </div>
