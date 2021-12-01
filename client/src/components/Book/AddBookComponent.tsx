@@ -57,7 +57,7 @@ class AddBook extends Component<addBook> {
     <LocalForm onSubmit={(values) => {
         this.props.postBook(values.name, values.author, values.description, values.isbn, values.cat, values.floor, values.shelf, values.copies);
     }}>
-                    <Row className="form-group">
+                    <Row className="form-group" >
                                 <Label htmlFor="name" md={2}>Name </Label>
                                 <Col md={4}>
                                     <Control.text model=".name" id="name" name="name"

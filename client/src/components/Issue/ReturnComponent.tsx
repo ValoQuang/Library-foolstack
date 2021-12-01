@@ -24,17 +24,13 @@ function RenderIssue ({issue,i,returnBook}:any) {
    totalFine+=fine;
     return (
             <React.Fragment>
+            <td>{i}</td>
             <td>
-            {i}
-            </td>
-            <td>
-        <Link to={`/users/${issue.student._id}`}>
-        {issue.student.firstname+' '+issue.student.lastname}
+            <Link to={`/users/${issue.student._id}`}>
+            {issue.student.firstname+' '+issue.student.lastname}
             </Link>
             </td>
-            <td>
-            {issue.student.roll}
-            </td>
+            <td>{issue.student.roll}</td>
             <td>
                 {issue.book==null ? "N/A":<Link to={`/books/${issue.book._id}`}>
             {issue.book.name}
@@ -119,7 +115,7 @@ render(){
     }
     else {
         const dueIssues = this.props.issues.issues.filter((issue: { returned: any; })=>(!issue.returned));
-        const list = dueIssues.map((issue: { _id: React.Key | null | undefined; }) => {
+        const list = dueIssues.map((issue:any) => {
             return (
                     <tr key={issue._id}>
                         <RenderIssue issue={issue} 
@@ -144,7 +140,7 @@ render(){
             <th>ISBN number</th>
             <th>Issue Date</th>
             <th>Return Deadline</th>
-            <th>Fine (in Rs.)</th>
+            <th>Fine (in EUR.)</th>
             <th>Return book</th> 
            </tr>
         </thead>

@@ -5,7 +5,7 @@ import {Provider} from 'react-redux';
 import {ConfigureStore} from './redux/reducers/store'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import 'font-awesome/css/font-awesome.css';
 import './App.css';
 
 const store= ConfigureStore();

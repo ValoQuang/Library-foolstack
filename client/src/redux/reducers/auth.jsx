@@ -4,27 +4,14 @@ import {PayloadAction} from '@reduxjs/toolkit'
 // based on a token being in local storage. In a real app,
 // we would also want a util to check if the token is expired.
 
-var getLocalCred:any = localStorage.getItem('creds');
-var getLocalUserInfo:any = localStorage.getItem('creds');
-var getLocalToken:any = localStorage.getItem('token')
-
-export interface A {
-    type:String,
-    creds: any,
-    token:any,
-    userinfo:any,
-    message:any,
-    payload:any
-}
-
 const Auth = (state = {
-        isLoading: false,
-        isAuthenticated: getLocalToken ? true : false,
-        token: getLocalToken,
-        user: getLocalCred ? JSON.parse(getLocalCred) : null,
-        userinfo: localStorage.getItem('userinfo') ? JSON.parse(getLocalUserInfo) : null,
-        errMess: null
-    }, action:A) => {
+    isLoading: false,
+    isAuthenticated: localStorage.getItem('token') ? true : false,
+    token: localStorage.getItem('token'),
+    user: localStorage.getItem('creds') ? JSON.parse(localStorage.getItem('creds')) : null,
+    userinfo: localStorage.getItem('userinfo') ? JSON.parse(localStorage.getItem('userinfo')) : null,
+    errMess: null
+    }, action) => {
     switch (action.type) {
         case ActionTypes.LOGIN_REQUEST:
             return {...state,

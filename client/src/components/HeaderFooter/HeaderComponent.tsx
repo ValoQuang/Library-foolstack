@@ -99,11 +99,11 @@ class Header extends Component<header,MyComponentState >{
                     <div className="container">
                      <NavbarToggler onClick={this.toggleNav}></NavbarToggler>
                      <NavbarBrand className="mr-auto text-primary" href="/home">
-                     <h6>QUANG APP</h6>
+                     QUANG APP
                      </NavbarBrand>
                      <Collapse isOpen={this.state.isNavOpen} navbar>
                      <Nav navbar>
-                        <NavItem  onClick={this.toggleNav}>
+                        <NavItem className="ml-2" onClick={this.toggleNav}>
                             <NavLink className="nav-link text-primary" to="/home">
                                <span className="fa fa-home fa-lg"/> Home
                            </NavLink>
@@ -191,7 +191,7 @@ class Header extends Component<header,MyComponentState >{
                                         </Button>
                                         :
                                         <div>
-                                        <div className="navbar-text mr-1">{this.props.auth.user.username}</div>
+                                        <div className="navbar-text mr-3">{this.props.auth.user.username}</div>
                                         <Button outline color="primary" onClick={this.handleLogout}>
                                             <span className="fa fa-sign-out fa-lg"></span> Logout
                                             {this.props.auth.isLoading ?
