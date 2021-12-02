@@ -52,56 +52,34 @@ class AddBook extends Component<addBook> {
     <div className="container">
     <div className="row justify-content-center heading">
     <div className="col-12">
-  <h3>  Add a book</h3>
-  </div>
+    <br/><br/>
+    <h3>Add a book</h3>
+    </div>
     </div>
     <div className="row row-content justify-content-center">
     <LocalForm onSubmit={(values) => {
         this.props.postBook(values.name, values.author, values.description, values.isbn, values.cat, values.floor, values.shelf, values.copies);
     }}>
-                    <Row className="form-group" >
-                                <Label htmlFor="name" md={2}>Name </Label>
-                                <Col md={4}>
-                                    <Control.text model=".name" id="name" name="name"
-                                        placeholder="Name of book"
-                                        className="form-control"
-                                        validators={{
-                                            required, minLength: minLength(3),uniqueName
-                                        }}
-                                         />
-                                    <Errors
-                                        className="text-danger"
-                                        model=".name"
-                                        show="touched"
-                                        messages={{
-                                            required: 'Required',
-                                            minLength: ' Must be greater than 2 characters',
-                                            uniqueName: ' There exists a book with this name already'
-                                        }}
-                                     />
-                                </Col>
-                                 <Label htmlFor="author" md={2}>Authors </Label>
-                                <Col md={4}>
-                                    <Control.text model=".author" id="author" name="author"
-                                        placeholder="Name of authors"
-                                        className="form-control"
-                                        validators={{
-                                            required, minLength: minLength(3)
-                                        }}
-                                         />
-                                    <Errors
-                                        className="text-danger"
-                                        model=".author"
-                                        show="touched"
-                                        messages={{
-                                            required: 'Required',
-                                            minLength: ' Must be greater than 2 characters'
-                                        }}
-                                     />
-                                </Col>
-                            </Row>
-                            <Row className="form-group">
-                                <Label htmlFor="isbn" md={2}>ISBN No.</Label>
+        <Row className="form-group" >
+            <Label htmlFor="name" md={2}>Name </Label>
+                <Col md={4}>
+                <Control.text model=".name" id="name" name="name"placeholder="Name of book"className="form-control"
+                    validators={{required, minLength: minLength(3),uniqueName}}
+                />
+                <Errors className="text-danger" model=".name" show="touched"
+                    messages={{required: 'Required',minLength: ' Must be greater than 2 characters',uniqueName: ' There exists a book with this name already'}}
+                />
+                </Col>
+            <Label htmlFor="author" md={2}>Authors </Label>
+                <Col md={4}>
+                <Control.text model=".author" id="author" name="author"placeholder="Name of authors"className="form-control"
+                    validators={{required, minLength: minLength(3)}}/>
+                <Errors className="text-danger"model=".author"show="touched"messages={{required: 'Required',minLength: ' Must be greater than 2 characters'}}/>
+                </Col>
+        </Row>
+        <br/>
+        <Row className="form-group">
+            <Label htmlFor="isbn" md={2}>ISBN No.</Label>
                                 <Col md={4}>
                                     <Control.text model=".isbn" id="isbn" name="isbn"
                                         placeholder="ISBN no. of book"
@@ -146,6 +124,7 @@ class AddBook extends Component<addBook> {
                                      />
                                 </Col>
                             </Row>
+                            <br/>
                         <Row className="form-group">
                             <Col>
                             <Label htmlFor="cat">Category</Label>
@@ -172,28 +151,7 @@ class AddBook extends Component<addBook> {
                             </Control.select>
                             </Col>
                         </Row>
-                        <Row className="form-group text-center justify-content-center">
-                                <Label htmlFor="shelf" md={3}> Shelf</Label>
-                                <Col md={6}>
-                                    <Control.text model=".shelf" id="shelf" name="shelf"
-                                        placeholder="Shelf no. for locating book"
-                                        className="form-control"
-                                        validators={{
-                                            requiredNum, minVal: minVal(1), maxVal: maxVal(100), isNumber
-                                    }}/>
-                                    <Errors
-                                        className="text-danger"
-                                        model=".shelf"
-                                        show="touched"
-                                        messages={{
-                                            requiredNum: 'Required',
-                                            minVal: ' Must be greater than 0',
-                                            maxVal: ' Must be 100 or less',
-                                            isNumber: ' Must be a number'
-                                        }}
-                                     />
-                                </Col>
-                            </Row>
+                <br/><br/>
                         <Row className="form-group">
                                 <Label htmlFor="description" md={2}>Description</Label>
                                 <Col md={10}>
@@ -214,6 +172,8 @@ class AddBook extends Component<addBook> {
                     </div>
                 <br/>
     </div>
+
+    
  );}
 }
 

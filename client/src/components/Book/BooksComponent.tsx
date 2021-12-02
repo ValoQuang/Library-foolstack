@@ -95,6 +95,7 @@ render(){
         <div className="container">
         <div className="row mt-5">
             <div className="col-12 heading">
+            <br/><br/><br/><br/>
              <h3>List of All books</h3>
              <Table striped bordered hover responsive>
         <thead>
@@ -107,11 +108,9 @@ render(){
             {this.props.isAdmin?(<th>Edit / <br/>Delete</th>):(<React.Fragment/>)}
           </tr>
         </thead>
-        <tbody>
-            {list}
-        </tbody>
+        <tbody>{list}</tbody>
         </Table>
-            </div>
+        </div>
         </div>
     </div>
         );

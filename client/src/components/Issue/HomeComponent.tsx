@@ -11,21 +11,36 @@ class Home extends Component {
         window.scrollTo(0, 0)
       }
 
-render(){
-    return(
-        <div className="container mt-5 home text-center align-self-center">
-        <br/><br/><br/>
-            <div className="row pt-5 darkbg text-center justify-content-center">
-            <h1> Quang Home Page</h1>
-            </div>
-            <div className="row darkbg">
-
-        <br/><br/><br/>
-        </div>
-        </div>
-    )
-}
-
-}
-
+      render(){
+        return(
+            <div className="container mt-5 home text-center align-self-center">
+            <br/><br/><br/><br/><br/><br/>
+                <div className="row mt-5 darkbg text-center justify-content-center">
+                <h1> Welcome to the Central Library</h1>
+                </div>
+                <div className="row darkbg">
+            <br/><br/><br/>
+            <br/><br/><br/>
+                <h6>
+                username login as admin: director <br/>
+                password login as admin: director <br/>
+                Both type of users can search for book, check availibity <br/>
+                For admin route: can issue book, confirm return book, edit, remove book, see stats <br/>
+                For student route: can check book, search book
+                <br/><br/> </h6>
+                </div>
+                <div className="row darkbg justify-content-center">
+                <table>
+                <tr> <th><h6>Library Timings</h6></th> </tr>
+                <tr> <td><h6>Opening Time</h6> </td> <td> <h6>9.00 A.M.</h6></td></tr>
+                <tr> <td>Closing Time </td> <td> 9.00 P.M.</td></tr>
+                </table>
+                <br/>
+                <br/>
+                    </div>
+                    <br/><br/>
+                    <br/><br/><br/>
+                </div>
+            );
+    }}
 export default Home;

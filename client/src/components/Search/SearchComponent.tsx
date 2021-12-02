@@ -80,17 +80,17 @@ render(){
              <p>Location : {` Floor- ${book.floor}, Shelf- ${book.shelf}`}</p>
             </ListGroupItem>        );
             else return (<React.Fragment/>);
-    });
-    if (this.props.booksLoading) {
-        return(
+        });
+        if (this.props.booksLoading) {
+          return(
             <div className="container loading">
                 <div className="row">            
                     <CircularProgress />
                 </div>
             </div>
         );
-    }
-    else if (this.props.booksErrMess) {
+      }
+      else if (this.props.booksErrMess) {
         return(
             <div className="container loading">
                 <div className="row heading"> 
@@ -109,6 +109,7 @@ render(){
         <div className="container loading">
         <div className="row">
             <div className="col-12 heading">
+            <br/><br/>
              <h3>Search your book here : </h3>
              <Form>
         <Row form>
@@ -227,9 +228,7 @@ render(){
         <div className="row">
         <div className="col-12">
       <br/>
-      <ListGroup>
-      {list}
-      </ListGroup>
+      <ListGroup>{list}</ListGroup>
       </div>
       </div>
       <br/>

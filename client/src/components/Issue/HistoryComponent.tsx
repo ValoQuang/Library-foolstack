@@ -104,7 +104,7 @@ render(){
             <div className="container loading">
                 <div className="row heading"> 
                     <div className="col-12 text-center">
-                        <br/><br/><br/><br/>
+                        <br/><br/>
                         <h4>{'You have not issued any books.'}</h4> 
                         <h4>{'Request admin to issue a book'}</h4>
                     </div>

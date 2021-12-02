@@ -9,7 +9,6 @@ import { Icon } from '@mui/material';
 import { LOGIN_SUCCESS } from '../../redux/actions/ActionTypes';
 import { loginUser } from '../../redux/actions/userAction';
 
-
   function Registerer(props:any){
     if(props.isSignedIn===false)
     return (
@@ -44,6 +43,10 @@ interface MyComponentState { isNavOpen: boolean,
     isRegisterOpen: boolean,
     dropdownOpen: boolean,
 }
+const divStyle = {
+    display: 'flex',
+    alignItems: 'center',
+  };
 
 class Header extends Component<header,MyComponentState >{
     username: any;
@@ -109,20 +112,19 @@ class Header extends Component<header,MyComponentState >{
     
      googleError() {console.log('Google Sign In was unsuccessful. Try again later');} 
 
-
     render(){
         return (
             <React.Fragment>
-                 <Navbar color="dark" dark expand="xl" fixed="top">
+                 <Navbar color="dark"  expand="xl" fixed="top">
                     <div className="container">
                      <NavbarToggler onClick={this.toggleNav}></NavbarToggler>
-                     <NavbarBrand className="mr-auto text-primary" href="/home">
+                     <NavbarBrand className="mr-auto text-white" href="/home">
                      QUANG APP
                      </NavbarBrand>
                      <Collapse isOpen={this.state.isNavOpen} navbar>
                      <Nav navbar>
                         <NavItem className="ml-2" onClick={this.toggleNav}>
-                            <NavLink className="nav-link text-primary" to="/home">
+                            <NavLink className="nav-link text-white" to="/home">
                                <span className="fa fa-home fa-lg"/> Home
                            </NavLink>
                         </NavItem>
@@ -130,7 +132,7 @@ class Header extends Component<header,MyComponentState >{
                             <NavItem className="">
                             <Dropdown  isOpen={this.state.dropdownOpen} toggle={this.toggle}>
                             <DropdownToggle color="Primary" >
-                            <div className="text-primary">
+                            <div className="text-white">
                                                     <span className="fa fa-book fa-lg"/> Books
                                                    &nbsp; <i className="fa fa-caret-down fa-sm" aria-hidden="true"></i>
                                                 </div>
@@ -144,20 +146,20 @@ class Header extends Component<header,MyComponentState >{
                           </NavItem>
                         ):(
                             <NavItem className="ml-2" onClick={this.toggleNav}>
-                                  <NavLink className="nav-link text-primary" to="/books">
+                                  <NavLink className="nav-link text-white" to="/books">
                                                     <span className="fa fa-book fa-lg"/> Books
                                                 </NavLink>
                               </NavItem>
                         )}  
                         <NavItem className="ml-2" onClick={this.toggleNav}>
-                            <NavLink className="nav-link text-primary" to="/search">
+                            <NavLink className="nav-link text-white" to="/search">
                                 <span className="fa fa-search fa-lg"/> Search
                             </NavLink>
                         </NavItem>
                         {
                             (this.props.auth.isAuthenticated)?(
                                 <NavItem onClick={this.toggleNav} className="ml-2">
-                                <NavLink className="nav-link text-primary" to="/profile">
+                                <NavLink className="nav-link text-white" to="/profile">
                                      <span className="fa fa-user-circle-o fa-lg"/> My Profile
                                 </NavLink>
                                 </NavItem>
@@ -167,7 +169,7 @@ class Header extends Component<header,MyComponentState >{
                         {
                             (this.props.auth.isAuthenticated&&!this.props.auth.userinfo.admin)?(
                                 <NavItem onClick={this.toggleNav} className="ml-2">
-                               <NavLink className="nav-link text-primary" to="/history">
+                               <NavLink className="nav-link text-white" to="/history">
                                      <span className="fa fa-history"/> Issue history
                                 </NavLink>
                                 </NavItem>
@@ -178,17 +180,17 @@ class Header extends Component<header,MyComponentState >{
                             (this.props.auth.isAuthenticated&&this.props.auth.userinfo.admin)?(
                               <React.Fragment>
                                 <NavItem onClick={this.toggleNav} className="ml-2">
-                                <NavLink className="nav-link text-primary" to="/issue">
+                                <NavLink className="nav-link text-white" to="/issue">
                                      <span className="fa fa-plus-square"/> Issue Book
                                 </NavLink>
                                 </NavItem>
                                 <NavItem onClick={this.toggleNav} className="ml-2">
-                                <NavLink className="nav-link text-primary" to="/return">
+                                <NavLink className="nav-link text-white" to="/return">
                                    <span className="fa fa-list-ul"/> Return Book
                                 </NavLink>
                                 </NavItem>
                                 <NavItem onClick={this.toggleNav} className="ml-2">
-                                <NavLink className="nav-link text-primary" to="/stats">
+                                <NavLink className="nav-link text-white" to="/stats">
                                    <span className="fa fa-info-circle"/> Stats
                                 </NavLink>
                                 </NavItem>
@@ -196,53 +198,36 @@ class Header extends Component<header,MyComponentState >{
                             ):
                             (<div/>)
                         }
-                     </Nav>
-                     <Nav className="ml-auto" navbar>
-                     <NavItem>
-                                    { !this.props.auth.isAuthenticated ?
+                        </Nav>
+                        <Nav className="ml-100" navbar>
+                        <NavItem>
+                            { !this.props.auth.isAuthenticated ?
                         <Button outline color="primary" onClick={this.toggleModal}>
-                                            <span className="fa fa-sign-in fa-lg"></span> Login
-                                            {this.props.auth.isLoading ?
-                                                <span className="fa fa-spinner fa-pulse fa-fw"></span>
-                                                : null
-                                            }
+                            <span className="fa fa-sign-in fa-lg"></span>Login
+                            {this.props.auth.isLoading ?
+                            <span className="fa fa-spinner fa-pulse fa-fw"></span>
+                                : null
+                            }
                         </Button>
-                                        :
-                                        <div>
-                                        <div className="navbar-text mr-3">{this.props.auth.user.username}</div>
-                                        <Button outline color="primary" onClick={this.handleLogout}>
-                                            <span className="fa fa-sign-out fa-lg"></span> Logout
-                                            {this.props.auth.isLoading ?
-                                                <span className="fa fa-spinner fa-pulse fa-fw"></span>
-                                                : null
-                                            }
-                                        </Button>
-                                        </div>
-                                    }
+                            :
+                            <div style={divStyle}>
+                            <div className="text-white">Welcome {this.props.auth.user.username} </div>
+                        <Button outline color="primary" onClick={this.handleLogout}>
+                            <span className="fa fa-sign-out fa-lg"></span> Logout
+                            {this.props.auth.isLoading ?<span className="fa fa-spinner fa-pulse fa-fw"></span>: null}
+                        </Button>
+                        </div>
+                        }
+                        <Registerer isSignedIn={this.props.auth.isAuthenticated} toggleRegister={()=>{this.toggleRegister(true)}}/>
+                        </NavItem>
 
-            <GoogleLogin
-            clientId="511106555487-m6feond50oktruagqlb0h84fi9u1uvqm.apps.googleusercontent.com"
-            render={(renderProps) => (
-              <Button color="primary" fullWidth onClick={renderProps.onClick} disabled={renderProps.disabled} startIcon={<Icon />} variant="contained">
-                Google Sign In
-              </Button>
-            )}
-            onSuccess={this.googleSuccess}
-            onFailure={this.googleError}
-            cookiePolicy="single_host_origin"
-          />
-                
-                    <Registerer isSignedIn={this.props.auth.isAuthenticated} toggleRegister={()=>{this.toggleRegister(true)}}/>
-                     </NavItem>
-                      </Nav>
-                     </Collapse>
-                    </div>
-                 </Navbar>
-                 <Modal isOpen={!this.props.auth.isAuthenticated&&this.state.isModalOpen} toggle={this.toggleModal}>
-                     <ModalHeader toggle={this.toggleModal}>
-                         Sign In
-                     </ModalHeader>
-                     <ModalBody>
+                        </Nav>
+                        </Collapse>
+                        </div>
+                        </Navbar>
+                        <Modal isOpen={!this.props.auth.isAuthenticated&&this.state.isModalOpen} toggle={this.toggleModal}>
+                        <ModalHeader toggle={this.toggleModal}> Sign In</ModalHeader>
+                        <ModalBody>
                         <Form onSubmit={this.handleLogin}>
                             <FormGroup>
                                 <Label htmlFor="username">Username</Label>
@@ -256,14 +241,12 @@ class Header extends Component<header,MyComponentState >{
                             </FormGroup>
                             <Button type="submit" value="submit" color="primary">Login</Button>
                         </Form>
-                    </ModalBody>
-                     </Modal>
-                 <Modal isOpen={this.state.isRegisterOpen} toggle={this.toggleRegister}>
-                     <ModalHeader toggle={this.toggleRegister}>
-                         Register 
-                     </ModalHeader>
-                     <ModalBody>
-                     <LocalForm model="user" onSubmit={(values) => {
+                        </ModalBody>
+                        </Modal>
+                        <Modal isOpen={this.state.isRegisterOpen} toggle={this.toggleRegister}>
+                        <ModalHeader toggle={this.toggleRegister}> Register </ModalHeader>
+                        <ModalBody>
+                        <LocalForm model="user" onSubmit={(values) => {
                            this.toggleRegister(true);
                             this.props.registerUser({
                               username: values.username,
@@ -282,7 +265,7 @@ class Header extends Component<header,MyComponentState >{
                             </FormGroup>
                             <FormGroup>
                             <Label htmlFor="password">Password</Label>
-                            <Control.text model=".password" id="password" name="password" 
+                            <Control.password model=".password" id="password" name="password" 
                             className="form-control" placeholder="Password" validators={{required,minLength: minLength(3),maxLength:maxLength(20)}} />
                             <Errors className="text-danger" model=".password" show="touched" messages={{required: 'Required',
                                 minLength: ' Must be greater than 5 characters', maxLength:' Must be 20 characters or less'}}/>
@@ -325,6 +308,3 @@ class Header extends Component<header,MyComponentState >{
 }
 export default Header;
 
-function dispatch(arg0: { type: any; data: { result: any; token: any; }; }) {
-    throw new Error('Function not implemented.');
-}

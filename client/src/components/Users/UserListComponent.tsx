@@ -85,6 +85,7 @@ render(){
         <div className="container mt-6 text-center align-self-center full">
             <div className="row text-center justify-content-center">
             <div className="col-12 heading">
+            <br/><br/> 
                 <h3>List of {this.props.users[0].admin?' admins in-charge': ' students registered'}</h3>
                 <Table striped bordered hover responsive>
         <thead>

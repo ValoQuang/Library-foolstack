@@ -24,7 +24,6 @@ function RenderBook({book,isAdmin,toggleEditModal,changeSelected}:renderBook) {
               <b> Category: </b> {book.cat} <br/><br/>
               <b> ISBN number: </b> {book.isbn} <br/><br/>
               <b>Descrption: </b><br/> {book.description} <br/><br/>
-              <b> Location: </b> <br/>Shelf no. {book.shelf} ,<br/>
               {book.floor===0?' Ground ':book.floor}{(book.floor===1)?'st ':(book.floor===2)?'nd ':(book.floor===3)?'rd ':(book.floor===0)?'':'th '}
               Floor <br/><br/>
              <b> Copies available : </b> {book.copies}

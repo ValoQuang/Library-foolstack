@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import Header from './HeaderFooter/HeaderComponent';
-import Footer from './HeaderFooter/FooterComponent';
 import Home from './Issue/HomeComponent';
 import Booklist from './Book/BooksComponent';
 import Search from './Search/SearchComponent';
@@ -175,25 +174,24 @@ class Main extends Component<any,any> {
                       isAdmin={(this.props.auth.userinfo==null)?false:(this.props.auth.userinfo.admin)}
                       toggleEditModal={this.toggleEditModal}
                       toggleDeleteModal={this.toggleDeleteModal}
-                      changeSelected={this.changeSelected}
-                />}
+                      changeSelected={this.changeSelected}/>}
                 />
 
                       <Route exact path='/books' component={() => <Booklist
-            books={this.props.books.books}
-            booksLoading={this.props.books.isLoading}
-            booksErrMess={this.props.books.errMess}
-            isSignedIn={this.props.auth.isAuthenticated}
-            isAdmin={(this.props.auth.userinfo == null) ? false : (this.props.auth.userinfo.admin)}
-            auth={this.props.auth}
-            toggleEditModal={this.toggleEditModal}
-            toggleDeleteModal={this.toggleDeleteModal}
-            changeSelected={this.changeSelected} i={1}/>}/>
+                      books={this.props.books.books}
+                      booksLoading={this.props.books.isLoading}
+                      booksErrMess={this.props.books.errMess}
+                      isSignedIn={this.props.auth.isAuthenticated}
+                      isAdmin={(this.props.auth.userinfo == null) ? false : (this.props.auth.userinfo.admin)}
+                      auth={this.props.auth}
+                      toggleEditModal={this.toggleEditModal}
+                      toggleDeleteModal={this.toggleDeleteModal}
+                      changeSelected={this.changeSelected} i={1}/>}/>
                       <Route path='/books/:bookId' component={BookWithId} />
                       <PrivateRouteCommon exact path='/profile' component={() => <Profile
-            auth={this.props.auth}
-            editUser={this.props.editUser}
-            editPassword={this.props.editPassword} errMess={""} user={undefined}/>
+                      auth={this.props.auth}
+                      editUser={this.props.editUser}
+                      editPassword={this.props.editPassword} errMess={""} user={undefined}/>
                       }
                       />
                        <PrivateRouteAdmin exact path='/add_book' component={() => <AddBook
@@ -250,18 +248,18 @@ class Main extends Component<any,any> {
             usersErrMess={this.props.users.errMess} errMess={""} returnIssue={(undefined)}/>}/>
                       <Redirect to="/home"/>
           </Switch>
-        <Footer/>
+ 
         <Modal isOpen={this.state.isDeleteModalOpen} toggle={this.toggleDeleteModal}>
                      <ModalHeader toggle={this.toggleDeleteModal}>
                          Confirm Deletion
                      </ModalHeader>
                      <ModalBody>
-                       Book details : <br/><br/>
-                        Name : {this.state.selectedBook?this.state.selectedBook.name:''} <br/>
-                        Authors : {this.state.selectedBook?this.state.selectedBook.author:''} <br/>
-                        ISBN Number : {this.state.selectedBook?this.state.selectedBook.isbn:''} <br/>
-                        Available Copies : {this.state.selectedBook?this.state.selectedBook.copies:''} <br/> <br/>
-                        Are you sure you wish to delete this book ? <br/><br/>
+                      Book details : <br/><br/>
+                      Name : {this.state.selectedBook?this.state.selectedBook.name:''} <br/>
+                      Authors : {this.state.selectedBook?this.state.selectedBook.author:''} <br/>
+                      ISBN Number : {this.state.selectedBook?this.state.selectedBook.isbn:''} <br/>
+                      Available Copies : {this.state.selectedBook?this.state.selectedBook.copies:''} <br/> <br/>
+                      Are you sure you wish to delete this book ? <br/><br/>
          <Button color="danger" onClick={()=>{
            this.props.deleteBook(this.state.selectedBook._id);
            this.toggleDeleteModal();}}>Yes</Button>{' '}  

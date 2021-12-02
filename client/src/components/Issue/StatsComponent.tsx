@@ -79,9 +79,10 @@ class Stats extends Component<statProp, statState> {
     
         return(
 
-        <div className="container mt-6 text-center align-self-center full">
+        <div className="container mt-5 text-center align-self-center full">
             <div className="row text-center justify-content-center heading">
             <div className="col-12">
+            <br/><br/>
                 <h3>Stats</h3>
             </div>
             </div>

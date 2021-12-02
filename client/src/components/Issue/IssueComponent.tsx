@@ -79,7 +79,8 @@ class Issue extends Component<issueProp, issueState> {
     <div className="container full">
     <div className="row justify-content-center heading">
     <div className="col-12">
-    <h3 >  Issue book</h3>
+    <br/><br/>
+    <h3>Issue book</h3>
     </div>
     </div>
     <div className="row row-content justify-content-center">
