@@ -5,9 +5,7 @@ import { NavLink,Link } from 'react-router-dom';
 import { Control, LocalForm, Errors  } from 'react-redux-form';
 import { required, maxLength, minLength, validEmail} from "../Validator/index"
 import {GoogleLogin} from 'react-google-login'
-import { Icon } from '@mui/material';
-import { LOGIN_SUCCESS } from '../../redux/actions/ActionTypes';
-import { loginUser } from '../../redux/actions/userAction';
+
 
   function Registerer(props:any){
     if(props.isSignedIn===false)
@@ -100,29 +98,24 @@ class Header extends Component<header,MyComponentState >{
         });
       }
 
-     googleSuccess(res:any) {
-        const result = res?.profileObj;
-        const token = res?.tokenId;
-        try {
-          this.props.loginUser({result,token});
-    } catch (error) {
-          console.log(error);
-        }
-    };
-    
-     googleError() {console.log('Google Sign In was unsuccessful. Try again later');} 
+    responseGoogle() {
+        console.log('inside')
+    }
+    denyGoogle() {
+        console.log('fail')
+    }
 
     render(){
         return (
             <React.Fragment>
                  <Navbar color="dark"  expand="xl" fixed="top">
-                    <div className="container">
+                    <div className="container d-flex">
                      <NavbarToggler onClick={this.toggleNav}></NavbarToggler>
                      <NavbarBrand className="mr-auto text-white" href="/home">
-                     QUANG APP
+                     <h3>QUANG APP</h3>
                      </NavbarBrand>
                      <Collapse isOpen={this.state.isNavOpen} navbar>
-                     <Nav navbar>
+                     <Nav navbar >
                         <NavItem className="ml-2" onClick={this.toggleNav}>
                             <NavLink className="nav-link text-white" to="/home">
                                <span className="fa fa-home fa-lg"/> Home
@@ -133,9 +126,8 @@ class Header extends Component<header,MyComponentState >{
                             <Dropdown  isOpen={this.state.dropdownOpen} toggle={this.toggle}>
                             <DropdownToggle color="Primary" >
                             <div className="text-white">
-                                                    <span className="fa fa-book fa-lg"/> Books
-                                                   &nbsp; <i className="fa fa-caret-down fa-sm" aria-hidden="true"></i>
-                                                </div>
+                                <span className="fa fa-book fa-lg"/>Books&nbsp;<i className="fa fa-caret-down fa-sm" aria-hidden="true"></i>
+                            </div>
                             </DropdownToggle>
                             <DropdownMenu>
                               <DropdownItem onClick={this.toggleNav} tag={Link} to="/books">View / Modify books</DropdownItem>
@@ -199,7 +191,7 @@ class Header extends Component<header,MyComponentState >{
                             (<div/>)
                         }
                         </Nav>
-                        <Nav className="ml-100" navbar>
+                        <Nav>
                         <NavItem>
                             { !this.props.auth.isAuthenticated ?
                         <Button outline color="primary" onClick={this.toggleModal}>
@@ -211,7 +203,7 @@ class Header extends Component<header,MyComponentState >{
                         </Button>
                             :
                             <div style={divStyle}>
-                            <div className="text-white">Welcome {this.props.auth.user.username} </div>
+                            <div className="text-white align-items-center"><h5>Welcome {this.props.auth.user.username}</h5></div>
                         <Button outline color="primary" onClick={this.handleLogout}>
                             <span className="fa fa-sign-out fa-lg"></span> Logout
                             {this.props.auth.isLoading ?<span className="fa fa-spinner fa-pulse fa-fw"></span>: null}
@@ -219,6 +211,18 @@ class Header extends Component<header,MyComponentState >{
                         </div>
                         }
                         <Registerer isSignedIn={this.props.auth.isAuthenticated} toggleRegister={()=>{this.toggleRegister(true)}}/>
+                        </NavItem>
+                        <NavItem>
+                        <NavLink to="/google">
+                        <GoogleLogin
+                            clientId="511106555487-m6feond50oktruagqlb0h84fi9u1uvqm.apps.googleusercontent.com"
+                            buttonText="Login with Google"
+                            onSuccess={this.responseGoogle}
+                            onFailure={this.denyGoogle}
+                            cookiePolicy={'single_host_origin'}
+                            />
+                        
+                        </NavLink>
                         </NavItem>
 
                         </Nav>
@@ -302,6 +306,7 @@ class Header extends Component<header,MyComponentState >{
                         </LocalForm>
                      </ModalBody>
                  </Modal>
+                 
                 </React.Fragment>
         );
     }

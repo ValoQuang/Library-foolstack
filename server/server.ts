@@ -38,7 +38,12 @@ app.use(passport.initialize());
 app.use('/api/books',bookRouter);
 app.use('/api/users',userRouter);
 app.use('/api/issues',issueRouter);
-
+app.post('/auth/google',passport.authenticate('google-id-token'),
+function (req:any, res:any) {
+    // do something with req.user
+    res.send(req.user? 200 : 401);
+  }
+);
 // Serve static assets if in production
 if (process.env.NODE_ENV === 'production') {
     // Set static folder

@@ -6,7 +6,26 @@ const User = require('../models/user.model');
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
+var GoogleTokenStrategy = require('passport-google-id-token');
 
+passport.use(new GoogleTokenStrategy({
+    clientID: process.env.GOOGLE_CLIENT_ID,
+  },
+  async function(parsedToken: any, googleId:any, done:any) {
+    const userPayload = {
+        email: parsedToken?.payload?.email,
+        firstName: parsedToken?.payload?.given_name,
+        lastName: parsedToken?.payload?.family_name,
+    }
+    try {
+        const user = await User.findOrCreate({ googleId: googleId }, function (err:any, user:any) {
+            return done(err, user);
+          });
+    } catch(e) {
+        done(e)
+    }   
+  }
+));
 
 exports.local=passport.use(new LocalStrategy(User.authenticate()));
 
