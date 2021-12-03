@@ -163,7 +163,7 @@ class Main extends Component<any,any> {
           <Header auth={this.props.auth}
         loginUser={this.props.loginUser}
         logoutUser={this.props.logoutUser}
-        registerUser={this.props.registerUser} isNavOpen={false} isModalOpen={false} isRegisterOpen={false} dropdownOpen={false} username={""} password={""}          />
+        registerUser={this.props.registerUser} isNavOpen={false} isModalOpen={false} isRegisterOpen={false} dropdownOpen={false} username={""} password={""}/>
           <Switch location={this.props.location}>
                       <Route exact path='/home' component={() => <Home />} />
                       <Route exact path='/search' component={() => <Search 

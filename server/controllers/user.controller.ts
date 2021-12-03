@@ -2,6 +2,7 @@ const User = require('../models/user.model');
 import {Request, Response, NextFunction} from "express"
 const passport = require('passport');
 const authenticate = require('../middleware/authenticate');
+const jwt = require('jsonwebtoken')
 
 //GET ALL USERS
 exports.getAllUser = async (req:Request, res:Response, next: NextFunction) => {
@@ -97,6 +98,7 @@ exports.logIn = async (req:any, res:Response, next: NextFunction) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
         res.json({success: true, status: 'Login Successful!', token: token, userinfo: req.user});
+        console.log(token)
       }); 
     }) (req, res, next); // function call IIFE
 }
@@ -129,4 +131,19 @@ exports.checkJWT = async (req:any, res:Response, next: NextFunction) => {
         return res.json({status: 'JWT valid!', success: true, user: user});
       }
     }) (req, res);
+}
+
+exports.logGoogle = async (req:any, res:Response, next: NextFunction) => {
+  try {
+    const {email,id,lastname,firstname,} = req.user as any
+    const token = jwt.sign(
+      {email,firstname,id},
+      'QUANG',{
+        expiresIn: '1h',
+      }
+    )
+    res.json({token,id,firstname,lastname})
+  } catch(error) {
+    return next(error)
+  }
 }

@@ -5,7 +5,8 @@ import { NavLink,Link } from 'react-router-dom';
 import { Control, LocalForm, Errors  } from 'react-redux-form';
 import { required, maxLength, minLength, validEmail} from "../Validator/index"
 import {GoogleLogin} from 'react-google-login'
-
+import { baseUrl } from '../../baseUrl';
+import axios from 'axios';
 
   function Registerer(props:any){
     if(props.isSignedIn===false)
@@ -86,6 +87,7 @@ class Header extends Component<header,MyComponentState >{
         this.toggleModal();
         this.props.loginUser({username: this.username.value, password: this.password.value});
         event.preventDefault();
+        console.log(this.username)
     }
 
   handleLogout() {
@@ -98,9 +100,13 @@ class Header extends Component<header,MyComponentState >{
         });
       }
 
-    responseGoogle() {
+    async responseGoogle(response:any) {
         console.log('inside')
+        axios.post(baseUrl + 'users/google', 
+        {id_token: response.tokenObj.id_token})
+        console.log(response);
     }
+
     denyGoogle() {
         console.log('fail')
     }
@@ -116,7 +122,7 @@ class Header extends Component<header,MyComponentState >{
                      </NavbarBrand>
                      <Collapse isOpen={this.state.isNavOpen} navbar>
                      <Nav navbar >
-                        <NavItem className="ml-2" onClick={this.toggleNav}>
+                        <NavItem navbar className="ml-2" onClick={this.toggleNav}>
                             <NavLink className="nav-link text-white" to="/home">
                                <span className="fa fa-home fa-lg"/> Home
                            </NavLink>
@@ -192,15 +198,23 @@ class Header extends Component<header,MyComponentState >{
                         }
                         </Nav>
                         <Nav>
-                        <NavItem>
+                        <NavItem className="d-flex">
                             { !this.props.auth.isAuthenticated ?
-                        <Button outline color="primary" onClick={this.toggleModal}>
-                            <span className="fa fa-sign-in fa-lg"></span>Login
-                            {this.props.auth.isLoading ?
-                            <span className="fa fa-spinner fa-pulse fa-fw"></span>
-                                : null
-                            }
-                        </Button>
+                        <><Button outline color="primary" onClick={this.toggleModal}>
+                                            <span className="fa fa-sign-in fa-lg"></span>Login
+                                            {this.props.auth.isLoading ?
+                                                <span className="fa fa-spinner fa-pulse fa-fw"></span>
+                                                : null}
+                            </Button>
+                            <div>
+                            <GoogleLogin
+                                clientId="511106555487-m6feond50oktruagqlb0h84fi9u1uvqm.apps.googleusercontent.com"
+                                buttonText="Login with Google"
+                                onSuccess={this.responseGoogle}
+                                onFailure={this.denyGoogle}
+                                cookiePolicy={'single_host_origin'} />
+                            </div></>
+
                             :
                             <div style={divStyle}>
                             <div className="text-white align-items-center"><h5>Welcome {this.props.auth.user.username}</h5></div>
@@ -214,13 +228,6 @@ class Header extends Component<header,MyComponentState >{
                         </NavItem>
                         <NavItem>
                         <NavLink to="/google">
-                        <GoogleLogin
-                            clientId="511106555487-m6feond50oktruagqlb0h84fi9u1uvqm.apps.googleusercontent.com"
-                            buttonText="Login with Google"
-                            onSuccess={this.responseGoogle}
-                            onFailure={this.denyGoogle}
-                            cookiePolicy={'single_host_origin'}
-                            />
                         
                         </NavLink>
                         </NavItem>

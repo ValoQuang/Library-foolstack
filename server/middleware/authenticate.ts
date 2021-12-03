@@ -6,21 +6,39 @@ const User = require('../models/user.model');
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
-var GoogleTokenStrategy = require('passport-google-id-token');
 
-passport.use(new GoogleTokenStrategy({
+async function findOrCreate(payload:any) {
+    return User.findOne({email: payload.email})
+    .exec()
+    .then((user:any)=>{
+        if (!user) {
+            const newUser = new User({
+                email:payload.email,
+                firstname: payload.firstname,
+                lastname:payload.lastname,
+            })
+            newUser.save()
+            return newUser
+        }
+        return user
+    })
+}
+
+var GoogleStrategy = require('passport-google-id-token');
+
+exports.google= passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
   },
-  async function(parsedToken: any, googleId:any, done:any) {
+  async function(parsedToken: any, googleId:string, done:any) {
     const userPayload = {
         email: parsedToken?.payload?.email,
         firstName: parsedToken?.payload?.given_name,
         lastName: parsedToken?.payload?.family_name,
+        username: parsedToken?.payload?.name,
     }
     try {
-        const user = await User.findOrCreate({ googleId: googleId }, function (err:any, user:any) {
-            return done(err, user);
-          });
+        const user = await findOrCreate(userPayload) 
+        done(null, user);
     } catch(e) {
         done(e)
     }   
@@ -42,7 +60,7 @@ var opts:any = {};
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 opts.secretOrKey = 'QUANG';
 
-exports.jwtPassport = passport.use(new JwtStrategy(opts,
+passport.use(new JwtStrategy(opts,
     (jwt_payload:any, done:any) => {
         console.log("JWT payload: ", jwt_payload);
         User.findOne({_id: jwt_payload._id}, (err:any, user:any) => {
@@ -59,6 +77,7 @@ exports.jwtPassport = passport.use(new JwtStrategy(opts,
     }));
 
 exports.verifyUser = passport.authenticate('jwt', {session: false});
+exports.verifyGoogle =  passport.authenticate('google-id-token', {session:false});
 
 exports.verifyAdmin = function (req:any, res:Response, next:NextFunction){
     if(req.user.admin){
@@ -69,3 +88,4 @@ exports.verifyAdmin = function (req:any, res:Response, next:NextFunction){
         return next(err);
     }
 };
+

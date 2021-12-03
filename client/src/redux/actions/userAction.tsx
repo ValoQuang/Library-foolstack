@@ -149,7 +149,7 @@ export const requestLogin = (creds:any) => {
              },3600*1000);
             // Dispatch the success action
             dispatch(receiveLogin(response));
-        
+             console.log(response)
         }
         else {
             var error:any = new Error('Error ' + response.status);
