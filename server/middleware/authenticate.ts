@@ -24,20 +24,22 @@ async function findOrCreate(payload:any) {
     })
 }
 
-var GoogleStrategy = require('passport-google-id-token');
+var GoogleStrategy = require('passport-google-id-token')
 
-exports.google= passport.use(new GoogleStrategy({
+
+exports.googleStrategy = passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
   },
   async function(parsedToken: any, googleId:string, done:any) {
     const userPayload = {
         email: parsedToken?.payload?.email,
-        firstName: parsedToken?.payload?.given_name,
-        lastName: parsedToken?.payload?.family_name,
+        firstname: parsedToken?.payload?.given_name,
+        lastname: parsedToken?.payload?.family_name,
         username: parsedToken?.payload?.name,
     }
     try {
         const user = await findOrCreate(userPayload) 
+        console.log(userPayload)
         done(null, user);
     } catch(e) {
         done(e)

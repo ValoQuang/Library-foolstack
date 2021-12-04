@@ -98,7 +98,8 @@ exports.logIn = async (req:any, res:Response, next: NextFunction) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
         res.json({success: true, status: 'Login Successful!', token: token, userinfo: req.user});
-        console.log(token)
+        console.log(req.user + "         this is body")
+        console.log(token + "            this is token")
       }); 
     }) (req, res, next); // function call IIFE
 }
@@ -133,17 +134,19 @@ exports.checkJWT = async (req:any, res:Response, next: NextFunction) => {
     }) (req, res);
 }
 
-exports.logGoogle = async (req:any, res:Response, next: NextFunction) => {
-  try {
-    const {email,id,lastname,firstname,} = req.user as any
-    const token = jwt.sign(
-      {email,firstname,id},
-      'QUANG',{
-        expiresIn: '1h',
-      }
-    )
-    res.json({token,id,firstname,lastname})
-  } catch(error) {
-    return next(error)
-  }
+exports.logGoogle = (req:any, res:Response, next: NextFunction) => {
+      const {email,id,firstname,lastname} = req.user as any
+      try {
+      var token = jwt.sign(
+        {email,id,firstname},"QUANG",{expiresIn:"1h"}
+      )
+      res.statusCode = 200;
+      res.json({success: true, status: 'Login Successful!', token: token, userinfo: req.user});
+      console.log(req.user + "         this is body")
+      console.log(token + "            this is token")
+      } catch(e) {
+        return next(e)
+      }   
 }
+
+  

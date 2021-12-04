@@ -7,6 +7,7 @@ import { required, maxLength, minLength, validEmail} from "../Validator/index"
 import {GoogleLogin} from 'react-google-login'
 import { baseUrl } from '../../baseUrl';
 import axios from 'axios';
+import { loginGoogle, receiveLogin } from '../../redux/actions/userAction';
 
   function Registerer(props:any){
     if(props.isSignedIn===false)
@@ -35,6 +36,7 @@ interface header {
     logoutUser: Function,
     username:string,
     password:string,
+    loginGoogle:Function
 }
 
 interface MyComponentState { isNavOpen: boolean,
@@ -102,9 +104,10 @@ class Header extends Component<header,MyComponentState >{
 
     async responseGoogle(response:any) {
         console.log('inside')
-        axios.post(baseUrl + 'users/google', 
+        let res = await axios.post(baseUrl + 'users/google', 
         {id_token: response.tokenObj.id_token})
-        console.log(response);
+        console.log(res)
+        console.log(res.data.token)
     }
 
     denyGoogle() {
@@ -319,4 +322,8 @@ class Header extends Component<header,MyComponentState >{
     }
 }
 export default Header;
+
+function dispatch(arg0: { type: string; token: any; userinfo: any; }) {
+    throw new Error('Function not implemented.');
+}
 

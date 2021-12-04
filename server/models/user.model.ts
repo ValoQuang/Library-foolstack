@@ -20,7 +20,6 @@ var User = new Schema({
       },
       roll:{
         type: String,
-        required: true,
         unique: true
       },
     admin:   {

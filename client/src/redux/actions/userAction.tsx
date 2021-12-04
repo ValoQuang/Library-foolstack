@@ -238,3 +238,18 @@ export const registerUser = (creds:any) => async (dispatch:Function) => {
   .catch(error => alert(error.message+'\n'+
       'May be someone has already registered with that username, email or Roll No.\nTry Entering a new username,email or Roll No. '))
 };
+
+
+export const loginGoogle = (response:any) => async (dispatch:Function) => {
+          // If login was successful, set the token in local storage
+          localStorage.setItem('token', response.data.token);;
+          localStorage.setItem('userinfo', JSON.stringify(response.userinfo));    
+
+          setTimeout(()=>{
+            logoutUser();
+            alert('Your JWT token has expired. \nPlease log in again to continue.');
+           },3600*1000);
+          // Dispatch the success action
+          dispatch(receiveLogin(response));
+           console.log(response)
+  }

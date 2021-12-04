@@ -19,7 +19,7 @@ import {Switch,Route,Redirect, withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {Modal,ModalBody,ModalHeader,Button, Label, Col, Row} from 'reactstrap';
 import { postBook, fetchBooks, editBook, deleteBook} from '../redux/actions/bookAction';
-import {loginUser, logoutUser, registerUser, editUser, editPassword,fetchUsers } from '../redux/actions/userAction';
+import {loginUser, logoutUser, registerUser, editUser, editPassword,fetchUsers,loginGoogle } from '../redux/actions/userAction';
 import { returnIssue, fetchIssues, postIssue } from '../redux/actions/issueAction';
 import { Control, LocalForm, Errors  } from 'react-redux-form';
 
@@ -46,7 +46,8 @@ const mapDispatchToProps:any = (dispatch: (arg0: { (dispatch: Function): Promise
   editUser: (_id: string, firstname: string, lastname: string, roll: number, email: string) => dispatch(editUser(_id, firstname, lastname, roll, email)),
   editPassword : (_id: string,username: string,password: string) => dispatch(editPassword(_id,username,password)),
   postIssue: (bookId: string,studentId: string) => (dispatch(postIssue(bookId,studentId))),
-  returnIssue: (issueId: any) => (dispatch(returnIssue(issueId)))
+  returnIssue: (issueId: any) => (dispatch(returnIssue(issueId))),
+  loginGoogle: (response:any)=> dispatch(loginGoogle(response)),
 });
 
 class Main extends Component<any,any> {
@@ -163,6 +164,7 @@ class Main extends Component<any,any> {
           <Header auth={this.props.auth}
         loginUser={this.props.loginUser}
         logoutUser={this.props.logoutUser}
+        loginGoogle={this.props.loginGoogle}
         registerUser={this.props.registerUser} isNavOpen={false} isModalOpen={false} isRegisterOpen={false} dropdownOpen={false} username={""} password={""}/>
           <Switch location={this.props.location}>
                       <Route exact path='/home' component={() => <Home />} />
