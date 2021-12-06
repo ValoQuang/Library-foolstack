@@ -162,6 +162,7 @@ class Main extends Component<any,any> {
     return ( 
           <div className="App">
           <Header auth={this.props.auth}
+          user={this.props.user}
         loginUser={this.props.loginUser}
         logoutUser={this.props.logoutUser}
         loginGoogle={this.props.loginGoogle}

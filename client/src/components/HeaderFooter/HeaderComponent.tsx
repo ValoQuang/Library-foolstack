@@ -7,7 +7,8 @@ import { required, maxLength, minLength, validEmail} from "../Validator/index"
 import {GoogleLogin} from 'react-google-login'
 import { baseUrl } from '../../baseUrl';
 import axios from 'axios';
-import { loginGoogle, receiveLogin } from '../../redux/actions/userAction';
+
+
 
   function Registerer(props:any){
     if(props.isSignedIn===false)
@@ -36,7 +37,8 @@ interface header {
     logoutUser: Function,
     username:string,
     password:string,
-    loginGoogle:Function
+    loginGoogle:Function,
+    user:any
 }
 
 interface MyComponentState { isNavOpen: boolean,
@@ -50,6 +52,7 @@ const divStyle = {
   };
 
 class Header extends Component<header,MyComponentState >{
+    [x: string]: any;
     username: any;
     password: any;
     constructor(props:header){
@@ -66,6 +69,7 @@ class Header extends Component<header,MyComponentState >{
         this.handleLogout = this.handleLogout.bind(this);
         this.toggleRegister=this.toggleRegister.bind(this);
         this.toggle=this.toggle.bind(this);
+        this.responseGoogle = this.responseGoogle.bind(this);
     }
 
     toggle(){
@@ -104,11 +108,12 @@ class Header extends Component<header,MyComponentState >{
 
     async responseGoogle(response:any) {
         console.log('inside')
-        let res = await axios.post(baseUrl + 'users/google', 
-        {id_token: response.tokenObj.id_token})
-        console.log(res)
-        console.log(res.data.token)
-    }
+        //await axios.post(baseUrl + 'users/google', 
+        //{id_token: response.tokenObj.id_token})
+        console.log(response)
+        console.log(response.tokenId)
+        this.props.loginGoogle(response)
+    };
 
     denyGoogle() {
         console.log('fail')
@@ -145,18 +150,15 @@ class Header extends Component<header,MyComponentState >{
                             </DropdownMenu>
                           </Dropdown>
                           </NavItem>
-                        ):(
-                            <NavItem className="ml-2" onClick={this.toggleNav}>
-                                  <NavLink className="nav-link text-white" to="/books">
-                                                    <span className="fa fa-book fa-lg"/> Books
-                                                </NavLink>
-                              </NavItem>
-                        )}  
+                        ):<div/>} 
+                        {(this.props.auth.isAuthenticated?(
                         <NavItem className="ml-2" onClick={this.toggleNav}>
                             <NavLink className="nav-link text-white" to="/search">
                                 <span className="fa fa-search fa-lg"/> Search
                             </NavLink>
                         </NavItem>
+                        )  : <div/>
+                        )}
                         {
                             (this.props.auth.isAuthenticated)?(
                                 <NavItem onClick={this.toggleNav} className="ml-2">
@@ -164,11 +166,22 @@ class Header extends Component<header,MyComponentState >{
                                      <span className="fa fa-user-circle-o fa-lg"/> My Profile
                                 </NavLink>
                                 </NavItem>
-                            ):
+                            )
+                            :
                             (<div/>)
                         }
-                        {
-                            (this.props.auth.isAuthenticated&&!this.props.auth.userinfo.admin)?(
+
+                        {(this.props.auth.isAuthenticated)? (
+                            <NavItem className="ml-2" onClick={this.toggleNav}>
+                                  <NavLink className="nav-link text-white" to="/books">
+                                                    <span className="fa fa-book fa-lg"/> Books
+                                                </NavLink>
+                            </NavItem>
+                        )
+                        :
+                        (<div/>)}
+
+                        {(this.props.auth.isAuthenticated&&!this.props.auth.userinfo.admin)?(
                                 <NavItem onClick={this.toggleNav} className="ml-2">
                                <NavLink className="nav-link text-white" to="/history">
                                      <span className="fa fa-history"/> Issue history
@@ -202,8 +215,9 @@ class Header extends Component<header,MyComponentState >{
                         </Nav>
                         <Nav>
                         <NavItem className="d-flex">
-                            { !this.props.auth.isAuthenticated ?
-                        <><Button outline color="primary" onClick={this.toggleModal}>
+                            { !this.props.auth.userinfo ?
+                        <>
+                            <Button outline color="primary" onClick={this.toggleModal}>
                                             <span className="fa fa-sign-in fa-lg"></span>Login
                                             {this.props.auth.isLoading ?
                                                 <span className="fa fa-spinner fa-pulse fa-fw"></span>
@@ -216,11 +230,11 @@ class Header extends Component<header,MyComponentState >{
                                 onSuccess={this.responseGoogle}
                                 onFailure={this.denyGoogle}
                                 cookiePolicy={'single_host_origin'} />
-                            </div></>
-
+                            </div>
+                        </>
                             :
                             <div style={divStyle}>
-                            <div className="text-white align-items-center"><h5>Welcome {this.props.auth.user.username}</h5></div>
+                            <div className="text-white align-items-center"><h5>Welcome {this.props.auth.userinfo.email}</h5></div>
                         <Button outline color="primary" onClick={this.handleLogout}>
                             <span className="fa fa-sign-out fa-lg"></span> Logout
                             {this.props.auth.isLoading ?<span className="fa fa-spinner fa-pulse fa-fw"></span>: null}
@@ -231,10 +245,8 @@ class Header extends Component<header,MyComponentState >{
                         </NavItem>
                         <NavItem>
                         <NavLink to="/google">
-                        
                         </NavLink>
                         </NavItem>
-
                         </Nav>
                         </Collapse>
                         </div>
@@ -323,7 +335,4 @@ class Header extends Component<header,MyComponentState >{
 }
 export default Header;
 
-function dispatch(arg0: { type: string; token: any; userinfo: any; }) {
-    throw new Error('Function not implemented.');
-}
 

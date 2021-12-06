@@ -26,8 +26,7 @@ async function findOrCreate(payload:any) {
 
 var GoogleStrategy = require('passport-google-id-token')
 
-
-exports.googleStrategy = passport.use(new GoogleStrategy({
+const googleStrategy = passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
   },
   async function(parsedToken: any, googleId:string, done:any) {
@@ -39,7 +38,7 @@ exports.googleStrategy = passport.use(new GoogleStrategy({
     }
     try {
         const user = await findOrCreate(userPayload) 
-        console.log(userPayload)
+        console.log(userPayload + "line 41 authenticate")
         done(null, user);
     } catch(e) {
         done(e)

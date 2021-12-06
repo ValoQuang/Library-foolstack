@@ -134,19 +134,22 @@ exports.checkJWT = async (req:any, res:Response, next: NextFunction) => {
     }) (req, res);
 }
 
-exports.logGoogle = (req:any, res:Response, next: NextFunction) => {
-      const {email,id,firstname,lastname} = req.user as any
+exports.logGoogle = async (req:any, res:Response, next: NextFunction) => {
+  
+      const {email,id,firstname,lastname, admin} = req.user as any
       try {
       var token = jwt.sign(
-        {email,id,firstname},"QUANG",{expiresIn:"1h"}
+        {email,id,firstname, lastname, admin},"QUANG",{expiresIn:"1h"}
       )
       res.statusCode = 200;
       res.json({success: true, status: 'Login Successful!', token: token, userinfo: req.user});
+      console.log(res)
+      console.log(token + "         this is token")
       console.log(req.user + "         this is body")
-      console.log(token + "            this is token")
-      } catch(e) {
-        return next(e)
-      }   
+      
+    } catch(e) {
+        return next(e)     
+    }
 }
 
   
