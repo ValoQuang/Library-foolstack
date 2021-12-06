@@ -54,8 +54,8 @@ render(){
         <CardHeader><h3>My Profile</h3></CardHeader>
         <CardBody>
           <CardText>
-          <h3> First Name : {(!this.props.auth.userinfo.firstname) ? this.props.auth.userinfo.familyName: this.props.auth.userinfo.firstname} </h3>
-          <h3> Last Name : {(!this.props.auth.userinfo.lastname) ? this.props.auth.userinfo.givenName: this.props.auth.userinfo.lastname}</h3>
+          <h3> First Name : {this.props.auth.userinfo.firstname} </h3>
+          <h3> Last Name : {this.props.auth.userinfo.lastname}</h3>
           <h3> Email : {'          '+this.props.auth.userinfo.email}</h3>
           </CardText>
           <Button color="info" onClick={this.toggleEditModal}>Edit &nbsp;{'   '}<span className="fa fa-pencil"/></Button>
@@ -68,55 +68,64 @@ render(){
           </Card>
             </div>
             <Modal isOpen={this.state.isEditModalOpen} toggle={this.toggleEditModal}>
-                     <ModalHeader toggle={this.toggleEditModal}>
-                         Edit Profile
-                     </ModalHeader>
-                     <ModalBody>
-                     <LocalForm model="user" onSubmit={(values) => {
-                               this.toggleEditModal();
-                               this.props.editUser(this.props.auth.userinfo._id, values.firstname, 
-                                values.lastname, values.roll, values.email);     
-                                 }}>
-                            <FormGroup>
-                                <Label htmlFor="firstname">First Name</Label>
-                                <Control.text model=".firstname" id="firstname" name="firstname" 
-                            className="form-control" defaultValue={this.props.auth.userinfo.firstname}
-                             placeholder="firstname" 
-                             validators={{required,minLength: minLength(3),maxLength:maxLength(20)}} />
-                            <Errors className="text-danger" model=".firstname" show="touched" messages={{required: 'Required',
-                            minLength: ' Must be greater than 2 characters', maxLength:' Must be 20 characters or less'}}/>
-                            </FormGroup>
-                            <FormGroup>    
-                                 <Label htmlFor="lastname">Last Name</Label>
-                                <Control.text model=".lastname" id="lastname" name="lastname" 
-                            className="form-control"  defaultValue={this.props.auth.userinfo.lastname}
-                            placeholder="lastname" validators={{required,minLength: minLength(3),maxLength:maxLength(20)}} />
-                            <Errors className="text-danger" model=".lastname" show="touched" messages={{required: 'Required',
-                            minLength: ' Must be greater than 2 characters', maxLength:' Must be 20 characters or less'}}/>
-                            </FormGroup>
-                            <FormGroup>    
-                                 <Label htmlFor="roll">Roll No.</Label>
-                                <Control.text model=".roll" id="roll" name="roll" 
-                            className="form-control"  defaultValue={this.props.auth.userinfo.roll}
-                            placeholder="roll" validators={{required,minLength: minLength(3),maxLength:maxLength(12)}} />
-                            <Errors className="text-danger" model=".roll" show="touched" messages={{required: 'Required',
-                            minLength: ' Must be greater than 2 characters', maxLength:' Must be 12 characters or less'}}/>
-                            </FormGroup>
-                            <FormGroup>    
-                                 <Label htmlFor="email">E-mail</Label>
-                                <Control.text model=".email" id="email" name="email"
-                                 defaultValue={this.props.auth.userinfo.email} 
-                            className="form-control" placeholder="email" validators={{required,validEmail}} />
-                            <Errors className="text-danger" model=".email" show="touched" messages={{required: 'Required',
-                            validEmail: ' Enter a valid email'}}/>
-                            </FormGroup>
-                            <Button type="submit" value="submit" color="primary" >Submit</Button>
-                        </LocalForm>
-                     </ModalBody>
+            {!this.props.auth.userinfo.googleId && this.props.auth.userinfo.roll ? ( 
+                     <><ModalHeader toggle={this.toggleEditModal}>
+                        Edit Profile
+                    </ModalHeader><ModalBody>
+                            <LocalForm model="user" onSubmit={(values) => {
+                                this.toggleEditModal();
+                                this.props.editUser(this.props.auth.userinfo._id, values.firstname,
+                                    values.lastname, values.roll, values.email);
+                            } }>
+                                <FormGroup>
+                                    <Label htmlFor="firstname">First Name</Label>
+                                    <Control.text model=".firstname" id="firstname" name="firstname"
+                                        className="form-control" defaultValue={this.props.auth.userinfo.firstname}
+                                        placeholder="firstname"
+                                        validators={{ required, minLength: minLength(3), maxLength: maxLength(20) }} />
+                                    <Errors className="text-danger" model=".firstname" show="touched" messages={{
+                                        required: 'Required',
+                                        minLength: ' Must be greater than 2 characters', maxLength: ' Must be 20 characters or less'
+                                    }} />
+                                </FormGroup>
+                                <FormGroup>
+                                    <Label htmlFor="lastname">Last Name</Label>
+                                    <Control.text model=".lastname" id="lastname" name="lastname"
+                                        className="form-control" defaultValue={this.props.auth.userinfo.lastname}
+                                        placeholder="lastname" validators={{ required, minLength: minLength(3), maxLength: maxLength(20) }} />
+                                    <Errors className="text-danger" model=".lastname" show="touched" messages={{
+                                        required: 'Required',
+                                        minLength: ' Must be greater than 2 characters', maxLength: ' Must be 20 characters or less'
+                                    }} />
+                                </FormGroup>
+                                <FormGroup>
+                                    <Label htmlFor="roll">Roll No.</Label>
+                                    <Control.text model=".roll" id="roll" name="roll"
+                                        className="form-control" defaultValue={this.props.auth.userinfo.roll}
+                                        placeholder="roll" validators={{ required, minLength: minLength(3), maxLength: maxLength(12) }} />
+                                    <Errors className="text-danger" model=".roll" show="touched" messages={{
+                                        required: 'Required',
+                                        minLength: ' Must be greater than 2 characters', maxLength: ' Must be 12 characters or less'
+                                    }} />
+                                </FormGroup>
+                                <FormGroup>
+                                    <Label htmlFor="email">E-mail</Label>
+                                    <Control.text model=".email" id="email" name="email"
+                                        defaultValue={this.props.auth.userinfo.email}
+                                        className="form-control" placeholder="email" validators={{ required, validEmail }} />
+                                    <Errors className="text-danger" model=".email" show="touched" messages={{
+                                        required: 'Required',
+                                        validEmail: ' Enter a valid email'
+                                    }} />
+                                </FormGroup>
+                                <Button type="submit" value="submit" color="primary">Submit</Button>
+                            </LocalForm>
+                        </ModalBody></> ): ( <div className="container mt-6 home text-center align-self-center"><p>Google user does not have this function</p></div>)
+}
           </Modal>
           <Modal isOpen={this.state.isPasswordModalOpen} toggle={this.togglePasswordModal}>
 
-                {!this.props.auth.userinfo.googleId ? (
+                {!this.props.auth.userinfo.googleId && this.props.auth.userinfo.roll ? (
                     <><ModalHeader toggle={this.togglePasswordModal}>
                         Change Password
                     </ModalHeader><ModalBody>

@@ -147,7 +147,7 @@ class Main extends Component<any,any> {
 
       const PrivateRoute = ({ component: Component, ...rest }:any) => (
         <Route {...rest} render={(props) => (
-          this.props.auth.isAuthenticated&&!this.props.auth.userinfo.admin
+          this.props.auth.isAuthenticated&&!this.props.auth.userinfo.isAdmin
             ? <Component {...props} />
             : <Redirect to={{
                 pathname: '/home',

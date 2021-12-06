@@ -7,23 +7,21 @@ import {PayloadAction} from '@reduxjs/toolkit'
 const Auth = (state = {
     isLoading: false,
     isAuthenticated: localStorage.getItem('token') ? true : false,
-    isAdmin: null,
     token: localStorage.getItem('token'),
     user: localStorage.getItem('creds') ? JSON.parse(localStorage.getItem('creds')) : null,
     userinfo: localStorage.getItem('userinfo') ? JSON.parse(localStorage.getItem('userinfo')) : null,
-    
     errMess: null
 }, action) => {
 switch (action.type) {
     case "GOOGLE":
         return {...state,
-            isLoading:false,
-            isAdmin:true,
-            isAuthenticated:true,
-            userinfo:action.userinfo,
+            isLoading: false,
+            isAuthenticated: true,
+            isAdmin:false,
             errMess: '',
             token: action.token,
-        }
+            userinfo: action.userinfo
+        };
     case ActionTypes.LOGIN_REQUEST:
         return {...state,
             isLoading: true,
@@ -34,6 +32,7 @@ switch (action.type) {
         return {...state,
             isLoading: false,
             isAuthenticated: true,
+            isAdmin:true,
             errMess: '',
             token: action.token,
             userinfo: action.userinfo

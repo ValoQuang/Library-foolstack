@@ -26,11 +26,12 @@ async function findOrCreate(payload:any) {
 
 var GoogleStrategy = require('passport-google-id-token')
 
-const googleStrategy = passport.use(new GoogleStrategy({
+passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
   },
   async function(parsedToken: any, googleId:string, done:any) {
     const userPayload = {
+        admin: parsedToken?.payload?.admin,
         email: parsedToken?.payload?.email,
         firstname: parsedToken?.payload?.given_name,
         lastname: parsedToken?.payload?.family_name,

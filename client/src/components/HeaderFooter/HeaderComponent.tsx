@@ -111,7 +111,7 @@ class Header extends Component<header,MyComponentState >{
         //await axios.post(baseUrl + 'users/google', 
         //{id_token: response.tokenObj.id_token})
         console.log(response)
-        console.log(response.tokenId)
+                                  
         this.props.loginGoogle(response)
     };
 
@@ -135,7 +135,7 @@ class Header extends Component<header,MyComponentState >{
                                <span className="fa fa-home fa-lg"/> Home
                            </NavLink>
                         </NavItem>
-                        {this.props.auth.userinfo&&this.props.auth.userinfo.admin?(
+                        {this.props.auth.userinfo&&this.props.auth.userinfo.email ?(
                             <NavItem className="">
                             <Dropdown  isOpen={this.state.dropdownOpen} toggle={this.toggle}>
                             <DropdownToggle color="Primary" >
@@ -150,15 +150,12 @@ class Header extends Component<header,MyComponentState >{
                             </DropdownMenu>
                           </Dropdown>
                           </NavItem>
-                        ):<div/>} 
-                        {(this.props.auth.isAuthenticated?(
+                        ):<div/>}  
                         <NavItem className="ml-2" onClick={this.toggleNav}>
                             <NavLink className="nav-link text-white" to="/search">
                                 <span className="fa fa-search fa-lg"/> Search
                             </NavLink>
                         </NavItem>
-                        )  : <div/>
-                        )}
                         {
                             (this.props.auth.isAuthenticated)?(
                                 <NavItem onClick={this.toggleNav} className="ml-2">
@@ -178,10 +175,11 @@ class Header extends Component<header,MyComponentState >{
                                                 </NavLink>
                             </NavItem>
                         )
-                        :
-                        (<div/>)}
+                    :
+                            (<div/>)}
 
-                        {(this.props.auth.isAuthenticated&&!this.props.auth.userinfo.admin)?(
+                        {
+                            (this.props.auth.isAuthenticated&&!this.props.auth.isAdmin )?(
                                 <NavItem onClick={this.toggleNav} className="ml-2">
                                <NavLink className="nav-link text-white" to="/history">
                                      <span className="fa fa-history"/> Issue history
@@ -191,7 +189,7 @@ class Header extends Component<header,MyComponentState >{
                             (<div/>)
                         }
                          {
-                            (this.props.auth.isAuthenticated&&this.props.auth.userinfo.admin)?(
+                            (this.props.auth.isAuthenticated&&this.props.auth.isAdmin )?(
                               <React.Fragment>
                                 <NavItem onClick={this.toggleNav} className="ml-2">
                                 <NavLink className="nav-link text-white" to="/issue">
@@ -216,8 +214,7 @@ class Header extends Component<header,MyComponentState >{
                         <Nav>
                         <NavItem className="d-flex">
                             { !this.props.auth.userinfo ?
-                        <>
-                            <Button outline color="primary" onClick={this.toggleModal}>
+                        <><Button outline color="primary" onClick={this.toggleModal}>
                                             <span className="fa fa-sign-in fa-lg"></span>Login
                                             {this.props.auth.isLoading ?
                                                 <span className="fa fa-spinner fa-pulse fa-fw"></span>
@@ -230,8 +227,8 @@ class Header extends Component<header,MyComponentState >{
                                 onSuccess={this.responseGoogle}
                                 onFailure={this.denyGoogle}
                                 cookiePolicy={'single_host_origin'} />
-                            </div>
-                        </>
+                            </div></>
+
                             :
                             <div style={divStyle}>
                             <div className="text-white align-items-center"><h5>Welcome {this.props.auth.userinfo.email}</h5></div>
@@ -245,8 +242,10 @@ class Header extends Component<header,MyComponentState >{
                         </NavItem>
                         <NavItem>
                         <NavLink to="/google">
+                        
                         </NavLink>
                         </NavItem>
+
                         </Nav>
                         </Collapse>
                         </div>

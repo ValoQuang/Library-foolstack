@@ -109,7 +109,7 @@ export const requestLogin = (creds:any) => {
     return {
         type: "GOOGLE",
         token: response.token,
-        userinfo: response.userinfo
+        userinfo: response.userinfoGoogle,
     }
   }
   
@@ -250,10 +250,12 @@ export const registerUser = (creds:any) => async (dispatch:Function) => {
       'May be someone has already registered with that username, email or Roll No.\nTry Entering a new username,email or Roll No. '))
 };
 
-export const loginGoogle = (response:any) =>  async (dispatch:Function) => {
+export const loginGoogle = (response:any) => async (dispatch:Function) => {
+  response.profileObj.admin = false;
   axios.post(baseUrl + 'users/google', response)
-  console.log(response.tokenId)
+
   localStorage.setItem('token', response.tokenObj.id_token);
+  
   localStorage.setItem('creds', JSON.stringify(response.profileObj.googleId));        
   localStorage.setItem('userinfo', JSON.stringify(response.profileObj));
 
