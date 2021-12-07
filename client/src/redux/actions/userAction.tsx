@@ -109,7 +109,7 @@ export const requestLogin = (creds:any) => {
     return {
         type: "GOOGLE",
         token: response.token,
-        userinfo: response.userinfoGoogle,
+        userinfo: response.userinfo,
     }
   }
   
@@ -153,7 +153,7 @@ export const requestLogin = (creds:any) => {
             dispatch(fetchIssues(!response.userinfo.admin));      
             if(response.userinfo.admin) {
               dispatch(fetchUsers())
-            }
+            
             setTimeout(()=>{
               logoutUser();
               alert('Your JWT token has expired. \nPlease log in again to continue.');
@@ -161,6 +161,9 @@ export const requestLogin = (creds:any) => {
             // Dispatch the success action
             dispatch(receiveLogin(response));
              console.log(response)
+            } else {
+            dispatch(receiveLoginGoogle(response))
+            }
         }
         else {
             var error:any = new Error('Error ' + response.status);
