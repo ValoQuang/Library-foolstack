@@ -253,6 +253,7 @@ export const registerUser = (creds:any) => async (dispatch:Function) => {
 export const loginGoogle = (response:any) => async (dispatch:Function) => {
   
   axios.post(baseUrl + 'users/google', response)
+  console.log(response.tokenId)
   response.profileObj.admin = false;
   localStorage.setItem('token', response.tokenObj.id_token);
   
@@ -260,7 +261,7 @@ export const loginGoogle = (response:any) => async (dispatch:Function) => {
   localStorage.setItem('userinfo', JSON.stringify(response.profileObj));
 
     
-  await dispatch(receiveLogin(response))
+  await dispatch(receiveLoginGoogle(response))
   };
 
 

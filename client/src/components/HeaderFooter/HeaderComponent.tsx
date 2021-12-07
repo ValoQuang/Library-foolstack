@@ -136,7 +136,7 @@ class Header extends Component<header,MyComponentState >{
                                <span className="fa fa-home fa-lg"/> Home
                            </NavLink>
                         </NavItem>
-                        {this.props.auth.userinfo&&this.props.auth.isAdmin ?(
+                        {this.props.auth.userinfo&&this.props.auth.userinfo?.admin ?(
                             <NavItem className="">
                             <Dropdown  isOpen={this.state.dropdownOpen} toggle={this.toggle}>
                             <DropdownToggle color="Primary" >
@@ -180,14 +180,14 @@ class Header extends Component<header,MyComponentState >{
                             (<div/>)}
 
                         {
-                            this.props.auth.isAuthenticated && !this.props.auth.isAdmin ? (
+                            this.props.auth.isAuthenticated && !this.props.auth.userinfo?.admin ? (
                                 <NavItem onClick={this.toggleNav} className="ml-2">
                                <NavLink className="nav-link text-white" to="/history">
                                      <span className="fa fa-history"/> Issue history
                                 </NavLink>
                                 </NavItem>
                             ):
-                            (<div/>)
+                            (<div>Empty</div>)
                         }
                          {
                             (this.props.auth.isAuthenticated&&this.props.auth.userinfo?.admin )?(

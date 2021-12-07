@@ -76,7 +76,7 @@ export const addIssue = (issue:any) => ({
     alert('The book could not be returned\nError: '+error.message); });
   };
   
-  export const fetchIssues = (student:any) => async (dispatch:Function) => {
+  export const fetchIssues = (student:any) => (dispatch:Function) => {
     let issueUrl:string;
      const bearer =  'Bearer ' + localStorage.getItem('token');
      if(student) {
@@ -85,7 +85,7 @@ export const addIssue = (issue:any) => ({
     else {
       issueUrl='issues';
     }
-    await dispatch(issuesLoading());
+    dispatch(issuesLoading());
     return fetch(baseUrl+issueUrl,{
        headers: {
           'Authorization': bearer
