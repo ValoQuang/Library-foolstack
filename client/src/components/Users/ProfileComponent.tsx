@@ -40,7 +40,7 @@ class Profile extends Component<profileProp, profileState> {
             this.setState({isEditModalOpen: !this.state.isEditModalOpen});
           }
 render(){
-    if(this.props.auth.userinfo===null){
+    if(!this.props.auth.userinfo){
         return (
             <div className="row heading">
                 Failed to fetch. Please reload the page
@@ -54,8 +54,8 @@ render(){
         <CardHeader><h3>My Profile</h3></CardHeader>
         <CardBody>
           <CardText>
-          <h3> First Name : {this.props.auth.userinfo.firstname} </h3>
-          <h3> Last Name : {this.props.auth.userinfo.lastname}</h3>
+          <h3> First Name :  {'          '+this.props.auth.userinfo.firstname || this.props.auth.userinfo.givenName} </h3>
+          <h3> Last Name : {'          '+this.props.auth.userinfo.lastname|| this.props.auth.userinfo.familyName}</h3>
           <h3> Email : {'          '+this.props.auth.userinfo.email}</h3>
           </CardText>
           <Button color="info" onClick={this.toggleEditModal}>Edit &nbsp;{'   '}<span className="fa fa-pencil"/></Button>

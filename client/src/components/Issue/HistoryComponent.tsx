@@ -82,7 +82,7 @@ render(){
         return(
             <div className="container">
                 <div className="row">            
-                    <CircularProgress />
+                    LOADING
                 </div>
             </div>
         );
@@ -106,7 +106,7 @@ render(){
                     <div className="col-12 text-center">
                         <br/><br/>
                         <h4>{'You have not issued any books.'}</h4> 
-                        <h4>{'Request admin to issue a book'}</h4>
+                        <h4>{'Admin can issue book to you, you can view your issue history here'}</h4>
                     </div>
                 </div>
             </div>

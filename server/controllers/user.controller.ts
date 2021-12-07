@@ -135,7 +135,7 @@ exports.checkJWT = async (req:any, res:Response, next: NextFunction) => {
 }
 
 exports.logGoogle = async (req:any, res:Response, next: NextFunction) => {
-  
+  await passport.authenticate('google-id-token', (err:Error, user:any, info:any) => {
       const {email,id,firstname,lastname, admin} = req.user as any
       try {
       var token = jwt.sign(
@@ -150,6 +150,7 @@ exports.logGoogle = async (req:any, res:Response, next: NextFunction) => {
     } catch(e) {
         return next(e)     
     }
+  })
 }
 
   

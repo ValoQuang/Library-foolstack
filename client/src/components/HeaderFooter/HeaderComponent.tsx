@@ -38,7 +38,8 @@ interface header {
     username:string,
     password:string,
     loginGoogle:Function,
-    user:any
+    user:any,
+    userinfo:any
 }
 
 interface MyComponentState { isNavOpen: boolean,
@@ -135,7 +136,7 @@ class Header extends Component<header,MyComponentState >{
                                <span className="fa fa-home fa-lg"/> Home
                            </NavLink>
                         </NavItem>
-                        {this.props.auth.userinfo&&this.props.auth.userinfo.email ?(
+                        {this.props.auth.userinfo&&this.props.auth.isAdmin ?(
                             <NavItem className="">
                             <Dropdown  isOpen={this.state.dropdownOpen} toggle={this.toggle}>
                             <DropdownToggle color="Primary" >
@@ -179,7 +180,7 @@ class Header extends Component<header,MyComponentState >{
                             (<div/>)}
 
                         {
-                            (this.props.auth.isAuthenticated&&!this.props.auth.isAdmin )?(
+                            this.props.auth.isAuthenticated && !this.props.auth.isAdmin ? (
                                 <NavItem onClick={this.toggleNav} className="ml-2">
                                <NavLink className="nav-link text-white" to="/history">
                                      <span className="fa fa-history"/> Issue history
@@ -189,7 +190,7 @@ class Header extends Component<header,MyComponentState >{
                             (<div/>)
                         }
                          {
-                            (this.props.auth.isAuthenticated&&this.props.auth.isAdmin )?(
+                            (this.props.auth.isAuthenticated&&this.props.auth.userinfo?.admin )?(
                               <React.Fragment>
                                 <NavItem onClick={this.toggleNav} className="ml-2">
                                 <NavLink className="nav-link text-white" to="/issue">
@@ -213,7 +214,7 @@ class Header extends Component<header,MyComponentState >{
                         </Nav>
                         <Nav>
                         <NavItem className="d-flex">
-                            { !this.props.auth.userinfo ?
+                            {  !this.props.auth.isAuthenticated ?
                         <><Button outline color="primary" onClick={this.toggleModal}>
                                             <span className="fa fa-sign-in fa-lg"></span>Login
                                             {this.props.auth.isLoading ?
@@ -231,7 +232,7 @@ class Header extends Component<header,MyComponentState >{
 
                             :
                             <div style={divStyle}>
-                            <div className="text-white align-items-center"><h5>Welcome {this.props.auth.userinfo.email}</h5></div>
+                            <div className="text-white align-items-center"><h5>Welcome {this.props.auth?.userinfo?.email}</h5></div>
                         <Button outline color="primary" onClick={this.handleLogout}>
                             <span className="fa fa-sign-out fa-lg"></span> Logout
                             {this.props.auth.isLoading ?<span className="fa fa-spinner fa-pulse fa-fw"></span>: null}

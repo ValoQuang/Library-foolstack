@@ -147,7 +147,7 @@ class Main extends Component<any,any> {
 
       const PrivateRoute = ({ component: Component, ...rest }:any) => (
         <Route {...rest} render={(props) => (
-          this.props.auth.isAuthenticated&&!this.props.auth.userinfo.isAdmin
+          this.props.auth.isAuthenticated&&!this.props.auth.isAdmin
             ? <Component {...props} />
             : <Redirect to={{
                 pathname: '/home',
@@ -163,6 +163,7 @@ class Main extends Component<any,any> {
           <div className="App">
           <Header auth={this.props.auth}
           user={this.props.user}
+          userinfo={this.props.auth.userinfo}
         loginUser={this.props.loginUser}
         logoutUser={this.props.logoutUser}
         loginGoogle={this.props.loginGoogle}
@@ -194,7 +195,7 @@ class Main extends Component<any,any> {
                       <PrivateRouteCommon exact path='/profile' component={() => <Profile
                       auth={this.props.auth}
                       editUser={this.props.editUser}
-                      editPassword={this.props.editPassword} errMess={""} user={undefined}/>
+                      editPassword={this.props.editPassword} errMess={""} user={null}/>
                       }
                       />
                        <PrivateRouteAdmin exact path='/add_book' component={() => <AddBook

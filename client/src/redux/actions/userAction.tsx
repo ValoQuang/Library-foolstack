@@ -251,16 +251,16 @@ export const registerUser = (creds:any) => async (dispatch:Function) => {
 };
 
 export const loginGoogle = (response:any) => async (dispatch:Function) => {
-  response.profileObj.admin = false;
+  
   axios.post(baseUrl + 'users/google', response)
-
+  response.profileObj.admin = false;
   localStorage.setItem('token', response.tokenObj.id_token);
   
   localStorage.setItem('creds', JSON.stringify(response.profileObj.googleId));        
   localStorage.setItem('userinfo', JSON.stringify(response.profileObj));
 
     
-  dispatch(receiveLoginGoogle(response))
+  await dispatch(receiveLogin(response))
   };
 
 
