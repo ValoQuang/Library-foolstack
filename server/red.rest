@@ -1,18 +1,12 @@
 ###
-GET http://localhost:5000/api/books
+GET http://localhost:5000/api/users
 content-type: application/json
 
 ###
-POST http://localhost:5000/api/users/signup
+POST http://localhost:5000/api/users/google
 content-type: application/json
 
-{
-    "username":"director",
-    "password":"director",
-    "firstname":"Admin ",
-    "lastname":"1",
-    "roll":"0000000001",
-    "email": "admin@gmail.com"
-}
+
+
 ###
 PUT http://localhost:5000/api/issues/61a63b51d0099a2288abc652

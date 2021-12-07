@@ -51,11 +51,11 @@ render(){
         <CardHeader><h3>User Details</h3></CardHeader>
         <CardBody>
           <CardText>
-          <h5> First Name : {'          '+this.props.user.firstname}</h5>
-          <h5> Last Name : {'          '+this.props.user.lastname}</h5>
-          <h5> {(this.props.user.admin)?'Admin Id : ':'Roll No.'} : {'          '+this.props.user.roll}</h5>
+          <h5> First Name : {'          '+this.props.user.firstname || this.props.user.givenName}</h5>
+          <h5> Last Name : {'          '+this.props.user.lastname|| this.props.user.familyName}</h5>
+          <h5> {(this.props.user.admin)?'Admin Id : ':'Roll No.'} : ({'          '+this.props.user.roll|| this.props.user.googleId} )</h5>
           <h5> Email : {'          '+this.props.user.email}</h5>
-          <h5> Username : {'          '+this.props.user.username}</h5>
+          <h5> Username : {'          '+this.props.user.username || this.props.user.name}</h5>
           </CardText>
         </CardBody>
           </Card>

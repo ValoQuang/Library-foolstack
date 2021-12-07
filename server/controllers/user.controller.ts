@@ -2,6 +2,7 @@ const User = require('../models/user.model');
 import {Request, Response, NextFunction} from "express"
 const passport = require('passport');
 const authenticate = require('../middleware/authenticate');
+const jwt = require('jsonwebtoken')
 
 //GET ALL USERS
 exports.getAllUser = async (req:Request, res:Response, next: NextFunction) => {
@@ -97,6 +98,8 @@ exports.logIn = async (req:any, res:Response, next: NextFunction) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
         res.json({success: true, status: 'Login Successful!', token: token, userinfo: req.user});
+        console.log(req.user + "         this is body")
+        console.log(token + "            this is token")
       }); 
     }) (req, res, next); // function call IIFE
 }
@@ -130,3 +133,24 @@ exports.checkJWT = async (req:any, res:Response, next: NextFunction) => {
       }
     }) (req, res);
 }
+
+exports.logGoogle = async (req:any, res:Response, next: NextFunction) => {
+  await passport.authenticate('google-id-token', (err:Error, user:any, info:any) => {
+      const {email,id,firstname,lastname, admin} = req.user as any
+      try {
+      var token = jwt.sign(
+        {email,id,firstname, lastname, admin},"QUANG",{expiresIn:"1h"}
+      )
+      res.statusCode = 200;
+      res.json({success: true, status: 'Login Successful!', token: token, userinfo: req.user});
+      console.log(res)
+      console.log(token + "         this is token")
+      console.log(req.user + "         this is body")
+      
+    } catch(e) {
+        return next(e)     
+    }
+  })
+}
+
+  

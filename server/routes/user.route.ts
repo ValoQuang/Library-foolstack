@@ -1,4 +1,3 @@
-export {}
 const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
@@ -7,6 +6,8 @@ const passport = require('passport');
 const authenticate = require('../middleware/authenticate');
 import {Request, Response} from "express"
 const cors = require('./cors');
+
+
 
 router.use(bodyParser.json());
 
@@ -33,5 +34,7 @@ router.get('/logout',cors.cors, userController.logOut);
 
 router.get('/checkJWTtoken', cors.corsWithOptions, userController.checkJWT)
 
+//GOOGLE ROUTE IN USER
+router.post('/google',cors.corsWithOptions,authenticate.verifyGoogle,userController.logGoogle);
 module.exports = router;
    

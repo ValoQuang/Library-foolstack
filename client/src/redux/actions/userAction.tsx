@@ -1,6 +1,7 @@
 import * as ActionTypes from './ActionTypes';
 import {baseUrl} from '../../baseUrl'
 import {fetchIssues, requestLogout, receiveLogout} from "./issueAction"
+import axios from "axios"
 
 //Edit user
 export const editUser = (_id:string, firstname:string, lastname:string, roll:number, email:string) => async (dispatch:Function) => {
@@ -103,6 +104,14 @@ export const requestLogin = (creds:any) => {
         userinfo: response.userinfo
     }
   }
+
+  export const receiveLoginGoogle = (response:any) => {
+    return {
+        type: "GOOGLE",
+        token: response.token,
+        userinfo: response.userinfoGoogle,
+    }
+  }
   
   export const loginError = (message:any) => {
     return {
@@ -133,10 +142,12 @@ export const requestLogin = (creds:any) => {
             throw error;
         })
     .then(response => response.json())
+    
     .then(response => {
         if (response.success) {
             // If login was successful, set the token in local storage
             localStorage.setItem('token', response.token);
+            console.log(response.token + "line 151 userActions" )
             localStorage.setItem('creds', JSON.stringify(creds));
             localStorage.setItem('userinfo', JSON.stringify(response.userinfo));    
             dispatch(fetchIssues(!response.userinfo.admin));      
@@ -149,7 +160,7 @@ export const requestLogin = (creds:any) => {
              },3600*1000);
             // Dispatch the success action
             dispatch(receiveLogin(response));
-        
+             console.log(response)
         }
         else {
             var error:any = new Error('Error ' + response.status);
@@ -238,3 +249,19 @@ export const registerUser = (creds:any) => async (dispatch:Function) => {
   .catch(error => alert(error.message+'\n'+
       'May be someone has already registered with that username, email or Roll No.\nTry Entering a new username,email or Roll No. '))
 };
+
+export const loginGoogle = (response:any) => async (dispatch:Function) => {
+  
+  axios.post(baseUrl + 'users/google', response)
+  console.log(response.tokenId)
+  response.profileObj.admin = false;
+  localStorage.setItem('token', response.tokenObj.id_token);
+  
+  localStorage.setItem('creds', JSON.stringify(response.profileObj.googleId));        
+  localStorage.setItem('userinfo', JSON.stringify(response.profileObj));
+
+    
+  await dispatch(receiveLoginGoogle(response))
+  };
+
+
