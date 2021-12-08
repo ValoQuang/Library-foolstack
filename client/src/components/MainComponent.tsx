@@ -19,7 +19,7 @@ import {Switch,Route,Redirect, withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {Modal,ModalBody,ModalHeader,Button, Label, Col, Row} from 'reactstrap';
 import { postBook, fetchBooks, editBook, deleteBook} from '../redux/actions/bookAction';
-import {loginUser, logoutUser, registerUser, editUser, editPassword,fetchUsers,loginGoogle } from '../redux/actions/userAction';
+import {loginUser, logoutUser, registerUser, editUser, editPassword,fetchUsers } from '../redux/actions/userAction';
 import { returnIssue, fetchIssues, postIssue } from '../redux/actions/issueAction';
 import { Control, LocalForm, Errors  } from 'react-redux-form';
 
@@ -47,7 +47,7 @@ const mapDispatchToProps:any = (dispatch: (arg0: { (dispatch: Function): Promise
   editPassword : (_id: string,username: string,password: string) => dispatch(editPassword(_id,username,password)),
   postIssue: (bookId: string,studentId: string) => (dispatch(postIssue(bookId,studentId))),
   returnIssue: (issueId: any) => (dispatch(returnIssue(issueId))),
-  loginGoogle: (response:any)=> dispatch(loginGoogle(response)),
+  
 });
 
 class Main extends Component<any,any> {
@@ -207,25 +207,25 @@ class Main extends Component<any,any> {
                       />
                       }/>
                       <PrivateRoute exact path='/profile' component={() => <Profile
-            auth={this.props.auth}
-            editUser={this.props.editUser} editPassword={undefined} errMess={undefined} user={undefined} />}
+                      auth={this.props.auth}
+                      editUser={this.props.editUser} editPassword={undefined} errMess={undefined} user={undefined} />}
                       />
                        <PrivateRoute exact path='/history' component={() => <History
-            issues={this.props.issues}
-            auth={this.props.auth} errMess={""} />}
+                      issues={this.props.issues}
+                      auth={this.props.auth} errMess={""} />}
                       />
                        <PrivateRouteAdmin exact path='/logs' component={() => <Log
-            issues={this.props.issues} errMess={""} />}
+                      issues={this.props.issues} errMess={""} />}
                       />
                          <PrivateRouteAdmin exact path='/list_students' component={() => <UserList
-            users={this.props.users.users.filter((user: any) => (!user.admin))}
-            usersLoading={this.props.users.isLoading}
-            usersErrMess={this.props.users.errMess} editPassword={undefined} errMess={undefined}                     />}
+                      users={this.props.users.users.filter((user: any) => (!user.admin))}
+                      usersLoading={this.props.users.isLoading}
+                      usersErrMess={this.props.users.errMess} editPassword={undefined} errMess={undefined}                     />}
                       />
                          <PrivateRouteAdmin exact path='/list_admins' component={() => <UserList
-            users={this.props.users.users.filter((user: any) => (user.admin))}
-            usersLoading={this.props.users.isLoading}
-            usersErrMess={this.props.users.errMess} editPassword={undefined} errMess={""}                     />}
+                      users={this.props.users.users.filter((user: any) => (user.admin))}
+                      usersLoading={this.props.users.isLoading}
+                      usersErrMess={this.props.users.errMess} editPassword={undefined} errMess={""}                     />}
                       />
                        <PrivateRouteAdmin exact path='/issue' component={() => <Issue
                       auth={this.props.auth}
@@ -238,26 +238,26 @@ class Main extends Component<any,any> {
                       postIssue={this.props.postIssue}
                        />} />
                       <PrivateRouteAdmin exact path='/return' component={() => <Return
-            issues={this.props.issues}
-            auth={this.props.auth}
-            returnIssue={this.props.returnIssue} errMess={""}/>} />
+                      issues={this.props.issues}
+                      auth={this.props.auth}
+                      returnIssue={this.props.returnIssue} errMess={""}/>} />
                       <PrivateRouteAdmin path='/users/:userId' component={UserWithId}/>
                       <PrivateRouteAdmin path='/stats' component={() => <Stats
-            issues={this.props.issues}
-            books={this.props.books.books}
-            booksLoading={this.props.books.isLoading}
-            booksErrMess={this.props.books.errMess}
-            users={this.props.users.users}
-            usersLoading={this.props.users.isLoading}
-            usersErrMess={this.props.users.errMess} errMess={""} returnIssue={(undefined)}/>}/>
+                      issues={this.props.issues}
+                      books={this.props.books.books}
+                      booksLoading={this.props.books.isLoading}
+                      booksErrMess={this.props.books.errMess}
+                      users={this.props.users.users}
+                      usersLoading={this.props.users.isLoading}
+                      usersErrMess={this.props.users.errMess} errMess={""} returnIssue={(undefined)}/>}/>
                       <Redirect to="/home"/>
-          </Switch>
+                      </Switch>
  
-        <Modal isOpen={this.state.isDeleteModalOpen} toggle={this.toggleDeleteModal}>
-                     <ModalHeader toggle={this.toggleDeleteModal}>
+                      <Modal isOpen={this.state.isDeleteModalOpen} toggle={this.toggleDeleteModal}>
+                      <ModalHeader toggle={this.toggleDeleteModal}>
                          Confirm Deletion
-                     </ModalHeader>
-                     <ModalBody>
+                      </ModalHeader>
+                      <ModalBody>
                       Book details : <br/><br/>
                       Name : {this.state.selectedBook?this.state.selectedBook.name:''} <br/>
                       Authors : {this.state.selectedBook?this.state.selectedBook.author:''} <br/>

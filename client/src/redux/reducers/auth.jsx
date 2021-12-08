@@ -1,5 +1,5 @@
 import * as ActionTypes from '../actions/ActionTypes';
-import {PayloadAction} from '@reduxjs/toolkit'
+
 // The auth reducer. The starting state sets authentication
 // based on a token being in local storage. In a real app,
 // we would also want a util to check if the token is expired.
@@ -7,13 +7,14 @@ import {PayloadAction} from '@reduxjs/toolkit'
 const Auth = (state = {
     isLoading: false,
     isAuthenticated: localStorage.getItem('token') ? true : false,
+    isAdmin: false,
     token: localStorage.getItem('token'),
-    user: localStorage.getItem('creds') ? JSON.parse(localStorage.getItem('creds')) : null,
-    userinfo: localStorage.getItem('userinfo') ? JSON.parse(localStorage.getItem('userinfo')) : null,
+    user: localStorage.getItem('creds') ? JSON.parse(localStorage.getItem('creds')) :"",
+    userinfo: localStorage.getItem('userinfo') ? JSON.parse(localStorage.getItem('userinfo')) : "",
     errMess: null
 }, action) => {
 switch (action.type) {
-    case "GOOGLE":
+    case  ActionTypes.GOOGLE:
         return {...state,
             isLoading: false,
             isAuthenticated: true,

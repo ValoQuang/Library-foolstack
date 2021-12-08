@@ -107,9 +107,9 @@ export const requestLogin = (creds:any) => {
 
   export const receiveLoginGoogle = (response:any) => {
     return {
-        type: "GOOGLE",
+        type: ActionTypes.GOOGLE,
         token: response.token,
-        userinfo: response.userinfoGoogle,
+        userinfo: response.userinfo,
     }
   }
   
@@ -250,18 +250,5 @@ export const registerUser = (creds:any) => async (dispatch:Function) => {
       'May be someone has already registered with that username, email or Roll No.\nTry Entering a new username,email or Roll No. '))
 };
 
-export const loginGoogle = (response:any) => async (dispatch:Function) => {
-  
-  axios.post(baseUrl + 'users/google', response)
-  console.log(response.tokenId)
-  response.profileObj.admin = false;
-  localStorage.setItem('token', response.tokenObj.id_token);
-  
-  localStorage.setItem('creds', JSON.stringify(response.profileObj.googleId));        
-  localStorage.setItem('userinfo', JSON.stringify(response.profileObj));
-
-    
-  await dispatch(receiveLoginGoogle(response))
-  };
 
 

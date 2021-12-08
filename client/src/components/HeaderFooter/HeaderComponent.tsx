@@ -7,6 +7,7 @@ import { required, maxLength, minLength, validEmail} from "../Validator/index"
 import {GoogleLogin} from 'react-google-login'
 import { baseUrl } from '../../baseUrl';
 import axios from 'axios';
+import { receiveLoginGoogle } from '../../redux/actions/userAction';
 
 
 
@@ -107,13 +108,17 @@ class Header extends Component<header,MyComponentState >{
         });
       }
 
-    async responseGoogle(response:any) {
+        responseGoogle(response:any) {
         console.log('inside')
-        //await axios.post(baseUrl + 'users/google', 
-        //{id_token: response.tokenObj.id_token})
-        console.log(response)
-                                  
-        this.props.loginGoogle(response)
+        response.profileObj.admin = false
+        axios.post(baseUrl + 'users/login', 
+        {id_token: response.tokenObj.id_token})
+     
+        console.log(response)           
+        //this.props.loginGoogle(response)
+        localStorage.setItem('token', response.tokenObj.id_token)
+        localStorage.setItem('userinfo', JSON.stringify(response.profileObj))
+        return receiveLoginGoogle(response)
     };
 
     denyGoogle() {
@@ -157,14 +162,12 @@ class Header extends Component<header,MyComponentState >{
                                 <span className="fa fa-search fa-lg"/> Search
                             </NavLink>
                         </NavItem>
-                        {
-                            (this.props.auth.isAuthenticated)?(
+                        {(this.props.auth.isAuthenticated)?(
                                 <NavItem onClick={this.toggleNav} className="ml-2">
                                 <NavLink className="nav-link text-white" to="/profile">
                                      <span className="fa fa-user-circle-o fa-lg"/> My Profile
                                 </NavLink>
-                                </NavItem>
-                            )
+                                </NavItem>)
                             :
                             (<div/>)
                         }
@@ -174,13 +177,10 @@ class Header extends Component<header,MyComponentState >{
                                   <NavLink className="nav-link text-white" to="/books">
                                                     <span className="fa fa-book fa-lg"/> Books
                                                 </NavLink>
-                            </NavItem>
-                        )
-                    :
+                            </NavItem>)
+                        :
                             (<div/>)}
-
-                        {
-                            this.props.auth.isAuthenticated && !this.props.auth.userinfo?.admin ? (
+                        {this.props.auth.isAuthenticated && !this.props.auth.userinfo.admin ? (
                                 <NavItem onClick={this.toggleNav} className="ml-2">
                                <NavLink className="nav-link text-white" to="/history">
                                      <span className="fa fa-history"/> Issue history
@@ -189,8 +189,7 @@ class Header extends Component<header,MyComponentState >{
                             ):
                             (<div>Empty</div>)
                         }
-                         {
-                            (this.props.auth.isAuthenticated&&this.props.auth.userinfo?.admin )?(
+                         {(this.props.auth.isAuthenticated&&this.props.auth.userinfo.admin )?(
                               <React.Fragment>
                                 <NavItem onClick={this.toggleNav} className="ml-2">
                                 <NavLink className="nav-link text-white" to="/issue">

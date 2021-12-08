@@ -30,22 +30,13 @@ passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
   },
   async function(parsedToken: any, googleId:string, done:any) {
-    const userPayload = {
-        admin: parsedToken?.payload?.admin,
-        email: parsedToken?.payload?.email,
-        firstname: parsedToken?.payload?.given_name,
-        lastname: parsedToken?.payload?.family_name,
-        username: parsedToken?.payload?.name,
+    User.findOne({ googleId: googleId }, function (err:any, user:any) {
+        console.log(googleId, user)
+        return done(err, user);
+      });
     }
-    try {
-        const user = await findOrCreate(userPayload) 
-        console.log(userPayload + "line 41 authenticate")
-        done(null, user);
-    } catch(e) {
-        done(e)
-    }   
-  }
 ));
+
 
 exports.local=passport.use(new LocalStrategy(User.authenticate()));
 
