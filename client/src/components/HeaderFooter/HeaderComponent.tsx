@@ -7,7 +7,8 @@ import { required, maxLength, minLength, validEmail} from "../Validator/index"
 import {GoogleLogin} from 'react-google-login'
 import { baseUrl } from '../../baseUrl';
 import axios from 'axios';
-import { receiveLoginGoogle } from '../../redux/actions/userAction';
+import {receiveLogin, receiveLoginGoogle, requestLogin} from '../../redux/actions/userAction';
+import { fetchIssues } from '../../redux/actions/issueAction';
 
 
 
@@ -40,7 +41,7 @@ interface header {
     password:string,
     loginGoogle:Function,
     user:any,
-    userinfo:any
+    userinfo:any,
 }
 
 interface MyComponentState { isNavOpen: boolean,
@@ -72,6 +73,9 @@ class Header extends Component<header,MyComponentState >{
         this.toggleRegister=this.toggleRegister.bind(this);
         this.toggle=this.toggle.bind(this);
         this.responseGoogle = this.responseGoogle.bind(this);
+    }
+    componentDidMount() {
+        window.scrollTo(0, 0)
     }
 
     toggle(){
@@ -108,19 +112,19 @@ class Header extends Component<header,MyComponentState >{
         });
       }
 
-        responseGoogle(response:any) {
-        console.log('inside')
-        response.profileObj.admin = false
-        axios.post(baseUrl + 'users/login', 
-        {id_token: response.tokenObj.id_token})
-     
-        console.log(response)           
-        //this.props.loginGoogle(response)
-        localStorage.setItem('token', response.tokenObj.id_token)
-        localStorage.setItem('userinfo', JSON.stringify(response.profileObj))
-        return receiveLoginGoogle(response)
-    };
+    async responseGoogle(response:any) {
 
+        axios.post(baseUrl + 'users/google', 
+        {id_token: response.tokenObj.id_token})
+        .then((res:any)=> {      
+            console.log(res)
+            localStorage.setItem('token', res.data.token)
+            localStorage.setItem('userinfo', JSON.stringify(res.data.userinfo))
+            fetchIssues(!res.data.userinfo.admin)
+        })
+            return receiveLogin(res)
+    }
+    
     denyGoogle() {
         console.log('fail')
     }
@@ -180,7 +184,7 @@ class Header extends Component<header,MyComponentState >{
                             </NavItem>)
                         :
                             (<div/>)}
-                        {this.props.auth.isAuthenticated && !this.props.auth.userinfo.admin ? (
+                        {(this.props.auth.isAuthenticated&&!this.props.auth.userinfo.admin ) ? (
                                 <NavItem onClick={this.toggleNav} className="ml-2">
                                <NavLink className="nav-link text-white" to="/history">
                                      <span className="fa fa-history"/> Issue history
@@ -213,8 +217,18 @@ class Header extends Component<header,MyComponentState >{
                         </Nav>
                         <Nav>
                         <NavItem className="d-flex">
-                            {  !this.props.auth.isAuthenticated ?
-                        <><Button outline color="primary" onClick={this.toggleModal}>
+                            {  this.props.auth.isAuthenticated  ?
+                        
+                            
+                            <div style={divStyle}>
+                            <div className="text-white align-items-center"><h5>Welcome {this.props.auth?.userinfo?.email}</h5></div>
+                        <Button outline color="primary" onClick={this.handleLogout}>
+                            <span className="fa fa-sign-out fa-lg"></span> Logout
+                            {this.props.auth.isLoading ?<span className="fa fa-spinner fa-pulse fa-fw"></span>: null}
+                        </Button>
+                        </div>
+                            :
+                            <><Button outline color="primary" onClick={this.toggleModal}>
                                             <span className="fa fa-sign-in fa-lg"></span>Login
                                             {this.props.auth.isLoading ?
                                                 <span className="fa fa-spinner fa-pulse fa-fw"></span>
@@ -229,14 +243,6 @@ class Header extends Component<header,MyComponentState >{
                                 cookiePolicy={'single_host_origin'} />
                             </div></>
 
-                            :
-                            <div style={divStyle}>
-                            <div className="text-white align-items-center"><h5>Welcome {this.props.auth?.userinfo?.email}</h5></div>
-                        <Button outline color="primary" onClick={this.handleLogout}>
-                            <span className="fa fa-sign-out fa-lg"></span> Logout
-                            {this.props.auth.isLoading ?<span className="fa fa-spinner fa-pulse fa-fw"></span>: null}
-                        </Button>
-                        </div>
                         }
                         <Registerer isSignedIn={this.props.auth.isAuthenticated} toggleRegister={()=>{this.toggleRegister(true)}}/>
                         </NavItem>
@@ -334,4 +340,8 @@ class Header extends Component<header,MyComponentState >{
 }
 export default Header;
 
+
+function res(res: any): ((value: void) => void | PromiseLike<void>) | null | undefined {
+    throw new Error('Function not implemented.');
+}
 

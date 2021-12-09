@@ -35,6 +35,6 @@ router.get('/logout',cors.cors, userController.logOut);
 router.get('/checkJWTtoken', cors.corsWithOptions, userController.checkJWT)
 
 //GOOGLE ROUTE IN USER
-router.post('/login',cors.corsWithOptions,authenticate.verifyGoogle,userController.logGoogle);
+router.post('/google',cors.corsWithOptions,passport.authenticate('google-id-token', {session:false}),userController.logGoogle);
 module.exports = router;
    

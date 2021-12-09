@@ -32,31 +32,28 @@ function RenderBook({book,isAdmin,toggleEditModal,changeSelected}:renderBook) {
         <CardFooter className="text-muted">
         <Row>
         <Col md={6}>
-        Created at : {new Intl.DateTimeFormat('en-US',{year: 'numeric', month: 'short', day: '2-digit', hour: 'numeric',minute: 'numeric', hour12: true }).format(new Date( Date.parse(book.createdAt)))}    
+            Created at : {new Intl.DateTimeFormat('en-US',{year: 'numeric', month: 'short', day: '2-digit', hour: 'numeric',minute: 'numeric', hour12: true }).format(new Date( Date.parse(book.createdAt)))}    
         </Col>
         <Col md={6}>
-        Last updated at : {new Intl.DateTimeFormat('en-US',{year: 'numeric', month: 'short', day: '2-digit',hour: 'numeric',minute: 'numeric', hour12: true}).format(new Date( Date.parse(book.updatedAt)))} 
+            Last updated at : {new Intl.DateTimeFormat('en-US',{year: 'numeric', month: 'short', day: '2-digit',hour: 'numeric',minute: 'numeric', hour12: true}).format(new Date( Date.parse(book.updatedAt)))} 
         </Col>
         </Row>
         </CardFooter>
         </Card>
         );
     else
-        return(
-            <div></div>
-        );
-        }
+        return(<div></div>);
+}
 
 
 class BookDetail extends Component<renderBook> {
     constructor(props:renderBook){
         super(props);
-        this.state={
-        }
+        this.state={}
     }
     componentDidMount() {
         window.scrollTo(0, 0)
-      }
+    }
 render(){
   if (this.props.isLoading) {
     return(

@@ -6,13 +6,15 @@ const User = require('../models/user.model');
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
+const GoogleStrategy = require('passport-google-id-token')
 
-async function findOrCreate(payload:any) {
+ async function findOrCreate(payload:any) {
     return User.findOne({email: payload.email})
     .exec()
     .then((user:any)=>{
         if (!user) {
             const newUser = new User({
+                admin: false,
                 email:payload.email,
                 firstname: payload.firstname,
                 lastname:payload.lastname,
@@ -24,17 +26,26 @@ async function findOrCreate(payload:any) {
     })
 }
 
-var GoogleStrategy = require('passport-google-id-token')
+
 
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
   },
   async function(parsedToken: any, googleId:string, done:any) {
-    User.findOne({ googleId: googleId }, function (err:any, user:any) {
-        console.log(googleId, user)
-        return done(err, user);
-      });
+    const userPayload = {
+        email: parsedToken?.payload?.email,
+        firstname: parsedToken?.payload?.givenName,
+        lastname: parsedToken?.payload?.familyName,
+        admin: false,
     }
+    try {
+        const user = await findOrCreate(userPayload)
+            console.log(googleId, user)
+            done(null, user);
+    } catch(e:any) {
+        done(e)
+    }
+}
 ));
 
 
@@ -70,7 +81,7 @@ passport.use(new JwtStrategy(opts,
     }));
 
 exports.verifyUser = passport.authenticate('jwt', {session: false});
-exports.verifyGoogle =  passport.authenticate('google-id-token', {session:false});
+exports.verifyGoogle =  passport.authenticate('google-id-token');
 
 exports.verifyAdmin = function (req:any, res:Response, next:NextFunction){
     if(req.user.admin){

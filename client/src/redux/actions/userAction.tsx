@@ -147,7 +147,6 @@ export const requestLogin = (creds:any) => {
         if (response.success) {
             // If login was successful, set the token in local storage
             localStorage.setItem('token', response.token);
-            console.log(response.token + "line 151 userActions" )
             localStorage.setItem('creds', JSON.stringify(creds));
             localStorage.setItem('userinfo', JSON.stringify(response.userinfo));    
             dispatch(fetchIssues(!response.userinfo.admin));      
@@ -249,6 +248,4 @@ export const registerUser = (creds:any) => async (dispatch:Function) => {
   .catch(error => alert(error.message+'\n'+
       'May be someone has already registered with that username, email or Roll No.\nTry Entering a new username,email or Roll No. '))
 };
-
-
 

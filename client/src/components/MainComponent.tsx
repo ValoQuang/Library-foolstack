@@ -47,7 +47,6 @@ const mapDispatchToProps:any = (dispatch: (arg0: { (dispatch: Function): Promise
   editPassword : (_id: string,username: string,password: string) => dispatch(editPassword(_id,username,password)),
   postIssue: (bookId: string,studentId: string) => (dispatch(postIssue(bookId,studentId))),
   returnIssue: (issueId: any) => (dispatch(returnIssue(issueId))),
-  
 });
 
 class Main extends Component<any,any> {

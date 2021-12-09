@@ -86,9 +86,8 @@ class AddBook extends Component<addBook> {
                                         className="form-control"
                                         validators={{
                                             required, minLength: minLength(10), maxLength: maxLength(13), isNumber,
-                                            uniqueIsbn
-                                        }}
-                                         />
+                                            uniqueIsbn}}
+                                    />
                                     <Errors
                                         className="text-danger"
                                         model=".isbn"
@@ -172,8 +171,6 @@ class AddBook extends Component<addBook> {
                     </div>
                 <br/>
     </div>
-
-    
  );}
 }
 

@@ -14,15 +14,6 @@ const Auth = (state = {
     errMess: null
 }, action) => {
 switch (action.type) {
-    case  ActionTypes.GOOGLE:
-        return {...state,
-            isLoading: false,
-            isAuthenticated: true,
-            isAdmin:false,
-            errMess: '',
-            token: action.token,
-            userinfo: action.userinfo
-        };
     case ActionTypes.LOGIN_REQUEST:
         return {...state,
             isLoading: true,
