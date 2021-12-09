@@ -24,10 +24,10 @@ const Books = (state = { isLoading: true,
                 {
                 if(book._id===newbook._id)
                 {
-                    return newbook;
+                return newbook;
                 }
             else {
-                    return book;
+                return book;
             }
                  })
                 }

@@ -71,9 +71,9 @@ export const postBook = (name:string, author:string, description:string, isbn:nu
 export const editBook = (_id:string, name:string, author:string, description:string, isbn:number, cat:string, floor:number, shelf:number, copies:number) => async (dispatch:Function) => {
     const newBook = {
       name: name, author: author,
-       description: description, isbn: isbn,
-        cat: cat, floor: floor, 
-        shelf: shelf, copies: copies
+      description: description, isbn: isbn,
+      cat: cat, floor: floor, 
+      copies: copies
     };
     const bearer = 'Bearer ' + localStorage.getItem('token');
     return fetch(baseUrl + 'books/' + _id, {

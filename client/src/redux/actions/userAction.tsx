@@ -104,24 +104,14 @@ export const requestLogin = (creds:any) => {
         userinfo: response.userinfo
     }
   }
-
-  export const receiveLoginGoogle = (response:any) => {
-    return {
-        type: ActionTypes.GOOGLE,
-        token: response.token,
-        userinfo: response.userinfo,
-    }
-  }
-  
   export const loginError = (message:any) => {
     return {
         type: ActionTypes.LOGIN_FAILURE,
         message
     }
   }
-  
   export const loginUser = (creds:any) => async (dispatch:Function) => {
-    dispatch(requestLogin(creds));
+    await dispatch(requestLogin(creds));
     return fetch(baseUrl + 'users/login', {
         method: 'POST',
         headers: { 

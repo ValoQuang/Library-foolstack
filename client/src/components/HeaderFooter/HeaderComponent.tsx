@@ -7,7 +7,7 @@ import { required, maxLength, minLength, validEmail} from "../Validator/index"
 import {GoogleLogin} from 'react-google-login'
 import { baseUrl } from '../../baseUrl';
 import axios from 'axios';
-import {receiveLogin, receiveLoginGoogle, requestLogin} from '../../redux/actions/userAction';
+import {receiveLogin} from '../../redux/actions/userAction';
 import { fetchIssues } from '../../redux/actions/issueAction';
 
 
@@ -113,7 +113,6 @@ class Header extends Component<header,MyComponentState >{
       }
 
     async responseGoogle(response:any) {
-
         axios.post(baseUrl + 'users/google', 
         {id_token: response.tokenObj.id_token})
         .then((res:any)=> {      
@@ -121,8 +120,8 @@ class Header extends Component<header,MyComponentState >{
             localStorage.setItem('token', res.data.token)
             localStorage.setItem('userinfo', JSON.stringify(res.data.userinfo))
             fetchIssues(!res.data.userinfo.admin)
-        })
-            return receiveLogin(res)
+            receiveLogin(res)
+        })        
     }
     
     denyGoogle() {
@@ -184,7 +183,7 @@ class Header extends Component<header,MyComponentState >{
                             </NavItem>)
                         :
                             (<div/>)}
-                        {(this.props.auth.isAuthenticated&&!this.props.auth.userinfo.admin ) ? (
+                        {(this.props.auth.isAuthenticated&& !this.props.auth.userinfo.admin ) ? (
                                 <NavItem onClick={this.toggleNav} className="ml-2">
                                <NavLink className="nav-link text-white" to="/history">
                                      <span className="fa fa-history"/> Issue history
@@ -217,9 +216,7 @@ class Header extends Component<header,MyComponentState >{
                         </Nav>
                         <Nav>
                         <NavItem className="d-flex">
-                            {  this.props.auth.isAuthenticated  ?
-                        
-                            
+                            {this.props.auth.isAuthenticated  ?     
                             <div style={divStyle}>
                             <div className="text-white align-items-center"><h5>Welcome {this.props.auth?.userinfo?.email}</h5></div>
                         <Button outline color="primary" onClick={this.handleLogout}>
@@ -340,8 +337,4 @@ class Header extends Component<header,MyComponentState >{
 }
 export default Header;
 
-
-function res(res: any): ((value: void) => void | PromiseLike<void>) | null | undefined {
-    throw new Error('Function not implemented.');
-}
 

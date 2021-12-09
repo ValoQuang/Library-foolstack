@@ -40,7 +40,6 @@ passport.use(new GoogleStrategy({
     }
     try {
         const user = await findOrCreate(userPayload)
-            console.log(googleId, user)
             done(null, user);
     } catch(e:any) {
         done(e)
@@ -81,7 +80,6 @@ passport.use(new JwtStrategy(opts,
     }));
 
 exports.verifyUser = passport.authenticate('jwt', {session: false});
-exports.verifyGoogle =  passport.authenticate('google-id-token');
 
 exports.verifyAdmin = function (req:any, res:Response, next:NextFunction){
     if(req.user.admin){
