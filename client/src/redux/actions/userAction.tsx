@@ -1,7 +1,6 @@
 import * as ActionTypes from "./ActionTypes";
 import { baseUrl } from "../../baseUrl";
 import { fetchIssues, requestLogout, receiveLogout } from "./issueAction";
-import axios from "axios";
 
 //Edit user
 export const editUser =
@@ -186,7 +185,7 @@ export const loginUser = (creds: any) => async (dispatch: Function) => {
       }
     })
     .catch((error) => {
-      alert(error.message + "\n" + "Username and password didn't match");
+      alert(error.message + "Username and password didn't match");
       return dispatch(loginError(error.message));
     });
 };

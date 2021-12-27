@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Table } from "reactstrap";
 import { Link } from "react-router-dom";
-import { CircularProgress } from "@mui/material";
+
 
 const fineRate = 1;
 let totalFine = 0;

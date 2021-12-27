@@ -6,23 +6,23 @@ export const booksLoading = () => ({
     type: ActionTypes.BOOKS_LOADING
 });
 
-export const booksFailed = (errmess:any) => ({
+export const booksFailed = (errmess:Error) => ({
     type: ActionTypes.BOOKS_FAILED,
     payload: errmess
 });
 
-export const addBooks = (books:any) => ({
+export const addBooks = (books:Object) => ({
     type: ActionTypes.ADD_BOOKS,
     payload: books
 });
 
 
-export const addBook = (book:any) => ({
+export const addBook = (book:Object) => ({
   type: ActionTypes.ADD_BOOK,
   payload: book
 });
 
-export const editBookdispatch = (books:any) => ({
+export const editBookdispatch = (books:Object) => ({
     type: ActionTypes.EDIT_BOOK,
     payload: books
   });

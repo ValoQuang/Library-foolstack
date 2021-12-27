@@ -47,11 +47,7 @@ class AddBook extends Component<addBook> {
         <div className="container loading">
           <div className="row heading">
             <div className="col-12">
-              <br />
-              <br />
-              <br />
-              <br />
-              <h3>{this.props.booksErrMess}</h3>
+                <h3>{this.props.booksErrMess}</h3>
             </div>
           </div>
         </div>
@@ -61,8 +57,7 @@ class AddBook extends Component<addBook> {
         <div className="container">
           <div className="row justify-content-center heading">
             <div className="col-12">
-              <br />
-              <br />
+              <br/><br/>
               <h3>Add a book</h3>
             </div>
           </div>

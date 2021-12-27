@@ -26,12 +26,10 @@ const Issues = (state = { isLoading: true,
                 {
                     return newissue;
                 }
-            else {
+                else {
                     return issue;
-            }
-                 })
+                }})
                 }
-
         default:
             return state;
     }

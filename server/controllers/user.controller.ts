@@ -143,7 +143,7 @@ exports.logGoogle = async (req:any, res:any, next: NextFunction) => {
       res.statusCode = 200;
       res.json({success: true, status: 'Login Successful!', token, userinfo: req.user});
       console.log(res)
-      console.log(req.user + "         this is body")
+      console.log(req.user + " this is body")
     } catch(e) {
         return next(e)     
     }

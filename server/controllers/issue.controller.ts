@@ -1,8 +1,8 @@
 import {Request, Response, NextFunction} from "express"
-var Issue = require('../models/issue.model');
-var Books = require('../models/book.model');
-var Users = require('../models/user.model');
-var express = require('express');
+const Issue = require('../models/issue.model');
+const Books = require('../models/book.model');
+const Users = require('../models/user.model');
+const express = require('express');
 const bodyParser = require('body-parser');
 const issueRouter = express.Router();
 
