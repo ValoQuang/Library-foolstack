@@ -1,23 +1,23 @@
-import { CircularProgress } from "@mui/material";
-import React, { Component } from "react";
-import { Card, CardBody, CardHeader, CardText } from "reactstrap";
+import { CircularProgress } from '@mui/material'
+import React, { Component } from 'react'
+import { Card, CardBody, CardHeader, CardText } from 'reactstrap'
 
 interface userProp {
-  auth: any;
-  editPassword: any;
-  isLoading: boolean;
-  errMess: any;
-  user: any;
+  auth: any
+  editPassword: any
+  isLoading: boolean
+  errMess: any
+  user: any
 }
 interface userState {}
 
 class UserDetail extends Component<userProp, userState> {
   constructor(props: userProp) {
-    super(props);
-    this.state = {};
+    super(props)
+    this.state = {}
   }
   componentDidMount() {
-    window.scrollTo(0, 0);
+    window.scrollTo(0, 0)
   }
   render() {
     if (this.props.isLoading) {
@@ -27,7 +27,7 @@ class UserDetail extends Component<userProp, userState> {
             <CircularProgress />
           </div>
         </div>
-      );
+      )
     } else if (this.props.errMess) {
       return (
         <div className="container loading">
@@ -41,7 +41,7 @@ class UserDetail extends Component<userProp, userState> {
             </div>
           </div>
         </div>
-      );
+      )
     } else
       return (
         <div className="container mt-6 home text-center align-self-center">
@@ -53,29 +53,29 @@ class UserDetail extends Component<userProp, userState> {
               <CardBody>
                 <CardText>
                   <h5>
-                    {" "}
-                    First Name :{" "}
-                    {"          " + this.props.user.firstname ||
+                    {' '}
+                    First Name :{' '}
+                    {'          ' + this.props.user.firstname ||
                       this.props.user.givenName}
                   </h5>
                   <h5>
-                    {" "}
-                    Last Name :{" "}
-                    {"          " + this.props.user.lastname ||
+                    {' '}
+                    Last Name :{' '}
+                    {'          ' + this.props.user.lastname ||
                       this.props.user.familyName}
                   </h5>
                   <h5>
-                    {" "}
-                    {this.props.user.admin ? "Admin Id : " : "Roll No."} : (
-                    {"          " + this.props.user.roll ||
-                      this.props.user.googleId}{" "}
+                    {' '}
+                    {this.props.user.admin ? 'Admin Id : ' : 'Roll No.'} : (
+                    {'          ' + this.props.user.roll ||
+                      this.props.user.googleId}{' '}
                     )
                   </h5>
-                  <h5> Email : {"          " + this.props.user.email}</h5>
+                  <h5> Email : {'          ' + this.props.user.email}</h5>
                   <h5>
-                    {" "}
-                    Username :{" "}
-                    {"          " + this.props.user.username ||
+                    {' '}
+                    Username :{' '}
+                    {'          ' + this.props.user.username ||
                       this.props.user.name}
                   </h5>
                 </CardText>
@@ -83,8 +83,8 @@ class UserDetail extends Component<userProp, userState> {
             </Card>
           </div>
         </div>
-      );
+      )
   }
 }
 
-export default UserDetail;
+export default UserDetail

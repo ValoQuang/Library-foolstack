@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react'
 import {
   Card,
   CardBody,
@@ -10,51 +10,51 @@ import {
   ModalBody,
   ModalHeader,
   FormGroup,
-} from "reactstrap";
-import { Control, LocalForm, Errors } from "react-redux-form";
+} from 'reactstrap'
+import { Control, LocalForm, Errors } from 'react-redux-form'
 import {
   required,
   maxLength,
   minLength,
   validEmail,
   matchcreds,
-} from "../Validator/index";
+} from '../Validator/index'
 
 interface profileProp {
-  auth: any;
-  editPassword: any;
-  errMess: any;
-  user: any;
-  editUser: Function;
+  auth: any
+  editPassword: any
+  errMess: any
+  user: any
+  editUser: Function
 }
 interface profileState {
-  isPasswordModalOpen: boolean;
-  isEditModalOpen: boolean;
+  isPasswordModalOpen: boolean
+  isEditModalOpen: boolean
 }
 
 class Profile extends Component<profileProp, profileState> {
   constructor(props: profileProp) {
-    super(props);
+    super(props)
     this.state = {
       isEditModalOpen: false,
       isPasswordModalOpen: false,
-    };
-    this.toggleEditModal = this.toggleEditModal.bind(this);
-    this.togglePasswordModal = this.togglePasswordModal.bind(this);
+    }
+    this.toggleEditModal = this.toggleEditModal.bind(this)
+    this.togglePasswordModal = this.togglePasswordModal.bind(this)
   }
 
   componentDidMount() {
-    window.scrollTo(0, 0);
+    window.scrollTo(0, 0)
   }
 
   togglePasswordModal() {
     this.setState({
       isPasswordModalOpen: !this.state.isPasswordModalOpen,
-    });
+    })
   }
 
   toggleEditModal() {
-    this.setState({ isEditModalOpen: !this.state.isEditModalOpen });
+    this.setState({ isEditModalOpen: !this.state.isEditModalOpen })
   }
   render() {
     if (!this.props.auth.isAuthenticated) {
@@ -62,7 +62,7 @@ class Profile extends Component<profileProp, profileState> {
         <div className="row heading">
           Failed to fetch. Please reload the page
         </div>
-      );
+      )
     }
     return (
       <div className="container mt-6 home text-center align-self-center">
@@ -88,14 +88,14 @@ class Profile extends Component<profileProp, profileState> {
                 <h3>Email :{this.props.auth.userinfo.email}</h3>
               </CardText>
               <Button color="info" onClick={this.toggleEditModal}>
-                Edit &nbsp;{"   "}
+                Edit &nbsp;{'   '}
                 <span className="fa fa-pencil" />
-              </Button>{" "}
+              </Button>{' '}
               {this.props.auth.userinfo.admin ? (
                 <div />
               ) : (
                 <Button color="info" onClick={this.togglePasswordModal}>
-                  Change Password &nbsp;{"   "}
+                  Change Password &nbsp;{'   '}
                   <span className="fa fa-key" />
                 </Button>
               )}
@@ -116,14 +116,14 @@ class Profile extends Component<profileProp, profileState> {
                 <LocalForm
                   model="user"
                   onSubmit={(values) => {
-                    this.toggleEditModal();
+                    this.toggleEditModal()
                     this.props.editUser(
                       this.props.auth.userinfo._id,
                       values.firstname,
                       values.lastname,
                       values.roll,
                       values.email
-                    );
+                    )
                   }}
                 >
                   <FormGroup>
@@ -146,9 +146,9 @@ class Profile extends Component<profileProp, profileState> {
                       model=".firstname"
                       show="touched"
                       messages={{
-                        required: "Required",
-                        minLength: " Must be greater than 2 characters",
-                        maxLength: " Must be 20 characters or less",
+                        required: 'Required',
+                        minLength: ' Must be greater than 2 characters',
+                        maxLength: ' Must be 20 characters or less',
                       }}
                     />
                   </FormGroup>
@@ -172,9 +172,9 @@ class Profile extends Component<profileProp, profileState> {
                       model=".lastname"
                       show="touched"
                       messages={{
-                        required: "Required",
-                        minLength: " Must be greater than 2 characters",
-                        maxLength: " Must be 20 characters or less",
+                        required: 'Required',
+                        minLength: ' Must be greater than 2 characters',
+                        maxLength: ' Must be 20 characters or less',
                       }}
                     />
                   </FormGroup>
@@ -198,9 +198,9 @@ class Profile extends Component<profileProp, profileState> {
                       model=".roll"
                       show="touched"
                       messages={{
-                        required: "Required",
-                        minLength: " Must be greater than 2 characters",
-                        maxLength: " Must be 12 characters or less",
+                        required: 'Required',
+                        minLength: ' Must be greater than 2 characters',
+                        maxLength: ' Must be 12 characters or less',
                       }}
                     />
                   </FormGroup>
@@ -220,8 +220,8 @@ class Profile extends Component<profileProp, profileState> {
                       model=".email"
                       show="touched"
                       messages={{
-                        required: "Required",
-                        validEmail: " Enter a valid email",
+                        required: 'Required',
+                        validEmail: ' Enter a valid email',
                       }}
                     />
                   </FormGroup>
@@ -252,14 +252,14 @@ class Profile extends Component<profileProp, profileState> {
                   model="passwordform"
                   onSubmit={(values) => {
                     if (values.newpassword === values.confirm) {
-                      this.togglePasswordModal();
+                      this.togglePasswordModal()
                       this.props.editPassword(
                         this.props.auth.userinfo._id,
                         this.props.auth.user.username,
                         values.newpassword
-                      );
+                      )
                     } else {
-                      alert("Your passwords didn't match. Please try again");
+                      alert("Your passwords didn't match. Please try again")
                     }
                   }}
                 >
@@ -283,10 +283,10 @@ class Profile extends Component<profileProp, profileState> {
                       model=".password"
                       show="touched"
                       messages={{
-                        required: "Required",
-                        minLength: " Must be greater than 5 characters",
-                        maxLength: " Must be 20 characters or less",
-                        matchcreds: " Enter the correct password",
+                        required: 'Required',
+                        minLength: ' Must be greater than 5 characters',
+                        maxLength: ' Must be 20 characters or less',
+                        matchcreds: ' Enter the correct password',
                       }}
                     />
                   </FormGroup>
@@ -310,9 +310,9 @@ class Profile extends Component<profileProp, profileState> {
                       model=".newpassword"
                       show="touched"
                       messages={{
-                        required: "Required",
-                        minLength: " Must be greater than 5 characters",
-                        maxLength: " Must be 20 characters or less",
+                        required: 'Required',
+                        minLength: ' Must be greater than 5 characters',
+                        maxLength: ' Must be 20 characters or less',
                       }}
                     />
                   </FormGroup>
@@ -335,9 +335,9 @@ class Profile extends Component<profileProp, profileState> {
                       model=".confirm"
                       show="touched"
                       messages={{
-                        required: "Required",
-                        minLength: " Must be greater than 5 characters",
-                        maxLength: " Must be 20 characters or less",
+                        required: 'Required',
+                        minLength: ' Must be greater than 5 characters',
+                        maxLength: ' Must be 20 characters or less',
                       }}
                     />
                   </FormGroup>
@@ -355,8 +355,8 @@ class Profile extends Component<profileProp, profileState> {
           )}
         </Modal>
       </div>
-    );
+    )
   }
 }
 
-export default Profile;
+export default Profile

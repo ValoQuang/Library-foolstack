@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react'
 import {
   Navbar,
   Form,
@@ -14,21 +14,21 @@ import {
   ModalBody,
   ModalHeader,
   Button,
-} from "reactstrap";
+} from 'reactstrap'
 import {
   Dropdown,
   DropdownItem,
   DropdownMenu,
   DropdownToggle,
-} from "reactstrap";
-import { NavLink, Link } from "react-router-dom";
-import { Control, LocalForm, Errors } from "react-redux-form";
-import { required, maxLength, minLength, validEmail } from "../Validator/index";
-import { GoogleLogin } from "react-google-login";
-import { baseUrl } from "../../baseUrl";
-import axios from "axios";
-import { receiveLogin } from "../../redux/actions/userAction";
-import { fetchIssues } from "../../redux/actions/issueAction";
+} from 'reactstrap'
+import { NavLink, Link } from 'react-router-dom'
+import { Control, LocalForm, Errors } from 'react-redux-form'
+import { required, maxLength, minLength, validEmail } from '../Validator/index'
+import { GoogleLogin } from 'react-google-login'
+import { baseUrl } from '../../baseUrl'
+import axios from 'axios'
+import { receiveLogin } from '../../redux/actions/userAction'
+import { fetchIssues } from '../../redux/actions/issueAction'
 
 function Registerer(props: any) {
   if (props.isSignedIn === false)
@@ -39,113 +39,113 @@ function Registerer(props: any) {
           <span className="fa fa-user-plus fa-lg"></span> Register
         </Button>
       </React.Fragment>
-    );
-  else return <React.Fragment></React.Fragment>;
+    )
+  else return <React.Fragment></React.Fragment>
 }
 
 interface header {
-  isNavOpen: boolean;
-  isModalOpen: boolean;
-  isRegisterOpen: boolean;
-  dropdownOpen: boolean;
-  auth: any;
-  registerUser: Function;
-  loginUser: Function;
-  logoutUser: Function;
-  username: string;
-  password: string;
-  loginGoogle: Function;
-  user: any;
-  userinfo: any;
+  isNavOpen: boolean
+  isModalOpen: boolean
+  isRegisterOpen: boolean
+  dropdownOpen: boolean
+  auth: any
+  registerUser: Function
+  loginUser: Function
+  logoutUser: Function
+  username: string
+  password: string
+  loginGoogle: Function
+  user: any
+  userinfo: any
 }
 
 interface MyComponentState {
-  isNavOpen: boolean;
-  isModalOpen: boolean;
-  isRegisterOpen: boolean;
-  dropdownOpen: boolean;
+  isNavOpen: boolean
+  isModalOpen: boolean
+  isRegisterOpen: boolean
+  dropdownOpen: boolean
 }
 const divStyle = {
-  display: "flex",
-  alignItems: "center",
-};
+  display: 'flex',
+  alignItems: 'center',
+}
 
 class Header extends Component<header, MyComponentState> {
-  [x: string]: any;
-  username: any;
-  password: any;
+  [x: string]: any
+  username: any
+  password: any
   constructor(props: header) {
-    super(props);
+    super(props)
     this.state = {
       isNavOpen: false,
       isModalOpen: false,
       isRegisterOpen: false,
       dropdownOpen: false,
-    };
-    this.toggleModal = this.toggleModal.bind(this);
-    this.toggleNav = this.toggleNav.bind(this);
-    this.handleLogin = this.handleLogin.bind(this);
-    this.handleLogout = this.handleLogout.bind(this);
-    this.toggleRegister = this.toggleRegister.bind(this);
-    this.toggle = this.toggle.bind(this);
-    this.responseGoogle = this.responseGoogle.bind(this);
+    }
+    this.toggleModal = this.toggleModal.bind(this)
+    this.toggleNav = this.toggleNav.bind(this)
+    this.handleLogin = this.handleLogin.bind(this)
+    this.handleLogout = this.handleLogout.bind(this)
+    this.toggleRegister = this.toggleRegister.bind(this)
+    this.toggle = this.toggle.bind(this)
+    this.responseGoogle = this.responseGoogle.bind(this)
   }
   componentDidMount() {
-    window.scrollTo(0, 0);
+    window.scrollTo(0, 0)
   }
 
   toggle() {
-    this.setState({ dropdownOpen: !this.state.dropdownOpen });
+    this.setState({ dropdownOpen: !this.state.dropdownOpen })
   }
 
   toggleNav() {
     if (window.innerWidth < 1200) {
       this.setState({
         isNavOpen: !this.state.isNavOpen,
-      });
+      })
     }
   }
 
   toggleRegister(event: any) {
     this.setState({
       isRegisterOpen: !this.state.isRegisterOpen,
-    });
+    })
   }
 
   handleLogin(event: any) {
-    this.toggleModal();
+    this.toggleModal()
     this.props.loginUser({
       username: this.username.value,
       password: this.password.value,
-    });
-    event.preventDefault();
-    console.log(this.username);
+    })
+    event.preventDefault()
+    console.log(this.username)
   }
 
   handleLogout() {
-    this.props.logoutUser();
+    this.props.logoutUser()
   }
 
   toggleModal() {
     this.setState({
       isModalOpen: !this.state.isModalOpen,
-    });
+    })
   }
 
   async responseGoogle(response: any) {
     axios
-      .post(baseUrl + "users/google", { id_token: response.tokenObj.id_token })
+      .post(baseUrl + 'users/google', { id_token: response.tokenObj.id_token })
       .then((res: any) => {
-        console.log(res);
-        localStorage.setItem("token", res.data.token);
-        localStorage.setItem("userinfo", JSON.stringify(res.data.userinfo));
-        fetchIssues(!res.data.userinfo.admin);
-        receiveLogin(res);
-      });
+        console.log(res)
+        localStorage.setItem('token', res.data.token)
+        localStorage.setItem('userinfo', JSON.stringify(res.data.userinfo))
+        fetchIssues(!res.data.userinfo.admin)
+        receiveLogin(res)
+      })
   }
 
   denyGoogle() {
-    console.log("fail");
+    console.log('fail')
   }
 
   render() {
@@ -295,7 +295,7 @@ class Header extends Component<header, MyComponentState> {
                           buttonText="Login with Google"
                           onSuccess={this.responseGoogle}
                           onFailure={this.denyGoogle}
-                          cookiePolicy={"single_host_origin"}
+                          cookiePolicy={'single_host_origin'}
                         />
                       </div>
                     </>
@@ -303,7 +303,7 @@ class Header extends Component<header, MyComponentState> {
                   <Registerer
                     isSignedIn={this.props.auth.isAuthenticated}
                     toggleRegister={() => {
-                      this.toggleRegister(true);
+                      this.toggleRegister(true)
                     }}
                   />
                 </NavItem>
@@ -351,7 +351,7 @@ class Header extends Component<header, MyComponentState> {
             <LocalForm
               model="user"
               onSubmit={(values) => {
-                this.toggleRegister(true);
+                this.toggleRegister(true)
                 this.props.registerUser({
                   username: values.username,
                   password: values.password,
@@ -359,7 +359,7 @@ class Header extends Component<header, MyComponentState> {
                   roll: values.roll,
                   firstname: values.firstname,
                   lastname: values.lastname,
-                });
+                })
               }}
             >
               <FormGroup>
@@ -381,9 +381,9 @@ class Header extends Component<header, MyComponentState> {
                   model=".username"
                   show="touched"
                   messages={{
-                    required: "Required",
-                    minLength: " Must be greater than 2 characters",
-                    maxLength: " Must be 20 characters or less",
+                    required: 'Required',
+                    minLength: ' Must be greater than 2 characters',
+                    maxLength: ' Must be 20 characters or less',
                   }}
                 />
               </FormGroup>
@@ -406,9 +406,9 @@ class Header extends Component<header, MyComponentState> {
                   model=".password"
                   show="touched"
                   messages={{
-                    required: "Required",
-                    minLength: " Must be greater than 5 characters",
-                    maxLength: " Must be 20 characters or less",
+                    required: 'Required',
+                    minLength: ' Must be greater than 5 characters',
+                    maxLength: ' Must be 20 characters or less',
                   }}
                 />
               </FormGroup>
@@ -431,9 +431,9 @@ class Header extends Component<header, MyComponentState> {
                   model=".firstname"
                   show="touched"
                   messages={{
-                    required: "Required",
-                    minLength: " Must be greater than 2 characters",
-                    maxLength: " Must be 20 characters or less",
+                    required: 'Required',
+                    minLength: ' Must be greater than 2 characters',
+                    maxLength: ' Must be 20 characters or less',
                   }}
                 />
               </FormGroup>
@@ -456,9 +456,9 @@ class Header extends Component<header, MyComponentState> {
                   model=".lastname"
                   show="touched"
                   messages={{
-                    required: "Required",
-                    minLength: " Must be greater than 2 characters",
-                    maxLength: " Must be 20 characters or less",
+                    required: 'Required',
+                    minLength: ' Must be greater than 2 characters',
+                    maxLength: ' Must be 20 characters or less',
                   }}
                 />
               </FormGroup>
@@ -481,9 +481,9 @@ class Header extends Component<header, MyComponentState> {
                   model=".roll"
                   show="touched"
                   messages={{
-                    required: "Required",
-                    minLength: " Must be greater than 2 characters",
-                    maxLength: " Must be 12 characters or less",
+                    required: 'Required',
+                    minLength: ' Must be greater than 2 characters',
+                    maxLength: ' Must be 12 characters or less',
                   }}
                 />
               </FormGroup>
@@ -502,8 +502,8 @@ class Header extends Component<header, MyComponentState> {
                   model=".email"
                   show="touched"
                   messages={{
-                    required: "Required",
-                    validEmail: " Enter a valid email",
+                    required: 'Required',
+                    validEmail: ' Enter a valid email',
                   }}
                 />
               </FormGroup>
@@ -514,7 +514,7 @@ class Header extends Component<header, MyComponentState> {
           </ModalBody>
         </Modal>
       </React.Fragment>
-    );
+    )
   }
 }
-export default Header;
+export default Header

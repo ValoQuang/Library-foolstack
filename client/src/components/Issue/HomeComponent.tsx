@@ -1,34 +1,22 @@
-import React, { Component } from "react";
+import React, { Component } from 'react'
 
 class Home extends Component {
   constructor(props: any) {
-    super(props);
-    this.state = {};
+    super(props)
+    this.state = {}
   }
 
   componentDidMount() {
-    window.scrollTo(0, 0);
+    window.scrollTo(0, 0)
   }
 
   render() {
     return (
       <div className="container mt-5 home text-center align-self-center">
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
         <div className="row mt-5 darkbg text-center justify-content-center">
           <h1> Welcome to the Q Library</h1>
         </div>
         <div className="row darkbg">
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
           <h6>
             username admin: director <br />
             password admin: director <br />
@@ -37,34 +25,34 @@ class Home extends Component {
             book, see stats <br />
             For student route: can check book, search book
             <br />
-            <br />{" "}
+            <br />{' '}
           </h6>
         </div>
         <div className="row darkbg justify-content-center">
           <table>
             <tr>
-              {" "}
+              {' '}
               <th>
                 <h6>Library Timings</h6>
-              </th>{" "}
+              </th>{' '}
             </tr>
             <tr>
-              {" "}
+              {' '}
               <td>
-                <h6>Opening Time</h6>{" "}
-              </td>{" "}
+                <h6>Opening Time</h6>{' '}
+              </td>{' '}
               <td>
-                {" "}
+                {' '}
                 <h6>9.00 A.M.</h6>
               </td>
             </tr>
             <tr>
-              {" "}
+              {' '}
               <td>
-                <h6>Closing Time</h6>{" "}
-              </td>{" "}
+                <h6>Closing Time</h6>{' '}
+              </td>{' '}
               <td>
-                {" "}
+                {' '}
                 <h6>9.00 A.M.</h6>
               </td>
             </tr>
@@ -72,13 +60,8 @@ class Home extends Component {
           <br />
           <br />
         </div>
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
       </div>
-    );
+    )
   }
 }
-export default Home;
+export default Home

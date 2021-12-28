@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react'
 import {
   Row,
   Col,
@@ -8,17 +8,16 @@ import {
   CardFooter,
   CardBody,
   CardTitle,
-} from "reactstrap";
-
-import { CircularProgress } from "@mui/material";
+  Spinner,
+} from 'reactstrap'
 
 interface renderBook {
-  isLoading: boolean;
-  errMess: any;
-  book: any;
-  isAdmin: boolean;
-  toggleEditModal: Function;
-  changeSelected: Function;
+  isLoading: boolean
+  errMess: any
+  book: any
+  isAdmin: boolean
+  toggleEditModal: Function
+  changeSelected: Function
 }
 function RenderBook({
   book,
@@ -35,8 +34,8 @@ function RenderBook({
             <span
               className="fa fa-pencil Option"
               onClick={() => {
-                changeSelected(book._id);
-                toggleEditModal();
+                changeSelected(book._id)
+                toggleEditModal()
               }}
             />
           ) : (
@@ -53,16 +52,16 @@ function RenderBook({
             <b>Descrption: </b>
             <br /> {book.description} <br />
             <br />
-            {book.floor === 0 ? " Ground " : book.floor}
+            {book.floor === 0 ? ' Ground ' : book.floor}
             {book.floor === 1
-              ? "st "
+              ? 'st '
               : book.floor === 2
-              ? "nd "
+              ? 'nd '
               : book.floor === 3
-              ? "rd "
+              ? 'rd '
               : book.floor === 0
-              ? ""
-              : "th "}
+              ? ''
+              : 'th '}
             Floor <br />
             <br />
             <b> Copies available : </b> {book.copies}
@@ -72,51 +71,51 @@ function RenderBook({
         <CardFooter className="text-muted">
           <Row>
             <Col md={6}>
-              Created at :{" "}
-              {new Intl.DateTimeFormat("en-US", {
-                year: "numeric",
-                month: "short",
-                day: "2-digit",
-                hour: "numeric",
-                minute: "numeric",
+              Created at :{' '}
+              {new Intl.DateTimeFormat('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: '2-digit',
+                hour: 'numeric',
+                minute: 'numeric',
                 hour12: true,
               }).format(new Date(Date.parse(book.createdAt)))}
             </Col>
             <Col md={6}>
-              Last updated at :{" "}
-              {new Intl.DateTimeFormat("en-US", {
-                year: "numeric",
-                month: "short",
-                day: "2-digit",
-                hour: "numeric",
-                minute: "numeric",
+              Last updated at :{' '}
+              {new Intl.DateTimeFormat('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: '2-digit',
+                hour: 'numeric',
+                minute: 'numeric',
                 hour12: true,
               }).format(new Date(Date.parse(book.updatedAt)))}
             </Col>
           </Row>
         </CardFooter>
       </Card>
-    );
-  else return <div></div>;
+    )
+  else return <div></div>
 }
 
 class BookDetail extends Component<renderBook> {
   constructor(props: renderBook) {
-    super(props);
-    this.state = {};
+    super(props)
+    this.state = {}
   }
   componentDidMount() {
-    window.scrollTo(0, 0);
+    window.scrollTo(0, 0)
   }
   render() {
     if (this.props.isLoading) {
       return (
         <div className="container">
           <div className="row">
-            <CircularProgress />
+            <Spinner animation="border" />
           </div>
         </div>
-      );
+      )
     } else if (this.props.errMess) {
       return (
         <div className="container loading">
@@ -130,7 +129,7 @@ class BookDetail extends Component<renderBook> {
             </div>
           </div>
         </div>
-      );
+      )
     } else
       return (
         <div className="container full">
@@ -149,7 +148,7 @@ class BookDetail extends Component<renderBook> {
             </div>
           </div>
         </div>
-      );
+      )
   }
 }
-export default BookDetail;
+export default BookDetail

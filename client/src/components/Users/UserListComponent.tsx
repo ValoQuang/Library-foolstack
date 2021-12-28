@@ -1,14 +1,14 @@
-import React, { Component } from "react";
-import { Table } from "reactstrap";
-import { Link } from "react-router-dom";
-import { CircularProgress } from "@mui/material";
+import React, { Component } from 'react'
+import { Table } from 'reactstrap'
+import { Link } from 'react-router-dom'
+import { CircularProgress } from '@mui/material'
 
 interface userProp {
-  users: any;
-  editPassword: any;
-  usersLoading: boolean;
-  usersErrMess: any;
-  errMess: any;
+  users: any
+  editPassword: any
+  usersLoading: boolean
+  usersErrMess: any
+  errMess: any
 }
 interface userState {}
 
@@ -18,25 +18,25 @@ function RenderUser({ user, i }: any) {
       <td>{i}</td>
       <td>
         <Link to={`/users/${user._id}`}>
-          {user.firstname + " " + user.lastname}
+          {user.firstname + ' ' + user.lastname}
         </Link>
       </td>
       <td> {user.roll} </td>
       <td> {user.username} </td>
       <td> {user.email} </td>
     </React.Fragment>
-  );
+  )
 }
 
 class UserList extends Component<userProp, userState> {
-  i: number;
+  i: number
   constructor(props: userProp) {
-    super(props);
-    this.state = {};
-    this.i = 1;
+    super(props)
+    this.state = {}
+    this.i = 1
   }
   componentDidMount() {
-    window.scrollTo(0, 0);
+    window.scrollTo(0, 0)
   }
   render() {
     if (this.props.usersLoading) {
@@ -46,7 +46,7 @@ class UserList extends Component<userProp, userState> {
             <CircularProgress />
           </div>
         </div>
-      );
+      )
     } else if (this.props.usersErrMess) {
       return (
         <div className="container loading">
@@ -60,7 +60,7 @@ class UserList extends Component<userProp, userState> {
             </div>
           </div>
         </div>
-      );
+      )
     } else if (this.props.users.length === 0) {
       return (
         <div className="container loading">
@@ -70,41 +70,41 @@ class UserList extends Component<userProp, userState> {
               <br />
               <br />
               <br />
-              <h4>{"No users found"}</h4>
+              <h4>{'No users found'}</h4>
             </div>
           </div>
         </div>
-      );
+      )
     } else {
       const list = this.props.users.map((user: any) => {
         return (
           <tr key={user._id}>
             <RenderUser user={user} i={this.i++} />
           </tr>
-        );
-      });
+        )
+      })
       return (
         <div className="container mt-6 text-center align-self-center full">
           <div className="row text-center justify-content-center">
             <div className="col-12 heading">
-              <br />
-              <br />
+              <br/>
+              <br/>
               <h3>
-                List of{" "}
+                List of{' '}
                 {this.props.users[0].admin
-                  ? " admins in-charge"
-                  : " students registered"}
+                  ? ' admins in-charge'
+                  : ' students registered'}
               </h3>
               <Table striped bordered hover responsive>
                 <thead>
                   <tr>
                     <th>S.No.</th>
                     <th>
-                      Name of{" "}
-                      {this.props.users[0].admin ? " admin" : " student"}
+                      Name of{' '}
+                      {this.props.users[0].admin ? ' admin' : ' student'}
                     </th>
                     <th>
-                      {this.props.users[0].admin ? " Admin Id" : " Roll No."}
+                      {this.props.users[0].admin ? ' Admin Id' : ' Roll No.'}
                     </th>
                     <th>Username</th>
                     <th>Email</th>
@@ -117,9 +117,9 @@ class UserList extends Component<userProp, userState> {
             </div>
           </div>
         </div>
-      );
+      )
     }
   }
 }
 
-export default UserList;
+export default UserList

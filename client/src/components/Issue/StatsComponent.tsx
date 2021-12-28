@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react'
 import {
   Card,
   CardText,
@@ -6,33 +6,32 @@ import {
   CardLink,
   CardTitle,
   Button,
-} from "reactstrap";
-import { Link } from "react-router-dom";
-
-import { CircularProgress } from "@mui/material";
+  Spinner,
+} from 'reactstrap'
+import { Link } from 'react-router-dom'
 
 interface statProp {
-  issues: any;
-  errMess: any;
-  returnIssue: any;
-  booksLoading: boolean;
-  usersLoading: boolean;
-  usersErrMess: any;
-  booksErrMess: any;
-  books: any;
-  users: any;
+  issues: any
+  errMess: any
+  returnIssue: any
+  booksLoading: boolean
+  usersLoading: boolean
+  usersErrMess: any
+  booksErrMess: any
+  books: any
+  users: any
 }
 interface statState {}
 
 class Stats extends Component<statProp, statState> {
-  i: number;
+  i: number
   constructor(props: statProp) {
-    super(props);
-    this.state = {};
-    this.i = 1;
+    super(props)
+    this.state = {}
+    this.i = 1
   }
   componentDidMount() {
-    window.scrollTo(0, 0);
+    window.scrollTo(0, 0)
   }
   render() {
     if (
@@ -43,52 +42,40 @@ class Stats extends Component<statProp, statState> {
       return (
         <div className="container">
           <div className="row">
-            <CircularProgress />
+            <Spinner animation="border" />
           </div>
         </div>
-      );
+      )
     } else if (this.props.issues.errMess) {
       return (
         <div className="container loading">
           <div className="row heading">
             <div className="col-12">
-              <br />
-              <br />
-              <br />
-              <br />
               <h3>{this.props.issues.errMess}</h3>
             </div>
           </div>
         </div>
-      );
+      )
     } else if (this.props.usersErrMess) {
       return (
         <div className="container loading">
           <div className="row heading">
             <div className="col-12">
-              <br />
-              <br />
-              <br />
-              <br />
               <h3>{this.props.usersErrMess}</h3>
             </div>
           </div>
         </div>
-      );
+      )
     } else if (this.props.booksErrMess) {
       return (
         <div className="container loading">
           <div className="row heading">
             <div className="col-12">
-              <br />
-              <br />
-              <br />
-              <br />
               <h3>{this.props.booksErrMess}</h3>
             </div>
           </div>
         </div>
-      );
+      )
     } else {
       return (
         <div className="container mt-5 text-center align-self-center full">
@@ -197,9 +184,9 @@ class Stats extends Component<statProp, statState> {
           </div>
           <br />
         </div>
-      );
+      )
     }
   }
 }
 
-export default Stats;
+export default Stats

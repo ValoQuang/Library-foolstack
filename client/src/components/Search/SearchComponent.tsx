@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react'
 import {
   Form,
   FormGroup,
@@ -9,84 +9,83 @@ import {
   Badge,
   ListGroupItem,
   ListGroup,
-} from "reactstrap";
-import { Link } from "react-router-dom";
-
-import { CircularProgress } from "@mui/material";
+  Spinner,
+} from 'reactstrap'
+import { Link } from 'react-router-dom'
 
 interface searchProp {
-  books: any;
-  isAdmin: boolean;
-  changeSelected: Function;
-  booksLoading: any;
-  booksErrMess: any;
-  toggleEditModal: Function;
-  toggleDeleteModal: Function;
-  isSignedIn: any;
+  books: any
+  isAdmin: boolean
+  changeSelected: Function
+  booksLoading: any
+  booksErrMess: any
+  toggleEditModal: Function
+  toggleDeleteModal: Function
+  isSignedIn: any
 }
 
 interface searchState {
-  name: string;
-  author: string;
-  cat: any;
+  name: string
+  author: string
+  cat: any
 }
 
 class Search extends Component<searchProp, searchState> {
   constructor(props: searchProp) {
-    super(props);
+    super(props)
     this.state = {
-      name: "",
-      author: "",
+      name: '',
+      author: '',
       cat: [
-        "Romance",
-        "Technology",
-        "Computer Science",
-        "Management",
-        "Electronics",
-        "Physics",
-        "Chemistry",
-        "Mathematics",
-        "Fiction",
-        "Philosophy",
-        "Language",
-        "Arts",
-        "Other",
+        'Romance',
+        'Technology',
+        'Computer Science',
+        'Management',
+        'Electronics',
+        'Physics',
+        'Chemistry',
+        'Mathematics',
+        'Fiction',
+        'Philosophy',
+        'Language',
+        'Arts',
+        'Other',
       ],
-    };
-    this.onChange = this.onChange.bind(this);
+    }
+    this.onChange = this.onChange.bind(this)
   }
   onChange(e: any) {
-    const options = this.state.cat;
-    let pos = -1;
+    const options = this.state.cat
+    let pos = -1
 
     if (e.target.checked) {
-      options.push(e.target.value);
+      options.push(e.target.value)
     } else {
-      let i = 0;
+      let i = 0
       for (; i < options.length; i++) {
         if (options[i] === e.target.value) {
-          pos = i;
-          break;
+          pos = i
+          break
         } else {
         }
       }
-      options.splice(pos, 1);
+      options.splice(pos, 1)
     }
-    this.setState({ cat: options });
+    this.setState({ cat: options })
   }
 
   componentDidMount() {
-    window.scrollTo(0, 0);
+    window.scrollTo(0, 0)
   }
 
   render() {
-    var colors = ["warning", "danger", "success", "info", "secondary"];
-    var nameRegex = new RegExp(this.state.name, "i");
-    var authorRegex = new RegExp(this.state.author, "i");
+    var colors = ['warning', 'danger', 'success', 'info', 'secondary']
+    var nameRegex = new RegExp(this.state.name, 'i')
+    var authorRegex = new RegExp(this.state.author, 'i')
     const list = this.props.books.map((book: any) => {
       let category_matched = this.state.cat.some(
         (category: any) => category === book.cat
-      );
+      )
       if (
         book.name.search(nameRegex) !== -1 &&
         book.author.search(authorRegex) !== -1 &&
@@ -98,7 +97,7 @@ class Search extends Component<searchProp, searchState> {
               <b>{`${book.name}  `}</b>
             </Link>
             <Badge color={colors[book.cat.length % 5]} pill>
-              {" "}
+              {' '}
               {book.cat}
             </Badge>
             {this.props.isAdmin ? (
@@ -106,16 +105,16 @@ class Search extends Component<searchProp, searchState> {
                 &nbsp; &nbsp;
                 <span
                   onClick={() => {
-                    this.props.changeSelected(book._id);
-                    this.props.toggleEditModal();
+                    this.props.changeSelected(book._id)
+                    this.props.toggleEditModal()
                   }}
                   className="Option fa fa-pencil"
                 />
-                {"  "}&nbsp; &nbsp;{" "}
+                {'  '}&nbsp; &nbsp;{' '}
                 <span
                   onClick={() => {
-                    this.props.changeSelected(book._id);
-                    this.props.toggleDeleteModal();
+                    this.props.changeSelected(book._id)
+                    this.props.toggleDeleteModal()
                   }}
                   className="Option fa fa-trash"
                 />
@@ -127,17 +126,17 @@ class Search extends Component<searchProp, searchState> {
             <p> {book.copies} Copies available</p>
             <p>Location : {` Floor- ${book.floor}, Shelf- ${book.shelf}`}</p>
           </ListGroupItem>
-        );
-      else return <React.Fragment />;
-    });
+        )
+      else return <React.Fragment />
+    })
     if (this.props.booksLoading) {
       return (
         <div className="container loading">
           <div className="row">
-            <CircularProgress />
+            <Spinner animation="border" />
           </div>
         </div>
-      );
+      )
     } else if (this.props.booksErrMess) {
       return (
         <div className="container loading">
@@ -151,7 +150,7 @@ class Search extends Component<searchProp, searchState> {
             </div>
           </div>
         </div>
-      );
+      )
     } else {
       return (
         <div className="container loading">
@@ -170,7 +169,7 @@ class Search extends Component<searchProp, searchState> {
                         id="name"
                         value={this.state.name}
                         onChange={(e) => {
-                          this.setState({ name: e.target.value });
+                          this.setState({ name: e.target.value })
                         }}
                         placeholder="Enter name of the book"
                       />
@@ -184,7 +183,7 @@ class Search extends Component<searchProp, searchState> {
                         id="author"
                         value={this.state.author}
                         onChange={(e) => {
-                          this.setState({ author: e.target.value });
+                          this.setState({ author: e.target.value })
                         }}
                         placeholder="Enter name of author"
                       />
@@ -193,7 +192,7 @@ class Search extends Component<searchProp, searchState> {
                 </Row>
                 <Row>
                   <Col sm={6} md={2}>
-                    Category :{" "}
+                    Category :{' '}
                   </Col>
                 </Row>
                 <FormGroup check>
@@ -389,9 +388,9 @@ class Search extends Component<searchProp, searchState> {
           </div>
           <br />
         </div>
-      );
+      )
     }
   }
 }
 
-export default Search;
+export default Search

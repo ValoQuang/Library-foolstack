@@ -1,8 +1,6 @@
 import React, { Component } from "react";
-import { Table } from "reactstrap";
+import { Table,Spinner } from "reactstrap";
 import { Link } from "react-router-dom";
-
-import { CircularProgress } from "@mui/material";
 
 // RenderBook is a functional component
 interface renderBook {
@@ -99,7 +97,7 @@ class Booklist extends Component<bookList> {
       return (
         <div className="container">
           <div className="row">
-            <CircularProgress />
+          <Spinner animation="border" />
           </div>
         </div>
       );

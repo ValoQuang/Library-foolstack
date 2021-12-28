@@ -28,8 +28,8 @@ const Issues = (state = { isLoading: true,
                 }
                 else {
                     return issue;
-                }})
                 }
+            })}
         default:
             return state;
     }

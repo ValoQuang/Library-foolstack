@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import { Button, Label, Col, Row } from "reactstrap";
-import { Control, LocalForm, Errors } from "react-redux-form";
+import React, { Component } from 'react'
+import { Button, Label, Col, Row, Spinner } from 'reactstrap'
+import { Control, LocalForm, Errors } from 'react-redux-form'
 import {
   required,
   requiredNum,
@@ -9,55 +9,54 @@ import {
   maxVal,
   minVal,
   isNumber,
-} from "../Validator/index";
-
-import LinearProgress from "@mui/material/LinearProgress";
+} from '../Validator/index'
 
 interface addBook {
-  books: any;
-  booksErrMess: Function;
-  booksLoading: Function;
-  postBook: Function;
-  isAdmin: Boolean;
+  books: any
+  booksErrMess: Function
+  booksLoading: Function
+  postBook: Function
+  isAdmin: Boolean
 }
 
 class AddBook extends Component<addBook> {
   constructor(props: addBook) {
-    super(props);
-    this.state = {};
+    super(props)
+    this.state = {}
   }
   componentDidMount() {
-    window.scrollTo(0, 0);
+    window.scrollTo(0, 0)
   }
   render() {
     let uniqueIsbn = (val: any) =>
-      !this.props.books.some((book: any) => book.isbn === val);
+      !this.props.books.some((book: any) => book.isbn === val)
     let uniqueName = (val: any) =>
-      !this.props.books.some((book: any) => book.name === val);
+      !this.props.books.some((book: any) => book.name === val)
     if (this.props.booksLoading) {
       return (
         <div className="container">
           <div className="row">
-            <LinearProgress />
+            <Spinner animation="border" />
           </div>
         </div>
-      );
+      )
     } else if (this.props.booksErrMess) {
       return (
         <div className="container loading">
           <div className="row heading">
             <div className="col-12">
-                <h3>{this.props.booksErrMess}</h3>
+              <h3>{this.props.booksErrMess}</h3>
             </div>
           </div>
         </div>
-      );
+      )
     } else
       return (
         <div className="container">
           <div className="row justify-content-center heading">
             <div className="col-12">
-              <br/><br/>
+              <br />
+              <br />
               <h3>Add a book</h3>
             </div>
           </div>
@@ -73,12 +72,12 @@ class AddBook extends Component<addBook> {
                   values.floor,
                   values.shelf,
                   values.copies
-                );
+                )
               }}
             >
               <Row className="form-group">
                 <Label htmlFor="name" md={2}>
-                  Name{" "}
+                  Name{' '}
                 </Label>
                 <Col md={4}>
                   <Control.text
@@ -98,14 +97,14 @@ class AddBook extends Component<addBook> {
                     model=".name"
                     show="touched"
                     messages={{
-                      required: "Required",
-                      minLength: " Must be greater than 2 characters",
-                      uniqueName: " There exists a book with this name already",
+                      required: 'Required',
+                      minLength: ' Must be greater than 2 characters',
+                      uniqueName: ' There exists a book with this name already',
                     }}
                   />
                 </Col>
                 <Label htmlFor="author" md={2}>
-                  Authors{" "}
+                  Authors{' '}
                 </Label>
                 <Col md={4}>
                   <Control.text
@@ -121,8 +120,8 @@ class AddBook extends Component<addBook> {
                     model=".author"
                     show="touched"
                     messages={{
-                      required: "Required",
-                      minLength: " Must be greater than 2 characters",
+                      required: 'Required',
+                      minLength: ' Must be greater than 2 characters',
                     }}
                   />
                 </Col>
@@ -152,16 +151,16 @@ class AddBook extends Component<addBook> {
                     model=".isbn"
                     show="touched"
                     messages={{
-                      required: "Required",
-                      minLength: " Must be greater than 9 numbers",
-                      maxLength: " Must be 13 numbers or less",
-                      isNumber: " Must be a number",
-                      uniqueIsbn: " There exists a book with this ISBN No.",
+                      required: 'Required',
+                      minLength: ' Must be greater than 9 numbers',
+                      maxLength: ' Must be 13 numbers or less',
+                      isNumber: ' Must be a number',
+                      uniqueIsbn: ' There exists a book with this ISBN No.',
                     }}
                   />
                 </Col>
                 <Label htmlFor="copies" md={3}>
-                  {" "}
+                  {' '}
                   Copies Available
                 </Label>
                 <Col md={3}>
@@ -183,10 +182,10 @@ class AddBook extends Component<addBook> {
                     model=".copies"
                     show="touched"
                     messages={{
-                      requiredNum: "Required",
-                      minVal: " Must be greater than 0",
-                      maxVal: " Must be 1000 or less",
-                      isNumber: " Must be a number",
+                      requiredNum: 'Required',
+                      minVal: ' Must be greater than 0',
+                      maxVal: ' Must be 1000 or less',
+                      isNumber: ' Must be a number',
                     }}
                   />
                 </Col>
@@ -202,7 +201,7 @@ class AddBook extends Component<addBook> {
                     className="form-control"
                   >
                     <option>Romance</option> <option>Technology</option>
-                    <option>Computer Science</option>{" "}
+                    <option>Computer Science</option>{' '}
                     <option>Management</option>
                     <option>Electronics</option> <option>Physics</option>
                     <option>Chemistry</option> <option>Mathematics</option>
@@ -255,8 +254,8 @@ class AddBook extends Component<addBook> {
           </div>
           <br />
         </div>
-      );
+      )
   }
 }
 
-export default AddBook;
+export default AddBook

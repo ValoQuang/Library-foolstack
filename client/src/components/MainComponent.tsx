@@ -1,18 +1,18 @@
-import React, { Component } from "react";
-import Header from "./HeaderFooter/HeaderComponent";
-import Home from "./Issue/HomeComponent";
-import Booklist from "./Book/BooksComponent";
-import Search from "./Search/SearchComponent";
-import BookDetail from "./Book/BookDetailComponent";
-import Profile from "./Users/ProfileComponent";
-import AddBook from "./Book/AddBookComponent";
-import History from "./Issue/HistoryComponent";
-import Issue from "./Issue/IssueComponent";
-import Return from "./Issue/ReturnComponent";
-import UserDetail from "./Users/UserDetailComponent";
-import Stats from "./Issue/StatsComponent";
-import Log from "./Issue/LogComponent";
-import UserList from "./Users/UserListComponent";
+import React, { Component } from 'react'
+import Header from './HeaderFooter/HeaderComponent'
+import Home from './Issue/HomeComponent'
+import Booklist from './Book/BooksComponent'
+import Search from './Search/SearchComponent'
+import BookDetail from './Book/BookDetailComponent'
+import Profile from './Users/ProfileComponent'
+import AddBook from './Book/AddBookComponent'
+import History from './Issue/HistoryComponent'
+import Issue from './Issue/IssueComponent'
+import Return from './Issue/ReturnComponent'
+import UserDetail from './Users/UserDetailComponent'
+import Stats from './Issue/StatsComponent'
+import Log from './Issue/LogComponent'
+import UserList from './Users/UserListComponent'
 
 import {
   required,
@@ -22,9 +22,9 @@ import {
   maxVal,
   minVal,
   isNumber,
-} from "./Validator/index";
-import { Switch, Route, Redirect, withRouter } from "react-router-dom";
-import { connect } from "react-redux";
+} from './Validator/index'
+import { Switch, Route, Redirect, withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
 import {
   Modal,
   ModalBody,
@@ -33,13 +33,13 @@ import {
   Label,
   Col,
   Row,
-} from "reactstrap";
+} from 'reactstrap'
 import {
   postBook,
   fetchBooks,
   editBook,
   deleteBook,
-} from "../redux/actions/bookAction";
+} from '../redux/actions/bookAction'
 import {
   loginUser,
   logoutUser,
@@ -47,53 +47,53 @@ import {
   editUser,
   editPassword,
   fetchUsers,
-} from "../redux/actions/userAction";
+} from '../redux/actions/userAction'
 import {
   returnIssue,
   fetchIssues,
   postIssue,
-} from "../redux/actions/issueAction";
-import { Control, LocalForm, Errors } from "react-redux-form";
+} from '../redux/actions/issueAction'
+import { Control, LocalForm, Errors } from 'react-redux-form'
 
 const mapStateToProps = (state: {
-  books: any;
-  auth: any;
-  issues: any;
-  users: any;
+  books: any
+  auth: any
+  issues: any
+  users: any
 }) => {
   return {
     books: state.books,
     auth: state.auth,
     issues: state.issues,
     users: state.users,
-  };
-};
+  }
+}
 
 const mapDispatchToProps: any = (
   dispatch: (arg0: {
-    (dispatch: Function): Promise<any>;
-    (dispatch: Function): Promise<any>;
-    (dispatch: Function): Promise<any>;
-    (dispatch: Function): Promise<any>;
-    (dispatch: Function): Promise<any>;
-    (dispatch: Function): Promise<any>;
-    (dispatch: Function): Promise<any>;
-    (dispatch: Function): void;
-    (dispatch: Function): Promise<void>;
-    (dispatch: Function): Promise<any>;
-    (dispatch: Function): Promise<any>;
-    (dispatch: Function): Promise<any>;
-    (dispatch: Function): Promise<any>;
+    (dispatch: Function): Promise<any>
+    (dispatch: Function): Promise<any>
+    (dispatch: Function): Promise<any>
+    (dispatch: Function): Promise<any>
+    (dispatch: Function): Promise<any>
+    (dispatch: Function): Promise<any>
+    (dispatch: Function): Promise<any>
+    (dispatch: Function): void
+    (dispatch: Function): Promise<void>
+    (dispatch: Function): Promise<any>
+    (dispatch: Function): Promise<any>
+    (dispatch: Function): Promise<any>
+    (dispatch: Function): Promise<any>
   }) => void
 ) => ({
   fetchBooks: () => {
-    dispatch(fetchBooks());
+    dispatch(fetchBooks())
   },
   fetchIssues: (student: any) => {
-    dispatch(fetchIssues(student));
+    dispatch(fetchIssues(student))
   },
   fetchUsers: () => {
-    dispatch(fetchUsers());
+    dispatch(fetchUsers())
   },
   postBook: (
     name: string,
@@ -138,42 +138,42 @@ const mapDispatchToProps: any = (
   postIssue: (bookId: string, studentId: string) =>
     dispatch(postIssue(bookId, studentId)),
   returnIssue: (issueId: any) => dispatch(returnIssue(issueId)),
-});
+})
 
 class Main extends Component<any, any> {
   componentDidMount() {
-    this.props.fetchBooks();
+    this.props.fetchBooks()
     if (this.props.auth.isAuthenticated) {
-      this.props.fetchIssues(!this.props.auth.userinfo.admin);
+      this.props.fetchIssues(!this.props.auth.userinfo.admin)
     }
     if (this.props.auth.isAuthenticated && this.props.auth.userinfo.admin) {
-      this.props.fetchUsers();
+      this.props.fetchUsers()
     }
   }
   constructor(props: any) {
-    super(props);
+    super(props)
     this.state = {
       isDeleteModalOpen: false,
       isEditModalOpen: false,
       selectedBook: null,
-    };
-    this.toggleDeleteModal = this.toggleDeleteModal.bind(this);
-    this.toggleEditModal = this.toggleEditModal.bind(this);
-    this.changeSelected = this.changeSelected.bind(this);
-    this.handleSubmitEdit = this.handleSubmitEdit.bind(this);
+    }
+    this.toggleDeleteModal = this.toggleDeleteModal.bind(this)
+    this.toggleEditModal = this.toggleEditModal.bind(this)
+    this.changeSelected = this.changeSelected.bind(this)
+    this.handleSubmitEdit = this.handleSubmitEdit.bind(this)
   }
 
   handleSubmitEdit(values: {
-    name: any;
-    author: any;
-    description: any;
-    isbn: any;
-    cat: any;
-    floor: any;
-    shelf: any;
-    copies: any;
+    name: any
+    author: any
+    description: any
+    isbn: any
+    cat: any
+    floor: any
+    shelf: any
+    copies: any
   }) {
-    this.toggleEditModal();
+    this.toggleEditModal()
     this.props.editBook(
       this.state.selectedBook._id,
       values.name,
@@ -184,7 +184,7 @@ class Main extends Component<any, any> {
       values.floor,
       values.shelf,
       values.copies
-    );
+    )
   }
 
   changeSelected(_id: any) {
@@ -192,25 +192,25 @@ class Main extends Component<any, any> {
       selectedBook: this.props.books.books.filter(
         (book: { _id: any }) => book._id === _id
       )[0],
-    });
+    })
   }
 
   toggleDeleteModal() {
-    this.setState({ isDeleteModalOpen: !this.state.isDeleteModalOpen });
+    this.setState({ isDeleteModalOpen: !this.state.isDeleteModalOpen })
   }
 
   toggleEditModal() {
-    this.setState({ isEditModalOpen: !this.state.isEditModalOpen });
+    this.setState({ isEditModalOpen: !this.state.isEditModalOpen })
   }
 
   render() {
     const BookWithId = ({ match }: any) => {
       let selectedBook = this.props.books.books.filter(
         (book: { _id: any }) => book._id === match.params.bookId
-      )[0];
-      let notFoundErr = null;
+      )[0]
+      let notFoundErr = null
       if (selectedBook === undefined) {
-        notFoundErr = "\n\n Error 404 :  Book not found";
+        notFoundErr = '\n\n Error 404 :  Book not found'
       }
       return (
         <BookDetail
@@ -225,27 +225,27 @@ class Main extends Component<any, any> {
               : this.props.auth.userinfo.admin
           }
         />
-      );
-    };
+      )
+    }
 
     const UserWithId = ({ match }: any) => {
       let selectedUser = this.props.users.users.filter(
         (user: { _id: any }) => user._id === match.params.userId
-      )[0];
-      let notFoundErr = null;
+      )[0]
+      let notFoundErr = null
       if (selectedUser === undefined) {
-        notFoundErr = "\n\n Error 404 :  User not found";
+        notFoundErr = '\n\n Error 404 :  User not found'
       }
       return (
         <UserDetail
           user={selectedUser}
           isLoading={this.props.users.isLoading}
           errMess={this.props.users.errMess || notFoundErr}
-          editPassword={""}
+          editPassword={''}
           auth={undefined}
         />
-      );
-    };
+      )
+    }
 
     const PrivateRouteCommon = ({ component: Component, ...rest }: any) => (
       <Route
@@ -256,14 +256,14 @@ class Main extends Component<any, any> {
           ) : (
             <Redirect
               to={{
-                pathname: "/home",
+                pathname: '/home',
                 state: { from: props.location },
               }}
             />
           )
         }
       />
-    );
+    )
 
     const PrivateRouteAdmin = ({ component: Component, ...rest }: any) => (
       <Route
@@ -274,14 +274,14 @@ class Main extends Component<any, any> {
           ) : (
             <Redirect
               to={{
-                pathname: "/home",
+                pathname: '/home',
                 state: { from: props.location },
               }}
             />
           )
         }
       />
-    );
+    )
 
     const PrivateRoute = ({ component: Component, ...rest }: any) => (
       <Route
@@ -292,23 +292,23 @@ class Main extends Component<any, any> {
           ) : (
             <Redirect
               to={{
-                pathname: "/home",
+                pathname: '/home',
                 state: { from: props.location },
               }}
             />
           )
         }
       />
-    );
+    )
 
     let uniqueIsbn = (defaultIsbn: any) => (val: any) =>
       !this.props.books.books.some(
         (book: { isbn: any }) => book.isbn === val
-      ) || val === defaultIsbn;
+      ) || val === defaultIsbn
     let uniqueName = (defaultName: any) => (val: any) =>
       !this.props.books.books.some(
         (book: { name: any }) => book.name === val
-      ) || val === defaultName;
+      ) || val === defaultName
 
     return (
       <div className="App">
@@ -324,8 +324,8 @@ class Main extends Component<any, any> {
           isModalOpen={false}
           isRegisterOpen={false}
           dropdownOpen={false}
-          username={""}
-          password={""}
+          username={''}
+          password={''}
         />
         <Switch location={this.props.location}>
           <Route exact path="/home" component={() => <Home />} />
@@ -381,7 +381,7 @@ class Main extends Component<any, any> {
                 auth={this.props.auth}
                 editUser={this.props.editUser}
                 editPassword={this.props.editPassword}
-                errMess={""}
+                errMess={''}
                 user={null}
               />
             )}
@@ -423,14 +423,14 @@ class Main extends Component<any, any> {
               <History
                 issues={this.props.issues}
                 auth={this.props.auth}
-                errMess={""}
+                errMess={''}
               />
             )}
           />
           <PrivateRouteAdmin
             exact
             path="/logs"
-            component={() => <Log issues={this.props.issues} errMess={""} />}
+            component={() => <Log issues={this.props.issues} errMess={''} />}
           />
           <PrivateRouteAdmin
             exact
@@ -456,7 +456,7 @@ class Main extends Component<any, any> {
                 usersLoading={this.props.users.isLoading}
                 usersErrMess={this.props.users.errMess}
                 editPassword={undefined}
-                errMess={""}
+                errMess={''}
               />
             )}
           />
@@ -484,7 +484,7 @@ class Main extends Component<any, any> {
                 issues={this.props.issues}
                 auth={this.props.auth}
                 returnIssue={this.props.returnIssue}
-                errMess={""}
+                errMess={''}
               />
             )}
           />
@@ -500,7 +500,7 @@ class Main extends Component<any, any> {
                 users={this.props.users.users}
                 usersLoading={this.props.users.isLoading}
                 usersErrMess={this.props.users.errMess}
-                errMess={""}
+                errMess={''}
                 returnIssue={undefined}
               />
             )}
@@ -520,31 +520,31 @@ class Main extends Component<any, any> {
             <br />
             Name : {this.state.selectedBook
               ? this.state.selectedBook.name
-              : ""}{" "}
+              : ''}{' '}
             <br />
-            Authors :{" "}
-            {this.state.selectedBook ? this.state.selectedBook.author : ""}{" "}
+            Authors :{' '}
+            {this.state.selectedBook ? this.state.selectedBook.author : ''}{' '}
             <br />
-            ISBN Number :{" "}
-            {this.state.selectedBook ? this.state.selectedBook.isbn : ""} <br />
-            Available Copies :{" "}
-            {this.state.selectedBook ? this.state.selectedBook.copies : ""}{" "}
+            ISBN Number :{' '}
+            {this.state.selectedBook ? this.state.selectedBook.isbn : ''} <br />
+            Available Copies :{' '}
+            {this.state.selectedBook ? this.state.selectedBook.copies : ''}{' '}
             <br /> <br />
             Are you sure you wish to delete this book ? <br />
             <br />
             <Button
               color="danger"
               onClick={() => {
-                this.props.deleteBook(this.state.selectedBook._id);
-                this.toggleDeleteModal();
+                this.props.deleteBook(this.state.selectedBook._id)
+                this.toggleDeleteModal()
               }}
             >
               Yes
-            </Button>{" "}
+            </Button>{' '}
             <Button
               color="warning"
               onClick={() => {
-                this.toggleDeleteModal();
+                this.toggleDeleteModal()
               }}
             >
               No
@@ -561,7 +561,7 @@ class Main extends Component<any, any> {
               <LocalForm onSubmit={(values) => this.handleSubmitEdit(values)}>
                 <Row className="form-group">
                   <Label htmlFor="name" md={2}>
-                    Name{" "}
+                    Name{' '}
                   </Label>
                   <Col md={10}>
                     <Control.text
@@ -581,17 +581,17 @@ class Main extends Component<any, any> {
                       model=".name"
                       show="touched"
                       messages={{
-                        required: "Required",
-                        minLength: "Must be greater than 2 characters",
+                        required: 'Required',
+                        minLength: 'Must be greater than 2 characters',
                         uniqueName:
-                          " There exists a book with this name already",
+                          ' There exists a book with this name already',
                       }}
                     />
                   </Col>
                 </Row>
                 <Row className="form-group">
                   <Label htmlFor="author" md={2}>
-                    Authors{" "}
+                    Authors{' '}
                   </Label>
                   <Col md={10}>
                     <Control.text
@@ -610,8 +610,8 @@ class Main extends Component<any, any> {
                       model=".author"
                       show="touched"
                       messages={{
-                        required: "Required",
-                        minLength: "Must be greater than 2 characters",
+                        required: 'Required',
+                        minLength: 'Must be greater than 2 characters',
                       }}
                     />
                   </Col>
@@ -640,11 +640,11 @@ class Main extends Component<any, any> {
                       model=".isbn"
                       show="touched"
                       messages={{
-                        required: "Required",
-                        minLength: "Must be greater than 9 numbers",
-                        maxLength: "Must be 13 numbers or less",
-                        isNumber: "Must be a number",
-                        uniqueIsbn: " There exists a book with this ISBN No.",
+                        required: 'Required',
+                        minLength: 'Must be greater than 9 numbers',
+                        maxLength: 'Must be 13 numbers or less',
+                        isNumber: 'Must be a number',
+                        uniqueIsbn: ' There exists a book with this ISBN No.',
                       }}
                     />
                   </Col>
@@ -660,7 +660,7 @@ class Main extends Component<any, any> {
                       defaultValue={this.state.selectedBook.cat}
                     >
                       <option>Romance</option> <option>Technology</option>
-                      <option>Computer Science</option>{" "}
+                      <option>Computer Science</option>{' '}
                       <option>Management</option>
                       <option>Electronics</option> <option>Physics</option>
                       <option>Chemistry</option> <option>Mathematics</option>
@@ -673,7 +673,7 @@ class Main extends Component<any, any> {
 
                 <Row className="form-group">
                   <Label htmlFor="copies" md={6}>
-                    {" "}
+                    {' '}
                     Copies Available
                   </Label>
                   <Col md={6}>
@@ -694,10 +694,10 @@ class Main extends Component<any, any> {
                       className="text-danger"
                       model=".copies"
                       messages={{
-                        requiredNum: "Required",
-                        minVal: "Must be greater than 0",
-                        maxVal: "Must be 1000 or less",
-                        isNumber: "Must be a number",
+                        requiredNum: 'Required',
+                        minVal: 'Must be greater than 0',
+                        maxVal: 'Must be 1000 or less',
+                        isNumber: 'Must be a number',
                       }}
                     />
                   </Col>
@@ -723,7 +723,7 @@ class Main extends Component<any, any> {
 
                 <Row className="form-group">
                   <Label htmlFor="shelf" md={6}>
-                    {" "}
+                    {' '}
                     Shelf
                   </Label>
                   <Col md={6}>
@@ -744,10 +744,10 @@ class Main extends Component<any, any> {
                       className="text-danger"
                       model=".shelf"
                       messages={{
-                        requiredNum: "Required",
-                        minVal: "Must be greater than 0",
-                        maxVal: "Must be 100 or less",
-                        isNumber: "Must be a number",
+                        requiredNum: 'Required',
+                        minVal: 'Must be greater than 0',
+                        maxVal: 'Must be 100 or less',
+                        isNumber: 'Must be a number',
                       }}
                     />
                   </Col>
@@ -782,8 +782,8 @@ class Main extends Component<any, any> {
           <React.Fragment />
         )}
       </div>
-    );
+    )
   }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main))

@@ -1,42 +1,50 @@
-import { CircularProgress } from "@mui/material";
-import React, { Component } from "react";
-import { Button, Form, FormGroup, Label, Input, Col, Row } from "reactstrap";
+import React, { Component } from 'react'
+import {
+  Button,
+  Form,
+  FormGroup,
+  Label,
+  Input,
+  Col,
+  Row,
+  Spinner,
+} from 'reactstrap'
 
 interface issueProp {
-  booksLoading: Function;
-  usersLoading: Function;
-  booksErrMess: Function;
-  usersErrMess: Function;
-  books: any;
-  users: any;
-  postIssue: Function;
-  auth: any;
+  booksLoading: Function
+  usersLoading: Function
+  booksErrMess: Function
+  usersErrMess: Function
+  books: any
+  users: any
+  postIssue: Function
+  auth: any
 }
 interface issueState {
-  isbn: string;
-  firstname: string;
+  isbn: string
+  firstname: string
 }
 
 class Issue extends Component<issueProp, issueState> {
   constructor(props: issueProp) {
-    super(props);
+    super(props)
     this.state = {
-      isbn: "",
-      firstname: "",
-    };
+      isbn: '',
+      firstname: '',
+    }
   }
   componentDidMount() {
-    window.scrollTo(0, 0);
+    window.scrollTo(0, 0)
   }
   render() {
     if (this.props.booksLoading || this.props.usersLoading) {
       return (
         <div className="container">
           <div className="row">
-            <CircularProgress />
+            <Spinner animation="border" />
           </div>
         </div>
-      );
+      )
     } else if (this.props.booksErrMess) {
       return (
         <div className="container loading">
@@ -50,37 +58,33 @@ class Issue extends Component<issueProp, issueState> {
             </div>
           </div>
         </div>
-      );
+      )
     } else if (this.props.usersErrMess) {
       return (
         <div className="container loading">
           <div className="row heading">
             <div className="col-12">
-              <br />
-              <br />
-              <br />
-              <br />
               <h3>{this.props.usersErrMess}</h3>
             </div>
           </div>
         </div>
-      );
+      )
     } else {
       const bookoptions = this.props.books.map((book: any, index: any) => (
         <option key={book.isbn}>{book.isbn}</option>
-      ));
-      const defaultBook = this.props.books[0];
+      ))
+      const defaultBook = this.props.books[0]
       // To just get list of the students (not the admins)
-      let useroptions = this.props.users.filter((user: any) => !user.admin);
-      const defaultUser = useroptions[0];
+      let useroptions = this.props.users.filter((user: any) => !user.admin)
+      const defaultUser = useroptions[0]
       useroptions = useroptions.map((user: any, index: any) => (
         <option key={user.roll}>{user.firstname}</option>
-      ));
-      if (this.state.isbn === "") {
+      ))
+      if (this.state.isbn === '') {
         this.setState({
           isbn: defaultBook.isbn,
           firstname: defaultUser.firstname,
-        });
+        })
       }
       return (
         <div className="container full">
@@ -96,13 +100,13 @@ class Issue extends Component<issueProp, issueState> {
               onSubmit={(e) => {
                 let bookid = this.props.books.filter(
                   (book: { isbn: string }) => book.isbn === this.state.isbn
-                )[0]._id;
+                )[0]._id
                 let studentid = this.props.users.filter(
                   (user: { firstname: string }) =>
                     user.firstname === this.state.firstname
-                )[0]._id;
-                this.props.postIssue(bookid, studentid);
-                e.preventDefault();
+                )[0]._id
+                this.props.postIssue(bookid, studentid)
+                e.preventDefault()
               }}
             >
               <FormGroup row>
@@ -114,7 +118,7 @@ class Issue extends Component<issueProp, issueState> {
                   id="isbn"
                   className="form-control"
                   onInput={(e: any) => {
-                    this.setState({ isbn: e.target.value });
+                    this.setState({ isbn: e.target.value })
                   }}
                 >
                   {bookoptions}
@@ -127,7 +131,7 @@ class Issue extends Component<issueProp, issueState> {
                   id="name"
                   className="form-control"
                   onInput={(e: any) => {
-                    this.setState({ firstname: e.target.value });
+                    this.setState({ firstname: e.target.value })
                   }}
                 >
                   {useroptions}
@@ -143,7 +147,7 @@ class Issue extends Component<issueProp, issueState> {
                   defaultValue={defaultBook.name}
                   value={
                     !this.state.isbn
-                      ? ""
+                      ? ''
                       : this.props.books.filter(
                           (book: { isbn: string }) =>
                             book.isbn === this.state.isbn
@@ -163,7 +167,7 @@ class Issue extends Component<issueProp, issueState> {
                   defaultValue={defaultBook.author}
                   value={
                     !this.state.isbn
-                      ? ""
+                      ? ''
                       : this.props.books.filter(
                           (book: { isbn: string }) =>
                             book.isbn === this.state.isbn
@@ -181,16 +185,16 @@ class Issue extends Component<issueProp, issueState> {
                   name="name_student"
                   placeholder="Name of student"
                   defaultValue={
-                    defaultUser.firstname + " " + defaultUser.lastname
+                    defaultUser.firstname + ' ' + defaultUser.lastname
                   }
                   value={
                     !this.state.firstname
-                      ? ""
+                      ? ''
                       : this.props.users.filter(
                           (user: { firstname: string }) =>
                             user.firstname === this.state.firstname
                         )[0].firstname +
-                        " " +
+                        ' ' +
                         this.props.users.filter(
                           (user: { firstname: string }) =>
                             user.firstname === this.state.firstname
@@ -210,7 +214,7 @@ class Issue extends Component<issueProp, issueState> {
                   defaultValue={defaultUser.username}
                   value={
                     !this.state.firstname
-                      ? ""
+                      ? ''
                       : this.props.users.filter(
                           (user: any) => user.firstname === this.state.firstname
                         )[0].username
@@ -230,9 +234,9 @@ class Issue extends Component<issueProp, issueState> {
           </div>
           <br />
         </div>
-      );
+      )
     }
   }
 }
 
-export default Issue;
+export default Issue
