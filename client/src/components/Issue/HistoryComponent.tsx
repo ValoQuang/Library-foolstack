@@ -93,10 +93,6 @@ class History extends Component<historyProp, historyState> {
         <div className="container loading">
           <div className="row heading">
             <div className="col-12">
-              <br />
-              <br />
-              <br />
-              <br />
               <h3>{this.props.errMess}</h3>
             </div>
           </div>

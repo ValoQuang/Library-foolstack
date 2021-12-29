@@ -318,7 +318,7 @@ class Header extends Component<header, MyComponentState> {
           isOpen={!this.props.auth.isAuthenticated && this.state.isModalOpen}
           toggle={this.toggleModal}
         >
-          <ModalHeader toggle={this.toggleModal}> Sign In</ModalHeader>
+          <ModalHeader toggle={this.toggleModal}>Sign In</ModalHeader>
           <ModalBody>
             <Form onSubmit={this.handleLogin}>
               <FormGroup>
