@@ -151,8 +151,8 @@ class Header extends Component<header, MyComponentState> {
   render() {
     return (
       <React.Fragment>
-        <Navbar color="dark" expand="xl" fixed="top">
-          <div className="container d-flex">
+        <Navbar color="dark" dark expand="xl" fixed="top">
+          <div className="container d-grid">
             <NavbarToggler onClick={this.toggleNav}></NavbarToggler>
             <NavbarBrand className="mr-auto text-white" href="/home">
               <h3>QUANG APP</h3>
@@ -290,7 +290,7 @@ class Header extends Component<header, MyComponentState> {
                         ) : null}
                       </Button>
                       <div>
-                        <GoogleLogin
+                      <GoogleLogin
                           clientId="511106555487-m6feond50oktruagqlb0h84fi9u1uvqm.apps.googleusercontent.com"
                           buttonText="Login with Google"
                           onSuccess={this.responseGoogle}

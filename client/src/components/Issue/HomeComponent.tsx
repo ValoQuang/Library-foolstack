@@ -13,10 +13,9 @@ class Home extends Component {
   render() {
     return (
       <div className="container mt-5 home text-center align-self-center">
-        <div className="row mt-5 darkbg text-center justify-content-center">
-          <h1> Welcome to the Q Library</h1>
-        </div>
-        <div className="row darkbg">
+        <br/>
+        <div className="row darkbg mt-5">
+        <h1> Welcome to the Q Library</h1>
           <h6>
             username admin: director <br />
             password admin: director <br />
