@@ -2,6 +2,7 @@ import * as ActionTypes from './ActionTypes'
 import { baseUrl } from '../../baseUrl'
 import { fetchIssues, requestLogout, receiveLogout } from './issueAction'
 
+
 //Edit user
 export const editUser =
   (
@@ -97,22 +98,22 @@ export const fetchUsers = () => async (dispatch: Function) => {
     .catch((error) => dispatch(usersFailed(error.message)))
 }
 
-export const addUsers = (users: any) => ({
+export const addUsers = (users: Object) => ({
   type: ActionTypes.ADD_USERS,
   payload: users,
 })
 
-export const editUserdispatch = (USER: any) => ({
+export const editUserdispatch = (USER: Object) => ({
   type: ActionTypes.EDIT_USER,
   payload: USER,
 })
 
-export const editPasswordDispatch = (CREDS: any) => ({
+export const editPasswordDispatch = (CREDS: Object) => ({
   type: ActionTypes.EDIT_PASSWORD,
   payload: CREDS,
 })
 
-export const requestLogin = (creds: any) => {
+export const requestLogin = (creds: Object) => {
   return {
     type: ActionTypes.LOGIN_REQUEST,
     creds,
@@ -179,8 +180,7 @@ export const loginUser = (creds: any) => async (dispatch: Function) => {
         dispatch(receiveLogin(response))
         console.log(response)
       } else {
-        var error: any = new Error('Error ' + response.status)
-        error.response = response
+        var error:any = new Error('Error ' + response.status)
         throw error
       }
     })
