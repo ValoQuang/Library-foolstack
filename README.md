@@ -12,6 +12,7 @@
 <h3>Back-End stack:</h3>
 <li>Node.js - JavaScript runtime environment</li>
 <li>Express.js - Back-end web application framework running on top of Node.js</li>
+<br/>
 
 Student<br/>
 A student can<br/>
@@ -22,7 +23,7 @@ A student can<br/>
 <li>view his issue history</li>
   
 Admin<br/>
-An admin can<br/>
+An admin can
 <li>view and edit his profile</li>
 <li>search for books and view availability</li>
 <li>view, Edit or Delete existing books</li>
