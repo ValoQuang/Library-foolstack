@@ -13,9 +13,9 @@
 <li>Node.js - JavaScript runtime environment</li>
 <li>Express.js - Back-end web application framework running on top of Node.js</li>
 <br/>
-
+<br/>
 Student<br/>
-A student can<br/>
+A student can
 <li>register himself on the app</li>
 <li>view and edit his profile</li>
 <li>change his password</li>
