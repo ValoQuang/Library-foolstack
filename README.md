@@ -13,10 +13,22 @@
 <li>Node.js - JavaScript runtime environment</li>
 <li>Express.js - Back-end web application framework running on top of Node.js</li>
 
-
-Admin route access:
-Username:Director
-password: director
-
-Admin can: add, remove book, issue book to student
-Student can: view book, edit own profile
+Student<br/>
+A student can<br/>
+<li>register himself on the app</li>
+<li>view and edit his profile</li>
+<li>change his password</li>
+<li>search for books and view availabilty</li>
+<li>view his issue history</li>
+  
+Admin<br/>
+An admin can<br/>
+<li>view and edit his profile</li>
+<li>search for books and view availability</li>
+<li>view, Edit or Delete existing books</li>
+<li>add new books</li>
+<li>issue a book to a student</li>
+<li>return a book issued earlier</li>
+<li>view all stats of the library</li>
+<li>view issue log and the profile of all the students</li>
+<li>view the profile of all admins</li>
