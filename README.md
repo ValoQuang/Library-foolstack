@@ -21,7 +21,7 @@ A student can
 <li>change his password</li>
 <li>search for books and view availabilty</li>
 <li>view his issue history</li>
-  
+<br/> 
 Admin<br/>
 An admin can
 <li>view and edit his profile</li>
