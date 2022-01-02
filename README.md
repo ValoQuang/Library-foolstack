@@ -1,16 +1,18 @@
 # Library-management-
 
-Front-End stack:
-MongoDB - Document database - to store data as JSON
-Express.js - Back-end web application framework running on top of Node.js
-React - Front-end web app framework used
+
+<li>Front-End stack:</li>
+<ul>MongoDB - Document database - to store data as JSON</ul>
+<ul>Bootstrap - Styling</ul>
+<ul>React - Front-end web app framework used</ul>
 
 Middleware
-Redux - For flux architecture, and fetching rapidly data
-Mongoose - ODM for MongoDB
+<ul>Redux - For flux architecture, and fetching rapidly data</ul>
+<ul>Mongoose - ODM for MongoDB</ul>
 
 Back-End stack:
-Node.js - JavaScript runtime environment
+<ul>Node.js - JavaScript runtime environment</ul>
+<ul>Express.js - Back-end web application framework running on top of Node.js</ul>
 
 Admin route access:
 Username:Director
