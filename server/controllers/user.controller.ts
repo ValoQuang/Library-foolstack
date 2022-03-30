@@ -117,7 +117,7 @@ exports.logOut = async (req:any, res:Response, next: NextFunction) => {
     }
 }
 
-exports.checkJWT = async (req:any, res:Response, next: NextFunction) => {
+exports.checkJWT = async (req:Request, res:Response, next: NextFunction) => {
     passport.authenticate('jwt', {session: false}, (err:Error, user:any, info:any) => {
       if (err)
         return next(err);
@@ -134,7 +134,7 @@ exports.checkJWT = async (req:any, res:Response, next: NextFunction) => {
     }) (req, res);
 }
 
-exports.logGoogle = async (req:any, res:any, next: NextFunction) => {
+exports.logGoogle = async (req:any, res:Response, next: NextFunction) => {
       const {email,id,firstname,lastname, admin} = req.user as any
       try {
       var token = jwt.sign(

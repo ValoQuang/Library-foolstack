@@ -26,12 +26,10 @@ const GoogleStrategy = require('passport-google-id-token')
     })
 }
 
-
-
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
   },
-  async function(parsedToken: any, googleId:string, done:any) {
+  async function(parsedToken: any, done:any) {
     const userPayload = {
         email: parsedToken?.payload?.email,
         firstname: parsedToken?.payload?.givenName,
@@ -47,7 +45,6 @@ passport.use(new GoogleStrategy({
 }
 ));
 
-
 exports.local=passport.use(new LocalStrategy(User.authenticate()));
 
 // For sessions
@@ -55,13 +52,13 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 exports.getToken = function(user:any) {
-    return jwt.sign(user, 'QUANG',
+    return jwt.sign(user, process.env.SECRET_KEY,
         {expiresIn: 3600});
 };
 
 var opts:any = {};
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-opts.secretOrKey = 'QUANG';
+opts.secretOrKey = process.env.SECRET_KEY;
 
 passport.use(new JwtStrategy(opts,
     (jwt_payload:any, done:any) => {

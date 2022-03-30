@@ -6,7 +6,7 @@ import {Request, Response, NextFunction} from "express"
 exports.getAllBook = async (req:Request, res:Response, next:NextFunction) => {
     await Books.find(req.query)
     .sort({name: 'asc'})
-    .then((books:any)=>{
+    .then((books:JSON)=>{
         res.statusCode=200;
         res.setHeader('Content-Type','application/json');
         res.json(books);

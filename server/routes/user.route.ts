@@ -7,10 +7,7 @@ const authenticate = require('../middleware/authenticate');
 import {Request, Response} from "express"
 const cors = require('./cors');
 
-
-
 router.use(bodyParser.json());
-
 /* GET users listing. */
 router.options('*', cors.corsWithOptions, (req:Request, res:Response) => { res.sendStatus(200); 
   res.setHeader('Access-Control-Allow-Credentials', 'true');} )
